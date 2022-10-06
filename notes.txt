@@ -1,0 +1,10 @@
+
+Tem que fazer:
+--Colocar os tooltips nos botões do sidebar.
+
+--arrumar alinhamento sidebar
+
+
+Info:
+## Na tela de check-in, a pesquisa será feita através da placa do carro.
+  --Qnd clicar no botão "Realizar entrada", a tag "a" vai direcionar para um arquivo php, e depois redirecionar novamente para a pagina de checkin

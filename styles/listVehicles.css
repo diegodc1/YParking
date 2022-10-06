@@ -1,0 +1,135 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  /* flex-direction: column; */
+  /* gap: 8rem; */
+  align-items: center;
+  /* justify-content: center; */
+  background-color: var(--bg-gray);
+
+}
+
+.list-clients-header {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  background-color: var(--blue-light);
+  color: var(--text-light);
+  padding: 0rem 0rem 0rem 1rem;
+  height: 5vh;
+  font-size: 0.8rem;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+}
+
+.list-clients-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main-content {
+  width: 80%;
+  height: 100vh;
+  display: flex;
+  /* justify-content: center; */
+  margin-top: 5rem;
+  height: 100vh;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* margin-top: 1.5rem; */
+}
+
+
+.button-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  background-color: var(--green-light);
+  border: none;
+  transition: all 0.2s linear;
+  width: 13%;
+  height: 2.6rem !important;
+  font-weight: 600;
+}
+
+.add-user-button {
+  background-color: var(--blue-light);
+  padding: 0.5rem 1rem;
+  border: none;
+  text-decoration: none;
+  color: var(--text-light) !important;
+  border-radius: 5px;
+  font-weight: 600;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s linear;
+}
+
+.add-user-button:hover {
+  transform: scale(1.022);
+  transition: all 0.2s linear;
+}
+
+.table-list {
+  background-color: var(--text-light);
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.table-list table {
+  margin-bottom: 1.2rem !important;
+}
+
+.action-buttons {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-buttons button {
+  border: none;
+}
+
+.action-buttons i {
+  transition: all 0.5s linear;
+
+}
+
+.action-buttons i:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s linear;
+}
+
+.eye {
+  color: var(--blue-light);
+  opacity: 0.9;
+}
+
+.pencil {
+  color: var(--green-light);
+  opacity: 0.9;
+
+}
+
+.trash {
+  color: var(--red-light);
+  opacity: 0.9;
+}

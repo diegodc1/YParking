@@ -1,0 +1,18 @@
+:root {
+    --blue-light: #109CF1;
+    --green-light: #2ED47A;
+    --red-light: #FF3C5F;
+    --text-dark: #192A3E;
+    --text-light: white;
+    --gray-light: #90A0B7;
+    --dark-blue-text: #334D6E;
+    --icon-light: #C2CFE0;
+    --bg-gray: #dad8d8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}

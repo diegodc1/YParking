@@ -1,0 +1,270 @@
+/*=============== Sidebar Open ====================*/
+aside {
+  background: var(--text-light);
+  width: 13vw;
+  max-width: 13rem;
+  height: 100vh;
+  padding: 3rem 0rem 0rem 0rem;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+
+  z-index: 2;
+  left: 0;
+  bottom: 0;
+}
+
+aside i {
+  color: var(--text-dark);
+}
+
+/**** Sidebar Header ****/
+.header-sidebar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header-sidebar img {
+  width: 4rem;
+  height: 4rem;
+  transition: all 0.6s linear;
+}
+
+.header-sidebar i {
+  font-size: 1.4rem;
+  transition: all 0.4s;
+}
+
+.header-sidebar i:hover {
+  transform: rotate(90deg);
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+/**** Sidebar Sections ****/
+.menu-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  transition: all 0.4s;
+}
+
+.menu-sections button {
+  border: none;
+  background-color: var(--text-light);
+}
+
+.sections {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.9s;
+}
+
+.sections:hover {
+  background: var(--icon-light);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.sections a {
+  text-decoration: none;
+  color: #084236;
+}
+
+a:visited {
+  color: var(--text-color);
+}
+
+.menu-sections a {
+  text-decoration: none;
+}
+
+.line {
+  border: 1px solid var(--icon-light);
+  opacity: 0.5;
+}
+
+/**** Sidebar Footer *****/
+.footer-sidebar {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: var(--blue-light);
+  color: white;
+  width: 13vw;
+  max-width: 13rem;
+  padding: 1rem 0rem 1rem 1rem;
+
+
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
+  z-index: 11;
+}
+
+.info-user {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.info-user span {
+  font-size: 0.8rem;
+}
+
+.info-user p {
+  font-size: 0.7rem;
+}
+
+.info-user img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 12px;
+}
+
+.text-info {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.text-info span,
+.text-info p {
+  color: white;
+}
+
+
+.log-out i {
+  color: var(white);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+/*=============== Sidebar Closed ====================*/
+
+.close {
+  width: 3%;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.close .header-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close #user-photo,
+.close #user-office,
+.close span,
+.close #logo {
+  display: none;
+}
+
+.close .sections {
+  justify-content: center;
+}
+
+.close.footer-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position: absolute; */
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
+  z-index: 11;
+}
+
+.close.footer-sidebar #log-out {
+  margin-right: 1rem;
+}
+
+.close.footer-sidebar #log-out {
+  margin-right: 0rem;
+}
+
+
+/***************** Media query  ***********/
+@media (max-width: 426px) {
+
+  aside,
+  .footer-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+  }
+
+  .sections {
+    font-size: 2rem;
+  }
+
+  .menu-sections {
+    gap: 3rem;
+  }
+
+  .header-sidebar {
+    position: absolute;
+    top: 0;
+    margin-top: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .footer-sidebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  a:visited {
+    color: #084236;
+  }
+
+  /**** close sidebar ****/
+  .close {
+    position: relative;
+    padding-top: 0;
+    width: 10%;
+  }
+
+  .close .sections img {
+    width: 1.7rem;
+  }
+
+  .close .footer-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .close .footer-sidebar img {
+    margin-top: 1rem;
+  }
+}
+
+
+/* Tooltip*/
+.tooltip-inner {
+  background-color: var(--blue-light);
+}
+
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--blue-light);
+}
