@@ -4,6 +4,8 @@ Tem que fazer:
 
 --arrumar alinhamento sidebar
 
+--algumas paginas o tooltip n está funcionando
+
 
 Info:
 ## Na tela de check-in, a pesquisa será feita através da placa do carro.

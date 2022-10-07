@@ -43,7 +43,7 @@
       </button>
 
       <button data-bs-toggle="tooltip" data-bs-placement="right" title="Veículos" class="">
-        <a href="#" class="sections">
+        <a href="../pages/listVehicles.php" class="sections">
           <i class="fa-solid fa-car"></i>
           <span>Veículos</span>
         </a>
@@ -59,7 +59,7 @@
       <div class="line"></div>
 
       <button data-bs-toggle="tooltip" data-bs-placement="right" title="Perfil" class="">
-        <a href="#" class="sections">
+        <a href="../pages/perfil.php" class="sections">
           <i class="fa-solid fa-user-gear"></i>
           <span>Editar Perfil</span>
         </a>
@@ -83,7 +83,9 @@
     </div>
   </aside>
 
-
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <script src="/js/sidebar.js"></script>
   <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

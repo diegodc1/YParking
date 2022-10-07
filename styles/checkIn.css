@@ -131,7 +131,14 @@ main {
   text-decoration: none;
   background-color: var(--red-light);
   padding: 0.4rem 1rem 0.4rem 1rem;
+  /* height: 100%; */
   border-radius: 5px;
   color: var(--text-light) !important;
   font-weight: 600;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+
+.delete-checkin-button:hover {
+  filter: brightness(1.08);
 }

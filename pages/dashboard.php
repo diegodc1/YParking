@@ -53,7 +53,7 @@
         </section>
 
         <section class="sect2">
-          <a href="">
+          <a href="../pages/checkout.php">
             <div class="buttons-section car-out-button">
               <i class="fa-solid fa-arrow-turn-down"></i>
               <p>SAÍDA DE VEÍCULO</p>
@@ -71,6 +71,13 @@
             <div class="buttons-section">
               <i class="fa-solid fa-car"></i>
               <p>CADASTRAR VEÍCULO</p>
+            </div>
+          </a>
+
+          <a href="/pages/addUser.php">
+            <div class="buttons-section">
+              <i class="fa-solid fa-users-gear"></i>
+              <p>CADASTRAR USUÁRIO</p>
             </div>
           </a>
         </section>
