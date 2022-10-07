@@ -1,0 +1,18 @@
+.cancel-button {
+  background-color: var(--dark-blue-text);
+  border: none;
+  transition: all 0.2s linear;
+  width: 8%;
+  font-weight: 600;
+  color: var(--text-light) !important;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button:hover {
+  background-color: var(--dark-blue-text);
+  transform: scale(1.022);
+  transition: all 0.2s linear;
+}
