@@ -1,0 +1,62 @@
+CREATE TABLE users (
+	user_id INTEGER NOT null,
+	user_name VARCHAR(80),
+	user_email VARCHAR(50),
+	user_function VARCHAR(60),
+	user_access INTEGER,
+	user_password VARCHAR(256),
+	PRIMARY KEY (user_id)
+);
+
+CREATE TABLE parking (
+	parking_name VARCHAR(70),
+	parking_slots INTEGER
+);
+
+CREATE TABLE companys (
+	company_id INTEGER NOT null,
+	company_name VARCHAR(120),
+	company_email  VARCHAR(50),
+	company_phone INTEGER,
+	company_slots INTEGER,
+	PRIMARY KEY (company_id)
+);
+
+CREATE TABLE clients (
+	client_id INTEGER NOT null,
+	client_name VARCHAR(100),
+	client_phone INTEGER,
+	client_email VARCHAR(50),
+	client_cep INTEGER,
+	client_address VARCHAR(150),
+	client_type VARCHAR(20),
+	client_bussines_plan VARCHAR(10),
+	client_departure_time VARCHAR(7),
+	client_company_id INTEGER,
+	PRIMARY KEY (client_id),
+	FOREIGN KEY (client_company_id) REFERENCES companys (company_id)
+);
+
+CREATE TABLE vehicles (
+	vehicle_id INTEGER NOT null,
+	vehicle_name VARCHAR(100),
+	vehicle_plate VARCHAR(10),
+	vehicle_model VARCHAR(40),
+	vehicle_color VARCHAR(20),
+	vehicle_category VARCHAR(15),
+	vehicle_departure_time VARCHAR(20),
+	vehicle_client_id INTEGER,
+	PRIMARY KEY (vehicle_id),
+	FOREIGN KEY (vehicle_client_id) REFERENCES clients (client_id)
+);
+
+CREATE TABLE movements (
+	mov_id INTEGER NOT null,
+	mov_type VARCHAR(10),
+	mov_client_id INTEGER,
+	mov_vehicle_id INTEGER,
+	mov_datetime VARCHAR(30),
+	PRIMARY KEY (mov_id),
+	FOREIGN KEY (mov_client_id) REFERENCES clients (client_id),
+	FOREIGN KEY (mov_vehicle_id) REFERENCES vehicles (vehicle_id)
+);
