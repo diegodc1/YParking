@@ -37,13 +37,13 @@
     <div class="box2">
         <form action="index.php" method="POST">
             <div class="user">
-                <label for="input_user">USUÁRIO:</label>
-                <input type="text" placeholder="Digite seu nome de usuário" name="input_user" maxlength="35">
+                <label for="input_user">EMAIL:</label>
+                <input type="email" placeholder="Digite seu email" name="input_user" maxlength="35" required>
             </div>
 
             <div class="password">
                 <label for="input_password">SENHA:</label>
-                <input type="password" placeholder="Digite sua senha" name="input_password" maxlength="35">
+                <input type="password" placeholder="Digite sua senha" name="input_password" maxlength="35" required>
             </div>
 
             <p class="password-recovery">Para alterar sua senha, <a href="#">clique aqui!</a></p>

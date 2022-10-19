@@ -6,8 +6,8 @@
 // $senha = "892112";
 
 try {
-  $pdo = new PDO("pgsql:host=localhost dbname=yparkingdb user=postgres password=123");
-  echo "Foi";
+  $pdo = new PDO("pgsql:host=localhost dbname=yparking user=postgres password=123");
+  // echo "Foi";
 } catch (PDOException $e) {
   print $e->getMessage();
 }

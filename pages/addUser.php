@@ -17,40 +17,37 @@
 
   <main>
     <div class="main-content">
-      <form action="addClient.php" method="POST" class="row">
+      <form action="../actions/addUserAction.php" method="POST" class="row">
         <h2>DADOS GERAIS</h2>
         <div class="line"></div>
         <div class="inputs1 row gx-3 gy-2 align-items-center">
           <div class="col-md-3">
             <label for="inputName" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="inputName" class="inputName">
+            <input type="text" class="form-control" id="inputName" class="inputName" name="inputName" required>
           </div>
           <div class="col-3">
             <label for="inputEmail" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="">
+            <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="" required>
           </div>
-          <div class="col-md-3">
-            <label for="inputPhoneNumber" class="form-label">Telefone:</label>
-            <input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber">
-          </div>
+
           <div class="col-3">
-            <label for="inputOffice" class="form-label">Cargo:</label>
-            <input type="text" class="form-control" id="inputOffice" name="inputOffice" placeholder="">
+            <label for="inputFunction" class="form-label">Cargo:</label>
+            <input type="text" class="form-control" id="inputFunction" name="inputFunction" placeholder="" required> 
           </div>
           <div class="col-3">
             <label for="inputPassword" class="form-label">Senha:</label>
-            <input type="text" class="form-control" id="inputPassword" name="inputPassword" placeholder="">
+            <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="" required>
           </div>
           <div class="col-3">
             <label for="inputConfirmPassword" class="form-label">Confirme a senha:</label>
-            <input type="text" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="">
+            <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="" required>
           </div>
 
           <div class="type-user-use col-md-3">
-            <label for="inputTypeUser" class="form-label">Tipo de usuário:</label>
-            <select id="inputTypeUser" class="form-select">
-              <option selected>Normal</option>
-              <option>Administrador</option>
+            <label for="inputAccess" class="form-label">Tipo de usuário:</label>
+            <select id="inputAccess" class="form-select" name="inputAccess">
+              <option selected value="0">Normal</option>
+              <option value="1">Administrador</option>
             </select>
           </div>
 

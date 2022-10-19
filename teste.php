@@ -1,10 +1,10 @@
 <?php
 require_once('./db/config.php');
 
-$name = "Empresa Teste";
-$email = "teste@teste.com";
-$slots = 10;
-$phone = 41997017892;
+$name = "Empresa 2";
+$email = "teste2@teste2.com";
+$slots = 20;
+$phone = 41997017823;
 
 $sql = $pdo->prepare("INSERT INTO companys (company_name, company_email, company_slots) VALUES (:name, :email, :slots)");
 $sql->bindValue(':name', $name);
