@@ -60,8 +60,7 @@ class Usuario
 interface UsuarioDao {
   public function add(Usuario $u);
   public function findAll();
-  public function findByEmail($email);
-  
+  public function findUserLogin($email, $pass);
   public function findById($id);
   public function update(Usuario $u);
   public function delete($id);

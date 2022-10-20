@@ -60,3 +60,26 @@ CREATE TABLE movements (
 	FOREIGN KEY (mov_client_id) REFERENCES clients (client_id),
 	FOREIGN KEY (mov_vehicle_id) REFERENCES vehicles (vehicle_id)
 );
+
+
+
+----------------
+Add users:
+
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas Siqueira', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Luis', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Samuel', samuel@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Kauan', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Matheus', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Layla', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Luis Felipe', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas Carvalho', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Fernanda', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Guilherme', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Phablo', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Kaue', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')

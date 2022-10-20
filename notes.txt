@@ -1,6 +1,6 @@
 
 Tem que fazer:
---Colocar os tooltips nos botões do sidebar.
+--Colocar os tooltips nos botões do sidebar. ✔️
 
 --arrumar alinhamento sidebar
 

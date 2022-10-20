@@ -42,6 +42,13 @@
         </a>
       </button>
 
+      <button data-bs-toggle="tooltip" data-bs-placement="right" title="Usuários" class="">
+        <a href="../pages/listUsers.php" class="sections">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>Usuários</span>
+        </a>
+      </button>
+
       <button data-bs-toggle="tooltip" data-bs-placement="right" title="Veículos" class="">
         <a href="../pages/listVehicles.php" class="sections">
           <i class="fa-solid fa-car"></i>
