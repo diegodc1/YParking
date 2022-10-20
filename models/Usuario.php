@@ -53,7 +53,7 @@ class Usuario
   }
 
   public function setPassword($p) {
-    $this->password = $p;
+    $this->password = password_hash($p, PASSWORD_DEFAULT);
   }
 }
 
@@ -61,6 +61,7 @@ interface UsuarioDao {
   public function add(Usuario $u);
   public function findAll();
   public function findByEmail($email);
+  
   public function findById($id);
   public function update(Usuario $u);
   public function delete($id);

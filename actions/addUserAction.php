@@ -1,6 +1,7 @@
 <?php
 require_once('../db/config.php');
 require_once('../dao/UsuarioDao.php');
+session_start();
 
 $usuarioDao = new UsuarioDaoDB($pdo);
 
@@ -23,14 +24,23 @@ if($usuarioDao->findByEmail($email) === false) {
 
     $usuarioDao->add($newUser);
 
-    header("Location: ../pages/dashboard.php");
+    $_SESSION['message-type'] = 'success';
+    $_SESSION['icon-message'] = '#check-circle-fill';
+    $_SESSION['insert_user_message'] = "Usuário cadastrado com sucesso!";
+    header("Location: ../pages/addUser.php");
     exit();
   } else {
-    header("Location: ../pages/perfil.php.php");
+    $_SESSION['message-type'] = 'danger';
+    $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+    $_SESSION['insert_user_message'] = "As senhas devem ser iguais!";
+    header("Location: ../pages/addUser.php");
     exit();
   }
 } else {
-  header("Location: ../pages/perfil.php");
+  $_SESSION['message-type'] = 'danger';
+  $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+  $_SESSION['insert_user_message'] = "Usuário já cadastrado!";
+  header("Location: ../pages/addUser.php");
   exit();
 }
 

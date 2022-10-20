@@ -21,6 +21,7 @@ class UsuarioDaoDB implements UsuarioDAO {
     $u->setId($this->pdo->lastInsertId());
     return $u;
   }
+  
   public function findAll(){}
   public function findByEmail($email){
     $sql = $this->pdo->prepare("SELECT * FROM users WHERE user_email = :email");

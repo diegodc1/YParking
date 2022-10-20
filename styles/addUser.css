@@ -7,7 +7,6 @@ body {
   align-items: center;
   /* justify-content: center; */
   background-color: var(--bg-gray) !important;
-
 }
 
 .addUser-header {
@@ -57,8 +56,15 @@ main {
 .submit-user-button {
   border: none;
   background-color: var(--blue-light);
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 0.8rem;
   border-radius: 5px;
   color: var(--text-light);
   font-weight: 600;
+  transition: all 0.3s linear;
+}
+
+.submit-user-button:hover {
+  transform: scale(1.02);
+  transition: all 0.3s linear;
+  filter: brightness(1.09);
 }
