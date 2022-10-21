@@ -45,9 +45,6 @@ $users = $usuarioDao->findAll();
     </symbol>
       </svg>
     
-
-
-
     <div class="main-content">
       <div class="button-box">
         <p></p>
@@ -92,8 +89,8 @@ $users = $usuarioDao->findAll();
                   } ?></td>
                   <td>
                     <div class="action-buttons">
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-eye eye"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="../actions/deleteUserAction.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
                     </div>
                   </td>

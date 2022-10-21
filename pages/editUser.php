@@ -1,4 +1,24 @@
-<?php  session_start();?>
+<?php  
+session_start();
+require_once('../db/config.php');
+require_once('../dao/UsuarioDao.php');
+
+$usuarioDao= new UsuarioDaoDB($pdo);
+
+$user = false;
+
+$id = filter_input(INPUT_GET, 'id');
+
+if($id) {
+  $user = $usuarioDao->findById($id);
+}
+
+if($user === false) {
+  header("Location: listUser.php");
+  exit;
+}
+
+?>
 <head>
   <title>Adicionar Usuário</title>
   <link rel="stylesheet" href="../styles/addUser.css">
@@ -15,7 +35,7 @@
   ?>
 
   <header class="addUser-header">
-    <h1>CADASTRO DE USUÁRIO</h1>
+    <h1>EDITAR USUÁRIO</h1>
   </header>
 
   <main>
@@ -43,50 +63,49 @@
           unset($_SESSION['insert_user_message']);
         }
       ?>
-      <form action="../actions/addUserAction.php" method="POST" class="row">
+      <form action="../actions/updateUserAction.php" method="POST" class="row">
         <h2>DADOS GERAIS</h2>
         <div class="line"></div>
         <div class="inputs1 row gx-3 gy-2 align-items-center">
+          <input type="hidden" name="inputUserId" value="<?= $user->getId(); ?>">
+
           <div class="col-md-3">
             <label for="inputName" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="inputName" class="inputName" name="inputName" required>
+            <input type="text" class="form-control" id="inputName" class="inputName" name="inputName" value="<?= $user->getName(); ?>" required>
           </div>
           <div class="col-3">
             <label for="inputEmail" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="" required>
+            <input type="email" class="form-control" id="inputEmail" name="inputEmail" value="<?= $user->getEmail(); ?>" required>
           </div>
 
           <div class="col-3">
             <label for="inputFunction" class="form-label">Cargo:</label>
             <select id="inputFunction" class="form-select" name="inputFunction">
-              <option selected value="Manobrista">Manobrista</option>
+              <option selected value="<?= $user->getFunction(); ?>"><?= $user->getFunction(); ?></option>
+              <option value="Manobrista">Manobrista</option>
               <option value="Operador de Estac.">Operador de Estacionamento</option>
               <option value="Caixa">Caixa</option>
               <option value="Gerente">Gerente</option>
-            </select>
+            </select> 
           </div>
-          <div class="col-3">
-            <label for="inputPassword" class="form-label">Senha:</label>
-            <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="" required>
-          </div>
-          <div class="col-3">
-            <label for="inputConfirmPassword" class="form-label">Confirme a senha:</label>
-            <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="" required>
-          </div>
-
           <div class="type-user-use col-md-3">
             <label for="inputAccess" class="form-label">Tipo de usuário:</label>
             <select id="inputAccess" class="form-select" name="inputAccess">
-              <option selected value="0">Normal</option>
-              <option value="1">Administrador</option>
+              <?php 
+                if($user->getAccess() === 1) { ?>
+                  <option selected  value="1">Administrador</option>
+                  <option value="0">Comum</option>
+                <?php } else { ?>
+                  <option selected value="0">Comum</option>
+                  <option value="1">Administrador</option>
+                <?php } ?>
             </select>
           </div>
 
-          <div class="row mt-3 submit-box">
+          <div class="mt-5 submit-box">
             <a href="../pages/listUsers.php" class="cancel-button col-md-2">Cancelar</a>
-            <input class="submit-user-button col-md-2" type="submit" value="Cadastrar">
+            <input class="submit-user-button col-md-2" type="submit" value="Atualizar Cadastro">
           </div>
-
         </div>
       </form>
     </div>

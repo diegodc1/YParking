@@ -9,6 +9,9 @@ $email = filter_input(INPUT_POST, 'inputEmail');
 $password = filter_input(INPUT_POST, 'inputPassword');
 
 if($usuarioDao->findUserLogin($email, $password) != false) {
+  $user = $usuarioDao->findByEmail($email);
+  $_SESSION['user_id'] = $user->getId();
+ 
   header("Location: ../pages/dashboard.php");
 } else {
   $_SESSION['message-type'] = 'danger';

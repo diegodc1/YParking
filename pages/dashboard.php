@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt_br">
 
@@ -13,7 +15,10 @@
 
 
 <body class="dashboard-body">
-  <?php require_once('../components/sidebar.php') ?>
+  <?php require_once('../components/sidebar.php');
+
+
+  ?>
 
   <header>
     <h1>DASHBOARD</h1>

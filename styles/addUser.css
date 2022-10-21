@@ -51,6 +51,9 @@ main {
 
 .submit-box {
   justify-content: flex-end;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem !important;
 }
 
 .submit-user-button {
@@ -64,6 +67,27 @@ main {
 }
 
 .submit-user-button:hover {
+  transform: scale(1.02);
+  transition: all 0.3s linear;
+  filter: brightness(1.09);
+}
+
+.cancel-button {
+  border: none;
+  background-color: var(--gray-light);
+  padding: 0.5rem 0.3rem !important;
+  width: 8rem !important;
+  border-radius: 5px;
+  color: var(--text-light);
+  font-weight: 600;
+  transition: all 0.3s linear;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button:hover {
   transform: scale(1.02);
   transition: all 0.3s linear;
   filter: brightness(1.09);

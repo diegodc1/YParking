@@ -65,6 +65,28 @@ class UsuarioDaoDB implements UsuarioDAO {
       return false;
     }
   }
+  
+  public function findById($id){
+    $sql = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetch();
+
+      $u = new Usuario;
+      $u->setId($data['user_id']);
+      $u->setName($data['user_name']);
+      $u->setEmail($data['user_email']);
+      $u->setFunction($data['user_function']);
+      $u->setAccess($data['user_access']);
+      $u->setPassword($data['user_password']);
+
+      return $u;
+    } else {
+      return false;
+    }
+  }
 
   public function findUserLogin($email, $pass){
 
@@ -88,8 +110,19 @@ class UsuarioDaoDB implements UsuarioDAO {
     }
   }
 
-  public function findById($id){}
-  public function update(Usuario $u){}
+  
+
+  public function update(Usuario $u){
+    $sql = $this->pdo->prepare("UPDATE users SET user_name = :name, user_email = :email, user_function = :function, user_access = :access WHERE user_id = :id");
+    $sql->bindValue(':name', $u->getName());
+    $sql->bindValue(':email', $u->getEmail());
+    $sql->bindValue(':function', $u->getFunction());
+    $sql->bindValue(':access', $u->getAccess());
+    $sql->bindValue(':id', $u->getId());
+    $sql->execute();
+
+    return true;
+  }
 
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM users WHERE user_id = :id");
