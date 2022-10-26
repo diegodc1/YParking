@@ -2,7 +2,8 @@
 <html lang="pt-br">
 
 <head>
-  <?php require_once('../components/headConfig.php') ?>
+  <?php require_once('../components/headConfig.php') ;
+  session_start();?>
   <link rel="stylesheet" href="/styles/addClient.css">
   <title>Cadastrar Cliente </title>
 </head>
@@ -89,32 +90,20 @@
               <input type="text" class="form-control" id="inputCity">
             </div>
 
-            <div class="type-user-use col-md-3">
-              <p>Tipo de uso: </p>
-              <div class="inputs-radio">
-                <div class="form-check">
-                  <input type="radio" class="form-check-input" id="radio1" name="radio-type-use" value="option1" checked>Horista
-                  <label class="form-check-label" for="radio1"></label>
-                </div>
-                <div class="form-check">
-                  <input type="radio" class="form-check-input" id="radio2" name="radio-type-use" value="option2">Mensalista
-                  <label class="form-check-label" for="radio2"></label>
-                </div>
-              </div>
+            <div class="col-md-2">
+              <label for="inputType" class="form-label">Tipo de Uso:</label>
+              <select id="inputType" name="inputType" class="form-select">
+                <option selected value="Horista">Horista</option>
+                <option value="Mensalista">Mensalista</option>
+              </select>
             </div>
 
-            <div class="company-use type-user-use col-md-2">
-              <p>Convênio de Empresa? </p>
-              <div class="inputs-radio">
-                <div class="form-check">
-                  <input type="radio" class="form-check-input" id="radio1" name="company-use" value="option1" checked>Sim
-                  <label class="form-check-label" for="radio1"></label>
-                </div>
-                <div class="form-check">
-                  <input type="radio" class="form-check-input" id="radio2" name="company-use" value="option2">Não
-                  <label class="form-check-label" for="radio2"></label>
-                </div>
-              </div>
+            <div class="col-md-2">
+              <label for="inputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
+              <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select">
+                <option selected value="N">Não</option>
+                <option value="S">Sim</option>
+              </select>
             </div>
 
             <div class="col-md-3">

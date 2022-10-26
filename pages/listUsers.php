@@ -58,6 +58,13 @@ $users = $usuarioDao->findAll();
             </div>
           <?php
           unset($_SESSION['insert_user_message']);
+          echo "<script> let div = document.querySelector('.alert');
+            function removeAlert() {
+              let div = document.querySelector('.alert').style.display=\"none\";
+            }
+          
+            setTimeout(removeAlert, 4000);
+          </script>";
         } else { ?>
             <p></p>
         <?php } ?>

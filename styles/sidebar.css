@@ -104,7 +104,6 @@ a:visited {
   max-width: 13rem;
   padding: 1rem 0rem 1rem 1rem;
 
-
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s;
@@ -143,7 +142,6 @@ a:visited {
   color: white;
 }
 
-
 .log-out i {
   color: var(white);
   font-size: 1rem;
@@ -158,8 +156,6 @@ a:visited {
   justify-content: center;
   align-items: center;
 }
-
-
 
 .close .header-sidebar {
   display: flex;
@@ -196,10 +192,8 @@ a:visited {
   margin-right: 0rem;
 }
 
-
 /***************** Media query  ***********/
 @media (max-width: 426px) {
-
   aside,
   .footer-sidebar {
     display: flex;
@@ -258,12 +252,14 @@ a:visited {
   }
 }
 
+.alert {
+  transition: all 0.8s linear;
+}
 
 /* Tooltip*/
 .tooltip-inner {
   background-color: var(--blue-light);
 }
-
 
 .tooltip.bs-tooltip-end .tooltip-arrow::before {
   border-right-color: var(--blue-light);

@@ -89,7 +89,6 @@ class UsuarioDaoDB implements UsuarioDAO {
   }
 
   public function findUserLogin($email, $pass){
-
     $sql = $this->pdo->prepare("SELECT * FROM users WHERE user_email = :email");
     $sql->bindValue(':email', $email);
     $sql->execute();
@@ -110,8 +109,6 @@ class UsuarioDaoDB implements UsuarioDAO {
     }
   }
 
-  
-
   public function update(Usuario $u){
     $sql = $this->pdo->prepare("UPDATE users SET user_name = :name, user_email = :email, user_function = :function, user_access = :access WHERE user_id = :id");
     $sql->bindValue(':name', $u->getName());
@@ -119,6 +116,25 @@ class UsuarioDaoDB implements UsuarioDAO {
     $sql->bindValue(':function', $u->getFunction());
     $sql->bindValue(':access', $u->getAccess());
     $sql->bindValue(':id', $u->getId());
+    $sql->execute();
+
+    return true;
+  }
+
+  public function updatePerfil(Usuario $u, $pass) {
+    if($pass) {
+      $sql = $this->pdo->prepare("UPDATE users SET user_name = :name, user_email = :email, user_password = :password WHERE user_id = :id");
+      $sql->bindValue(':name', $u->getName());
+      $sql->bindValue(':email', $u->getEmail());
+      $sql->bindValue(':password', $u->getPassword());
+      $sql->bindValue(':id', $u->getId());
+    } else {
+      $sql = $this->pdo->prepare("UPDATE users SET user_name = :name, user_email = :email WHERE user_id = :id");
+      $sql->bindValue(':name', $u->getName());
+      $sql->bindValue(':email', $u->getEmail());
+      $sql->bindValue(':id', $u->getId());
+    }
+
     $sql->execute();
 
     return true;

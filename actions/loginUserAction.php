@@ -11,6 +11,8 @@ $password = filter_input(INPUT_POST, 'inputPassword');
 if($usuarioDao->findUserLogin($email, $password) != false) {
   $user = $usuarioDao->findByEmail($email);
   $_SESSION['user_id'] = $user->getId();
+  $_SESSION['user_name'] = $user->getName();
+  $_SESSION['user_function'] = $user->getFunction();
  
   header("Location: ../pages/dashboard.php");
 } else {

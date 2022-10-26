@@ -1,4 +1,4 @@
-<?php  session_start();?>
+
 <head>
   <title>Adicionar Usuário</title>
   <link rel="stylesheet" href="../styles/addUser.css">
@@ -10,7 +10,9 @@
 </head>
 
 <body>
-  <?php require_once('../components/sidebar.php');
+  <?php 
+  session_start();
+  require_once('../components/sidebar.php');
    
   ?>
 
@@ -41,6 +43,13 @@
             </div>
           <?php
           unset($_SESSION['insert_user_message']);
+          echo "<script> let div = document.querySelector('.alert');
+            function removeAlert() {
+              let div = document.querySelector('.alert').style.display=\"none\";
+            }
+          
+            setTimeout(removeAlert, 5000);
+          </script>";
         }
       ?>
       <form action="../actions/addUserAction.php" method="POST" class="row">

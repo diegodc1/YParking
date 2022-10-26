@@ -2,9 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="pt_br">
+  
 
 <head>
-  <?php require_once('../components/headConfig.php') ?>
+  <?php require_once('../components/headConfig.php'); 
+    session_start();?>
   <link rel="stylesheet" href="/styles/dashboard.css">
   <title>Dashboard</title>
 
@@ -16,6 +18,7 @@
 
 <body class="dashboard-body">
   <?php require_once('../components/sidebar.php');
+
 
 
   ?>
@@ -49,10 +52,12 @@
             </div>
           </a>
 
-          <a href="#">
+       
+
+          <a href="/pages/listUsers.php">
             <div class="buttons-section">
-              <i class="fa-solid fa-building-user"></i>
-              <p>EMPRESAS CONVENIADAS</p>
+              <i class="fa-solid fa-users-gear"></i>
+              <p>USUÁRIOS CADASTRADOS</p>
             </div>
           </a>
         </section>
@@ -81,10 +86,19 @@
 
           <a href="/pages/addUser.php">
             <div class="buttons-section">
-              <i class="fa-solid fa-users-gear"></i>
+              <i class="fa-solid fa-user-gear"></i>
               <p>CADASTRAR USUÁRIO</p>
             </div>
           </a>
+
+          <a href="#">
+            <div class="buttons-section">
+              <i class="fa-solid fa-building-user"></i>
+              <p>EMPRESAS CONVENIADAS</p>
+            </div>
+          </a>
+
+          
         </section>
       </div>
 

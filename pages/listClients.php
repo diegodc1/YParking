@@ -14,7 +14,10 @@
 </head>
 
 <body>
-  <?php require_once("../components/sidebar.php") ?>
+  <?php 
+  session_start();
+  require_once("../components/sidebar.php") ;
+    ?>
 
   <header class="list-clients-header">
     <h1>CLIENTES CADASTRADOS</h1>

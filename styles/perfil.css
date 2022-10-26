@@ -42,12 +42,10 @@ main {
 
 .box-user {
   padding-left: 5rem !important;
-
 }
 
 .box-info {
   padding-left: 5rem !important;
-
 }
 
 .submit-box {
@@ -61,4 +59,8 @@ main {
   border-radius: 5px;
   color: var(--text-light);
   font-weight: 600;
+}
+
+.alert {
+  transition: all 0.8s linear;
 }

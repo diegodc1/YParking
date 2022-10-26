@@ -61,6 +61,13 @@ if($user === false) {
             </div>
           <?php
           unset($_SESSION['insert_user_message']);
+          echo "<script> let div = document.querySelector('.alert');
+            function removeAlert() {
+              let div = document.querySelector('.alert').style.display=\"none\";
+            }
+          
+            setTimeout(removeAlert, 4000);
+          </script>";
         }
       ?>
       <form action="../actions/updateUserAction.php" method="POST" class="row">
