@@ -1,3 +1,14 @@
+<?php
+require_once('../db/config.php');
+require_once('../dao/ClientDao.php');
+session_start();
+
+
+$usuarioDao = new ClientDaoDB($pdo);
+$users = $usuarioDao->findAll();
+
+?>
+
 <head>
   <title>Clientes Cadastrados</title>
 
@@ -15,7 +26,6 @@
 
 <body>
   <?php 
-  session_start();
   require_once("../components/sidebar.php") ;
     ?>
 

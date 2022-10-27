@@ -83,3 +83,30 @@ INSERT INTO users (user_name, user_email, user_function, user_access, user_passw
 INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
 INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
 INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES ('Lucas', lucasrp@rpinfo.com, 'Manobrista', 1, '123')
+
+
+------ TABELA CLIENTES
+
+CREATE TABLE IF NOT EXISTS public.clients
+(
+    client_id integer NOT NULL DEFAULT nextval('clients_client_id_seq'::regclass),
+    client_name character varying(100) COLLATE pg_catalog."default",
+    client_email character varying(50) COLLATE pg_catalog."default",
+    client_address character varying(150) COLLATE pg_catalog."default",
+    client_type character varying(20) COLLATE pg_catalog."default",
+    client_bussines_plan character varying(10) COLLATE pg_catalog."default",
+    client_departure_time character varying(10) COLLATE pg_catalog."default",
+    client_company_id integer,
+    client_phone character varying COLLATE pg_catalog."default",
+    client_cep character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT clients_pkey PRIMARY KEY (client_id),
+    CONSTRAINT clients_client_company_id_fkey FOREIGN KEY (client_company_id)
+        REFERENCES public.companys (company_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.clients
+    OWNER to postgres;

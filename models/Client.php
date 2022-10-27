@@ -56,7 +56,7 @@ class Client {
   }
 
   public function setAddress($address) {
-    $this->address = strtolower(trim($address));
+    $this->address = ucwords(trim($address));
   }
   
   public function getType() {
@@ -64,7 +64,7 @@ class Client {
   }
 
   public function setType($type) {
-    $this->type = strtolower(trim($type));
+    $this->type = ucwords(trim($type));
   }
 
   public function getBussinesPlan() {
@@ -72,23 +72,23 @@ class Client {
   }
 
   public function setBussinesPlan($bussinesPlan) {
-    $this->bussinesPlan = strtolower(trim($bussinesPlan));
+    $this->bussinesPlan = trim($bussinesPlan);
   }
 
-  public function getDepartureType() {
-    return $this->bussinesPlan;
+  public function getDepartureTime() {
+    return $this->departureTime;
   }
 
-  public function setDepartureType($departureTime) {
+  public function setDepartureTime($departureTime) {
     $this->departureTime = strtolower(trim($departureTime));
   }
 
   public function getCompanyId() {
-    return $this->bussinesPlan;
+    return $this->companyId;
   }
 
   public function setCompanyId($companyId) {
-    $this->companyId = strtolower(trim($companyId));
+    $this->companyId = $companyId;
   }
 }
 
