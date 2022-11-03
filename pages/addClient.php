@@ -22,6 +22,7 @@
 
         <div class="form-box1">
           <h2>DADOS GERAIS</h2>
+          <?php require('../components/alertMessage.php')?>
           <div class="line"></div>
           <div class="inputs1 row gx-3 gy-2 align-items-center">
             <div class="col-md-3">
@@ -100,8 +101,8 @@
             <div class="col-md-2">
               <label for="inputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
               <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" require>
-                <option selected value="N">Não</option>
-                <option value="S">Sim</option>
+                <option selected value="Não">Não</option>
+                <option value="Sim">Sim</option>
               </select>
             </div>
 
@@ -119,45 +120,6 @@
 
           </div>
         </div>
-
-        <!-- <div class="form-box2">
-          <h2>DADOS DO VEÍCULO</h2>
-          <div class="line"></div>
-          <div class="inputs2 row gx-3 gy-2 align-items-center">
-            <div class="col-md-1">
-              <label for="inputVehicleBoard" class="form-label">Placa:</label>
-              <input type="text" class="form-control" id="inputVehicleBoard">
-            </div>
-            <div class="col-md-2">
-              <label for="inputVehicleBrand" class="form-label">Marca:</label>
-              <input type="text" class="form-control" id="inputVehicleBrand">
-            </div>
-            <div class="col-md-2">
-              <label for="inputVehicleModel" class="form-label">Modelo:</label>
-              <input type="text" class="form-control" id="inputVehicleModel">
-            </div>
-            <div class="col-md-2">
-              <label for="inputVehicleColor" class="form-label">Cor:</label>
-              <input type="text" class="form-control" id="inputVehicleColor">
-            </div>
-
-            <div class="col-md-2">
-              <label for="inputVehicleCategory" class="form-label">Categoria:</label>
-              <select id="inputVehicleCategory" class="form-select">
-                <option selected>Sedan</option>
-                <option value="RP Info">SUV</option>
-                <option value="RP Info">Hatch</option>
-                <option value="RP Info">Caminhonete</option>
-                <option value="RP Info">Moto</option>
-                <option value="RP Info">Caminhão</option>
-              </select>
-            </div>
-
-            <div class="col-md-2">
-              <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
-              <input type="text" class="form-control" id="inputHourOut">
-            </div> -->
-
           </div>
         </div>
 

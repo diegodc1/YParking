@@ -32,4 +32,7 @@ $newClient->setDepartureTime($departureTime);
 $newClient->setCompanyId($companyId);
 
 $clientDao->add($newClient);
+$_SESSION['message-type'] = 'success';
+$_SESSION['icon-message'] = '#check-circle-fill';
+$_SESSION['insert_user_message'] = "Cliente cadastrado com sucesso!";
 header("Location: ../pages/addClient.php");

@@ -45,10 +45,10 @@ class ClientDaoDB implements ClientDao {
         $u->setDepartureTime($client['client_departure_time']);
         $u->setCompanyId($client['client_company_id']);
 
-        $users[] = $u;
+        $clients[] = $u;
       }
     }
-    return $users;
+    return $clients;
   }
 
 

@@ -6,6 +6,7 @@ class Vehicle {
   private $plate;
   private $color;
   private $category;
+  private $brand;
   private $departureTime;
   private $clientId;
 
@@ -47,6 +48,14 @@ class Vehicle {
 
   public function setCategory($category) {
     $this->category= $category; 
+  }
+
+  public function getBrand() {
+    return $this->brand;
+  }
+
+  public function setBrand($brand) {
+    $this->brand = $brand; 
   }
 
   public function getDepartureTime() {

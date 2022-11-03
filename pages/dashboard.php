@@ -77,7 +77,7 @@
             </div>
           </a>
 
-          <a href="">
+          <a href="/pages/addVehicle.php">
             <div class="buttons-section">
               <i class="fa-solid fa-car"></i>
               <p>CADASTRAR VEÍCULO</p>
