@@ -1,6 +1,7 @@
 <?php
 require_once('../models/Client.php');
 
+
 class ClientDaoDB implements ClientDao {
   private $pdo;
   public function __construct(PDO $driver) {
@@ -51,8 +52,38 @@ class ClientDaoDB implements ClientDao {
     return $clients;
   }
 
+  public function findByVehicle($id) {
+    $sql = $this->pdo->prepare("SELECT * FROM clients WHERE client_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->execute();
+
+    if($sql->rowCount() > 0){
+      $data = $sql->fetch();
+
+      $u = new Client;
+      $u->setId($data['client_id']);
+      $u->setName($data['client_name']);
+      $u->setEmail($data['client_email']);
+      $u->setPhone($data['client_phone']);
+      $u->setAddress($data['client_address']);
+      $u->setCep($data['client_cep']);
+      $u->setType($data['client_type']);
+      $u->setBussinesPlan($data['client_bussines_plan']);
+      $u->setDepartureTime($data['client_departure_time']);
+      $u->setCompanyId($data['client_company_id']);
+
+      return $u;
+    } else {
+      return false;
+    }
+  }
+
 
   public function findById($id){}
   public function update(Client $u){}
-  public function delete($id){}
+  public function delete($id){
+    $sql = $this->pdo->prepare("DELETE FROM clients WHERE client_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->execute();  
+  }
 }

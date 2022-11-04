@@ -21,7 +21,7 @@
       <form action="../actions/clientAddAction.php" method="POST" class="row">
 
         <div class="form-box1">
-          <h2>DADOS GERAIS</h2>
+          <h2>DADOS GERAIS DO CLIENTE</h2>
           <?php require('../components/alertMessage.php')?>
           <div class="line"></div>
           <div class="inputs1 row gx-3 gy-2 align-items-center">
@@ -125,7 +125,7 @@
 
         <div class="col-12 buttons-group">
           <button type="" class="btn btn-primary clear-button">Limpar</button>
-          <button type="submit" class="btn btn-primary submit-button">Cadastrar Cliente</button>
+          <button type="submit" class="btn btn-primary submit-button">Continuar</button>
         </div>
       </form>
     </section>

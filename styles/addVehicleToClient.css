@@ -63,6 +63,8 @@ main {
 .client-info {
   width: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
 }
@@ -83,7 +85,7 @@ main {
   display: none;
   transition: all 5s linear;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 }
 
@@ -165,6 +167,11 @@ label {
 }
 
 .line {
+  border: 1px solid var(--icon-light);
+  opacity: 0.5;
+}
+
+.line {
   margin: 1rem 0rem 0rem 0rem;
 }
 
@@ -196,7 +203,7 @@ label {
   background-color: var(--green-light);
   border: none;
   transition: all 0.2s linear;
-  width: 13%;
+  width: 18%;
   height: 2.6rem !important;
   font-weight: 600;
 }

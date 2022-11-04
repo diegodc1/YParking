@@ -1,3 +1,16 @@
+<?php 
+require_once('../db/config.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/ClientDao.php');
+session_start();
+
+$vechicleDao = new VehicleDaoDB($pdo);
+$vehicles = $vechicleDao->findAll();
+
+$clientDao  = new ClientDaoDB($pdo);
+
+?>
+
 <head>
   <title>Clientes Cadastrados</title>
 
@@ -8,10 +21,7 @@
 </head>
 
 <body>
-  <?php 
-  session_start();
-  require_once("../components/sidebar.php") ?>
-
+  <?php require_once("../components/sidebar.php") ?>
   <header class="list-clients-header">
     <h1>VEÍCULOS CADASTRADOS</h1>
   </header>
@@ -36,189 +46,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>M3</td>
-              <td>TYE2E13</td>
-              <td>BMW</td>
-              <td>Branco</td>
-              <td>Sedan</td>
-              <td>Elon Musk</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Onix</td>
-              <td>FLO2E14</td>
-              <td>Chevrolet</td>
-              <td>Vermelho</td>
-              <td>Hatch</td>
-              <td>Monalisa</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>AHT2E15</td>
-              <td>Hyundai</td>
-              <td>Preto</td>
-              <td>Hatch</td>
-              <td>Floriano Peixoto</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Palio</td>
-              <td>FAE2E13</td>
-              <td>Fiat</td>
-              <td>Prata</td>
-              <td>Hatch</td>
-              <td>Bill Gates</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
+            <?php 
+              foreach($vehicles as $vehicle) { ?>
+                <tr>
+                  <td><?= $vehicle->getModel(); ?></td>
+                  <td><?= $vehicle->getPlate(); ?></td>       // Erro aqui
+                  <td><?= $vehicle->getBrand(); ?></td>
+                  <td><?= $vehicle->getColor(); ?></td>
+                  <td><?= $vehicle->getCategory(); ?></td>
+                  <?php 
+                    $idClient = $vehicle->getClientId();
+                    $client = $clientDao->findByVehicle($idClient);
+                    echo $client->getName();
 
+                  ?>  
+           
+                  <td><?=print_r($client); ?></td>
+
+                  <td>
+                    <div class="action-buttons">
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                    </div>
+                  </td>
+                </tr>
+            <?php } ?>
           </tbody>
-
         </table>
       </div>
     </div>

@@ -1,12 +1,13 @@
 <?php
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
+require_once('../dao/VehicleDao.php');
 session_start();
 
+$clientDao = new ClientDaoDB($pdo);
+$clients = $clientDao->findAll();
 
-$usuarioDao = new ClientDaoDB($pdo);
-$users = $usuarioDao->findAll();
-
+$vehicleDao = new VehicleDaoDB($pdo);
 ?>
 
 <head>
@@ -40,176 +41,38 @@ $users = $usuarioDao->findAll();
       </div>
 
       <div class="table-list">
+        <?php require('../components/alertMessage.php')?>
         <table id="listClientsVehicles" class="table" style="width:100%">
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Email</th>
-              <th>Carro</th>
-              <th>Placa do carro</th>
+              <th>Telefone</th>
+              <th>Tipo</th>
               <th>Convênio</th>
+              <th>Veículos</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Monalisa Silva</td>
-              <td>exemplo2@exemplo2.com</td>
-              <td>Chevrolet Onix</td>
-              <td>FAE2E13</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Filho do bill</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Pedro Alvarez Cabral</td>
-              <td>exemplo3@exemplo3.com</td>
-              <td>Ford Focus</td>
-              <td>KRA2E13</td>
-              <td>Não</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Elon Musk</td>
-              <td>exemplo5@exemplo5.com</td>
-              <td>BMW M3</td>
-              <td>LOA2E19</td>
-              <td>Não</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Bill Gates</td>
-              <td>exemplo6@exemplo6.com</td>
-              <td>Fiat Palio</td>
-              <td>LUA2E49</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Floriano Peixoto</td>
-              <td>exemplo7@exemplo7.com</td>
-              <td>Ford Ka</td>
-              <td>GTO2H59</td>
-              <td>Não</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Canse de exemplos</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Filho do bill</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php'"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Filho do bill</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Filho do bill</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Filho do bill</td>
-              <td>exemplo@exemplo.com</td>
-              <td>Honda Civic</td>
-              <td>BRA2E19</td>
-              <td>Sim</td>
-              <td>
-                <div class="action-buttons">
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                  <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
-                </div>
-              </td>
-            </tr>
-
-
+            <?php 
+              foreach($clients as $client) {
+                $clientVehicleQtd = $vehicleDao->findByClientIdQtd($client->getId()); ?>
+                <tr>
+                  <td><?= $client->getName(); ?></td>
+                  <td><?= $client->getPhone()?></td>
+                  <td><?= $client->getType();?></td>
+                  <td><?= $client->getBussinesPlan();?></td>
+                  <td><?= $clientVehicleQtd ?></td>
+                  <td>
+                    <div class="action-buttons">
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php"><i class="fa-solid fa-pencil pencil"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="../actions/deleteClientAction.php?id=<?= $client->getId(); ?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                    </div>
+                  </td>
+                </tr>
+             <?php }?>
           </tbody>
-
         </table>
       </div>
     </div>

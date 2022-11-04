@@ -10,3 +10,8 @@ Tem que fazer:
 Info:
 ## Na tela de check-in, a pesquisa será feita através da placa do carro.
   --Qnd clicar no botão "Realizar entrada", a tag "a" vai direcionar para um arquivo php, e depois redirecionar novamente para a pagina de checkin
+
+
+
+## NOtas 04/11
+--Erro na lista de veiculos!

@@ -78,6 +78,9 @@ class Vehicle {
 interface VehicleDao {
   public function add(Vehicle $u);
   public function findAll();
+  public function findByPlate($plate);
+  public function findByClientId($clientId);
+  public function findByClientIdQtd($clientId);
   public function findById($id);
   public function update(Vehicle $u);
   public function delete($id);
