@@ -1,18 +1,107 @@
 :root {
-    --blue-light: #109CF1;
-    --green-light: #2ED47A;
-    --red-light: #FF3C5F;
-    --text-dark: #192A3E;
-    --text-light: white;
-    --gray-light: #90A0B7;
-    --dark-blue-text: #334D6E;
-    --icon-light: #C2CFE0;
-    --bg-gray: #dad8d8;
+  --blue-light: #109cf1;
+  --green-light: #2ed47a;
+  --red-light: #ff3c5f;
+  --text-dark: #192a3e;
+  --text-light: white;
+  --gray-light: #90a0b7;
+  --dark-blue-text: #334d6e;
+  --icon-light: #c2cfe0;
+  --bg-gray: #dad8d8;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/******  CONFIRM DELETE MODAL *******/
+
+.modal-dialog {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.modal-header {
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+  width: 100%;
+  padding-bottom: 0;
+}
+
+.modal-content {
+  width: 75vw !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.p-question-modal {
+  font-size: 1.3rem;
+}
+
+.p-modal-warning {
+  font-size: 0.9rem;
+}
+
+.modal-body-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.modal-body-1 i {
+  font-size: 3.5rem;
+  color: #ffb03f;
+}
+
+.modal-body-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-blue-text);
+  font-weight: 500;
+}
+
+.modal-footer {
+  border: none;
+  display: flex;
+  flex-wrap: unset !important;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+
+.button-cancel-modal {
+  background-color: #90a0b7;
+  border: none;
+  width: 30%;
+}
+
+.button-confirm-modal {
+  background-color: var(--red-light);
+  border: none;
+  width: 30%;
+  color: var(--text-light) !important;
+}
+
+.button-confirm-modal:hover {
+  background-color: #d82244;
 }

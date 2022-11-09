@@ -52,12 +52,31 @@ class ClientDaoDB implements ClientDao {
     return $clients;
   }
 
-  public function findByVehicle($id) {
+  public function findByIdReturnName($id) {
     $sql = $this->pdo->prepare("SELECT * FROM clients WHERE client_id = :id");
     $sql->bindValue(':id', $id);
     $sql->execute();
 
     if($sql->rowCount() > 0){
+      $data = $sql->fetch();
+
+      $u = new Client;
+      $u->setId($data['client_id']);
+      $u->setName($data['client_name']);
+
+      return $u->getName();;
+    } else {
+      return false;
+    }
+  }
+
+
+  public function findById($id){
+    $sql = $this->pdo->prepare("SELECT * FROM clients WHERE client_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
       $data = $sql->fetch();
 
       $u = new Client;
@@ -78,8 +97,6 @@ class ClientDaoDB implements ClientDao {
     }
   }
 
-
-  public function findById($id){}
   public function update(Client $u){}
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM clients WHERE client_id = :id");

@@ -10,11 +10,12 @@ $vehicleDao = new VehicleDaoDB($pdo);
 
 $id = filter_input(INPUT_GET, 'id');
 $vehicleDao->findByClientIdQtd($id);
+$clientVehicleQtd = $vehicleDao->findByClientIdQtd($id);
 
-if($vehicleDao > 0){
+if($clientVehicleQtd > 0){
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
-  $_SESSION['insert_user_message'] = 'Não é possível excluir um cliente quando ele possui veículos vinculados!';
+  $_SESSION['insert_user_message'] = 'Não é possível excluir um cliente enquanto ele possui veículos vinculados!';
   header("Location: ../pages/listClients.php");
 } else {
   if ($id) {

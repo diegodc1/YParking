@@ -1,5 +1,6 @@
 <?php
 require_once('../models/Vehicle.php');
+require_once('../models/Client.php');
 
 class VehicleDaoDB implements VehicleDao {
   private $pdo;
@@ -42,6 +43,30 @@ class VehicleDaoDB implements VehicleDao {
         $u->setClientId($vehicle['vehicle_client_id']);
 
         $vehicles[] = $u;
+      }
+    }
+
+    return $vehicles;
+  }
+
+  public function findAllVehiClie() {
+    $vehicles = [];
+    $clients = [];
+
+    $sql= $this->pdo->query("SELECT * FROM vehicles");
+    if($sql->rowCount() > 0){
+      $data = $sql->fetchAll();
+
+      foreach($data as $vehicle) {
+        $u = new Vehicle();
+        $u->setId($vehicle['vehicle_id']);
+        $u->setModel($vehicle['vehicle_model']);
+        $u->setPlate($vehicle['vehicle_plate']);
+        $u->setColor($vehicle['vehicle_color']);
+        $u->setCategory($vehicle['vehicle_category']);
+        $u->setBrand($vehicle['vehicle_brand']);
+        $u->setDepartureTime($vehicle['vehicle_departure_time']);
+        $u->setClientId($vehicle['vehicle_client_id']);
       }
     }
 
@@ -99,8 +124,9 @@ class VehicleDaoDB implements VehicleDao {
     $sql = $this->pdo->prepare("SELECT * FROM vehicles WHERE vehicle_client_id = :clientId");
     $sql->bindValue(':clientId', $clientId);
     $sql->execute();
+    $qtd = $sql->rowCount();
 
-    return $sql->rowCount();
+    return $qtd;
   } 
 
   public function findById($id){}

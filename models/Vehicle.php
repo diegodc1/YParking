@@ -9,6 +9,7 @@ class Vehicle {
   private $brand;
   private $departureTime;
   private $clientId;
+  private $client;
 
   public function getId() {
     return $this->id;
@@ -73,11 +74,20 @@ class Vehicle {
   public function setClientId($clientId) {
     $this->clientId= $clientId; 
   }
+
+  public function getClient() {
+    return $this->client;
+  }
+
+  public function setClient($client) {
+    $this->client= $client; 
+  }
 }
 
 interface VehicleDao {
   public function add(Vehicle $u);
   public function findAll();
+  public function findAllVehiClie();
   public function findByPlate($plate);
   public function findByClientId($clientId);
   public function findByClientIdQtd($clientId);

@@ -95,8 +95,8 @@ class Client {
 interface ClientDao {
   public function add(Client $u);
   public function findAll();
+  public function findByIdReturnName($id);
   public function findById($id);
-  public function findByVehicle($id);
   public function update(Client $u);
   public function delete($id);
 }

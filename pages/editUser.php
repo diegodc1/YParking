@@ -14,7 +14,7 @@ if($id) {
 }
 
 if($user === false) {
-  header("Location: listUser.php");
+  header("Location: listUsers.php");
   exit;
 }
 
