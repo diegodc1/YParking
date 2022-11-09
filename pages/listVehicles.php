@@ -7,12 +7,13 @@ session_start();
 $vechicleDao = new VehicleDaoDB($pdo);
 $vehicles = $vechicleDao->findAll();
 
-$clientDao  = new ClientDaoDB($pdo);
+$clientDao = new ClientDaoDB($pdo);
+
 
 ?>
 
 <head>
-  <title>Clientes Cadastrados</title>
+  <title>Veículos Cadastrados</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
@@ -28,11 +29,14 @@ $clientDao  = new ClientDaoDB($pdo);
 
   <main>
     <div class="main-content">
+      
       <div class="button-box">
+       
         <a href="/pages/addClient.php" class="add-user-button">Cadastrar Veículo</a>
       </div>
 
       <div class="table-list">
+         <?php require('../components/alertMessage.php')?>  
         <table id="listClientsVehicles" class="table" style="width:100%">
           <thead>
             <tr>
@@ -50,24 +54,16 @@ $clientDao  = new ClientDaoDB($pdo);
               foreach($vehicles as $vehicle) { ?>
                 <tr>
                   <td><?= $vehicle->getModel(); ?></td>
-                  <td><?= $vehicle->getPlate(); ?></td>       // Erro aqui
+                  <td><?= $vehicle->getPlate(); ?></td>       
                   <td><?= $vehicle->getBrand(); ?></td>
                   <td><?= $vehicle->getColor(); ?></td>
                   <td><?= $vehicle->getCategory(); ?></td>
-                  <?php 
-                    $idClient = $vehicle->getClientId();
-                    $client = $clientDao->findByVehicle($idClient);
-                    echo $client->getName();
-
-                  ?>  
-           
-                  <td><?=print_r($client); ?></td>
-
+                  <td><?= $client = $clientDao->findByIdReturnName($vehicle->getClientId())?></td>
                   <td>
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="#"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="../actions/deleteVehicleAction.php?id=<?= $vehicle->getId(); ?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
                     </div>
                   </td>
                 </tr>
