@@ -101,23 +101,27 @@ class VehicleDaoDB implements VehicleDao {
     $sql = $this->pdo->prepare("SELECT * FROM vehicles WHERE vehicle_client_id = :clientId");
     $sql->bindValue(':clientId', $clientId);
     $sql->execute();
-    $data = $sql->fetch();
+    
+    $vehicles = [];
 
     if($sql->rowCount() > 0) {
-      $u = new Vehicle();
-      $u->setId($data['vehicle_id']);
-      $u->setModel($data['vehicle_model']);
-      $u->setPlate($data['vehicle_plate']);
-      $u->setColor($data['vehicle_color']);
-      $u->setCategory($data['vehicle_category']);
-      $u->setBrand($data['vehicle_brand']);
-      $u->setDepartureTime($data['vehicle_departure_time']);
-      $u->setClientId($data['vehicle_client_id']);
+      $data = $sql->fetchAll();
 
-      return $u;
-    } else {
-      return false;
-    }
+      foreach($data as $vehicle) {
+        $u = new Vehicle();
+        $u->setId($vehicle['vehicle_id']);
+        $u->setModel($vehicle['vehicle_model']);
+        $u->setPlate($vehicle['vehicle_plate']);
+        $u->setColor($vehicle['vehicle_color']);
+        $u->setCategory($vehicle['vehicle_category']);
+        $u->setBrand($vehicle['vehicle_brand']);
+        $u->setDepartureTime($vehicle['vehicle_departure_time']);
+        $u->setClientId($vehicle['vehicle_client_id']);
+
+        $vehicles[] = $u;
+      } 
+    } 
+    return $vehicles;
   }
 
   public function findByClientIdQtd($clientId) {
@@ -129,8 +133,39 @@ class VehicleDaoDB implements VehicleDao {
     return $qtd;
   } 
 
-  public function findById($id){}
-  public function update(Vehicle $u){}
+  public function findById($id){
+    $sql = $this->pdo->query("SELECT * FROM vehicles WHERE vehicle_id = $id");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetch();
+
+      $v = new Vehicle();
+      $v->setId($data['vehicle_id']);
+      $v->setModel($data['vehicle_model']);
+      $v->setPlate($data['vehicle_plate']);
+      $v->setColor($data['vehicle_color']);
+      $v->setCategory($data['vehicle_category']);
+      $v->setBrand($data['vehicle_brand']);
+      $v->setDepartureTime($data['vehicle_departure_time']);
+
+      return $v;
+    } else {
+      return false;
+    }
+  }
+
+  public function update(Vehicle $u){
+    $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_model = :model, vehicle_plate = :plate, vehicle_color = :color, vehicle_category = :category, vehicle_brand = :brand, vehicle_departure_time = :dpTime WHERE vehicle_id = :id");
+    $sql->bindValue(':model', $u->getModel());
+    $sql->bindValue(':plate', $u->getPlate());
+    $sql->bindValue(':color', $u->getColor());
+    $sql->bindValue(':category', $u->getCategory());
+    $sql->bindValue(':brand', $u->getBrand());
+    $sql->bindValue(':dpTime', $u->getDepartureTime());
+    $sql->bindValue(':id', $u->getId());
+    $sql->execute();
+
+    return true;
+  }
 
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM vehicles WHERE vehicle_id = :id");

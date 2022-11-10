@@ -45,6 +45,7 @@ $clientDao = new ClientDaoDB($pdo);
               <th>Marca</th>
               <th>Cor</th>
               <th>Categoria</th>
+              <th>Horário Saída</th>  
               <th>Cliente</th>
               <th>Ações</th>
             </tr>
@@ -58,11 +59,11 @@ $clientDao = new ClientDaoDB($pdo);
                   <td><?= $vehicle->getBrand(); ?></td>
                   <td><?= $vehicle->getColor(); ?></td>
                   <td><?= $vehicle->getCategory(); ?></td>
+                  <td><?= $vehicle->getDepartureTime(); ?></td>
                   <td><?= $client = $clientDao->findByIdReturnName($vehicle->getClientId())?></td>
                   <td>
                     <div class="action-buttons">
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="#"><i class="fa-solid fa-pencil pencil"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editVehicle.php?id=<?= $vehicle->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal"><i class="fa-solid fa-trash-can trash"></i></a></button>
                     </div>
                   </td>
@@ -88,7 +89,7 @@ $clientDao = new ClientDaoDB($pdo);
             <h5 class="modal-title" id="exampleModalLabel">Excluir este veículo?</h5>
           </div>
           <div class="modal-body-2">
-            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter está ação!</p>
+            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
           </div>
         </div>
         <div class="modal-footer">

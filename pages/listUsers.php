@@ -124,7 +124,7 @@ $users = $usuarioDao->findAll();
             <h5 class="modal-title" id="exampleModalLabel">Excluir este usuário?</h5>
           </div>
           <div class="modal-body-2">
-            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter está ação!</p>
+            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
           </div>
         </div>
         <div class="modal-footer">

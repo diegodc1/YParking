@@ -97,7 +97,23 @@ class ClientDaoDB implements ClientDao {
     }
   }
 
-  public function update(Client $u){}
+  public function update(Client $u){
+    $sql = $this->pdo->prepare("UPDATE clients SET client_name = :name, client_email = :email, client_address = :address, client_type = :type, client_bussines_plan = :bussinessPlan, client_phone = :phone, client_cep = :cep WHERE client_id = :id");
+
+    $sql->bindValue(':name', $u->getName());
+    $sql->bindValue(':email', $u->getEmail());
+    $sql->bindValue(':address', $u->getAddress());
+    $sql->bindValue(':type', $u->getType());
+    $sql->bindValue(':bussinessPlan', $u->getBussinesPlan());
+    $sql->bindValue(':phone', $u->getPhone());
+    $sql->bindValue(':cep', $u->getCep());
+    $sql->bindValue(':id', $u->getId());
+
+    $sql->execute();
+
+    return true;
+  }
+
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM clients WHERE client_id = :id");
     $sql->bindValue(':id', $id);

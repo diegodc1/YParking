@@ -49,6 +49,21 @@ $(document).ready(function () {
   })
 })
 
+$(document).ready(function () {
+  $('#listVehiclesToClients').DataTable({
+    scrollY: '18rem',
+    scrollCollapse: true,
+    info: false,
+    searching: false,
+    paging: false,
+
+    autoWidth: false,
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+    }
+  })
+})
+
 // Table to checkout list
 $(document).ready(function () {
   $('#checkout').DataTable({

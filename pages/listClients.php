@@ -65,7 +65,7 @@ $vehicleDao = new VehicleDaoDB($pdo);
                   <td><?= $clientVehicleQtd ?></td>
                   <td>
                     <div class="action-buttons">
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="#"><i class="fa-solid fa-eye eye"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/viewClient.php?id=<?= $client->getId() ?>"><i class="fa-solid fa-eye eye"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php?id=<?= $client->getId() ?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $client->getId();?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
                     </div>
@@ -87,7 +87,7 @@ $vehicleDao = new VehicleDaoDB($pdo);
                       <h5 class="modal-title" id="exampleModalLabel">Excluir este usuário?</h5>
                     </div>
                     <div class="modal-body-2">
-                      <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter está ação!</p>
+                      <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
                     </div>
                   </div>
                   <div class="modal-footer">

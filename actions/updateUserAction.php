@@ -30,6 +30,6 @@ if(!empty($id)) {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
   $_SESSION['insert_user_message'] = "Houve um erro e não foi possível atualizar o usuário!";
-  header("Location: ../pages/dashboard.php");
+  header("Location: ../pages/editUser.php?id=".$id);
   exit;
 }

@@ -7,7 +7,6 @@ body {
   align-items: center;
   /* justify-content: center; */
   background-color: var(--bg-gray);
-
 }
 
 .list-clients-header {
@@ -50,7 +49,6 @@ main {
   gap: 1.5rem;
   /* margin-top: 1.5rem; */
 }
-
 
 .button-box {
   width: 100%;
@@ -100,7 +98,8 @@ main {
 .action-buttons {
   width: 70%;
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -110,7 +109,6 @@ main {
 
 .action-buttons i {
   transition: all 0.5s linear;
-
 }
 
 .action-buttons i:hover {
@@ -126,7 +124,6 @@ main {
 .pencil {
   color: var(--green-light);
   opacity: 0.9;
-
 }
 
 .trash {
