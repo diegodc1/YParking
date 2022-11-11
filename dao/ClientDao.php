@@ -70,6 +70,16 @@ class ClientDaoDB implements ClientDao {
     }
   }
 
+  // Busca pelo id de um cliente, e retorna a quantidade de valores encontrados.
+  public function findByClientIdQtd($companyId) {
+    $sql = $this->pdo->prepare("SELECT * FROM clients WHERE client_company_id = :companyId");
+    $sql->bindValue(':companyId', $companyId);
+    $sql->execute();
+    $qtd = $sql->rowCount();
+
+    return $qtd;
+  }
+
 
   public function findById($id){
     $sql = $this->pdo->prepare("SELECT * FROM clients WHERE client_id = :id");

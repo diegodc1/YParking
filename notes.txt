@@ -13,5 +13,5 @@ Info:
 
 
 
-## NOtas 04/11
---Erro na lista de veiculos!
+## NOtas 11/11
+--Mudar bg das telas.

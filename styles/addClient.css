@@ -140,3 +140,8 @@ label {
   width: 1.3rem;
   height: 1.3rem;
 }
+
+#inputCompanyUse,
+#labelCompanyInput {
+  display: none;
+}

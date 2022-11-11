@@ -97,6 +97,7 @@ interface ClientDao {
   public function findAll();
   public function findByIdReturnName($id);
   public function findById($id);
+  public function findByClientIdQtd($companyId);
   public function update(Client $u);
   public function delete($id);
 }

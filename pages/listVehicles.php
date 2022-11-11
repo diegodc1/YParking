@@ -64,10 +64,35 @@ $clientDao = new ClientDaoDB($pdo);
                   <td>
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editVehicle.php?id=<?= $vehicle->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $vehicle->getId()?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
                     </div>
                   </td>
                 </tr>
+               
+
+            <!-- Confirm delete modal-->
+            <div class="modal fade" id="confirmDelModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="modal-body-1">
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      <h5 class="modal-title" id="exampleModalLabel">Excluir este veículo?</h5>
+                    </div>
+                    <div class="modal-body-2">
+                      <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="../actions/deleteVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal">Excluir</a>
+                  </div>
+                </div>
+            </div>
             <?php } ?>
           </tbody>
         </table>
@@ -75,29 +100,8 @@ $clientDao = new ClientDaoDB($pdo);
     </div>
   </main>
 
-  <!-- Confirm delete modal-->
-  <div class="modal fade" id="confirmDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-body-1">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <h5 class="modal-title" id="exampleModalLabel">Excluir este veículo?</h5>
-          </div>
-          <div class="modal-body-2">
-            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-          <a href="../actions/deleteVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal">Excluir</a>
-        </div>
-      </div>
-    </div>
+
+  
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>

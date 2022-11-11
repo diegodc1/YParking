@@ -100,15 +100,15 @@
 
             <div class="col-md-2">
               <label for="inputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
-              <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" require>
+              <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" require onclick="showInput()">
                 <option selected value="Não">Não</option>
                 <option value="Sim">Sim</option>
               </select>
             </div>
 
             <div class="col-md-3">
-              <label for="inputCompanyUse" class="form-label">Empresa:</label>
-              <select name="inputCompanyUse" class="form-select" require>
+              <label for="inputCompanyUse" id="labelCompanyInput" class="form-label">Empresa:</label>
+              <select name="inputCompanyUse" id="inputCompanyUse" class="form-select" require>
                 <option selected value="">Selecionar empresa...</option>
                 <option value="1">RP Info</option>
                 <option value="2">JS Hotel</option>
@@ -131,6 +131,20 @@
     </section>
   </main>
   <script>
+    function showInput() {
+      var inputCompany =  document.querySelector("#inputCompanyUse");
+      var labelCompany = document.querySelector("#labelCompanyInput");
+      var valueSelect = document.querySelector("#inputBussinesPlan").value;
+
+      if(valueSelect == 'Não') {
+        inputCompany.style.display = 'none';
+        labelCompany.style.display = 'none';
+      } else if(valueSelect == 'Sim') {
+        inputCompany.style.display = 'flex';
+        labelCompany.style.display = 'flex';
+      }
+    }
+
     function formatar(mascara, documento) {
       var i = documento.value.length;
       var saida = mascara.substring(0, 1);

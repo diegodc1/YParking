@@ -73,7 +73,7 @@ if($id) {
       </button>
 
       <button data-bs-toggle="tooltip" data-bs-placement="right" title="Empresas" class="">
-        <a href="#" class="sections">
+        <a href="../pages/listCompanys.php" class="sections">
           <i class="fa-solid fa-building"></i>
           <span>Empresas</span>
         </a>

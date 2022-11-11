@@ -7,7 +7,12 @@
   --gray-light: #90a0b7;
   --dark-blue-text: #334d6e;
   --icon-light: #c2cfe0;
-  --bg-gray: #dad8d8;
+  --bg-gray: linear-gradient(-180deg, #bcc5ce 0%, #929ead 98%),
+    radial-gradient(
+      at top left,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
 }
 
 * {
@@ -17,8 +22,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/******  CONFIRM DELETE MODAL *******/
-
+/*****************  CONFIRM DELETE MODAL *******************/
 .modal-dialog {
   display: flex !important;
   align-items: center !important;
@@ -105,3 +109,4 @@
 .button-confirm-modal:hover {
   background-color: #d82244;
 }
+/*///////////////////////////////////////////////////////*/

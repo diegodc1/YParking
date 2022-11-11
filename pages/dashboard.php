@@ -30,43 +30,12 @@
   <main>
     <div class="main-content">
       <div class="box1">
+        
         <section class="sect1">
           <a href="../pages/checkIn.php">
             <div class="buttons-section car-entry-button">
               <i class="fa-solid fa-arrow-turn-up"></i>
               <p>ENTRADA DE VEÍCULO</p>
-            </div>
-          </a>
-
-          <a href="../pages/listClients.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-users"></i>
-              <p>CLIENTES CADASTRADOS</p>
-            </div>
-          </a>
-
-          <a href="../pages/listVehicles.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-car"></i>
-              <p>VEÍCULOS CADASTRADOS</p>
-            </div>
-          </a>
-
-       
-
-          <a href="/pages/listUsers.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-users-gear"></i>
-              <p>USUÁRIOS CADASTRADOS</p>
-            </div>
-          </a>
-        </section>
-
-        <section class="sect2">
-          <a href="../pages/checkout.php">
-            <div class="buttons-section car-out-button">
-              <i class="fa-solid fa-arrow-turn-down"></i>
-              <p>SAÍDA DE VEÍCULO</p>
             </div>
           </a>
 
@@ -83,7 +52,7 @@
               <p>CADASTRAR VEÍCULO</p>
             </div>
           </a>
-
+          
           <a href="/pages/addUser.php">
             <div class="buttons-section">
               <i class="fa-solid fa-user-gear"></i>
@@ -91,22 +60,61 @@
             </div>
           </a>
 
-          <a href="#">
+          <a href="/pages/addCompany.php">
+            <div class="buttons-section">
+              <img src="../assets/imgs/icon-add-companys.png"/>
+              <p>CADASTRAR EMPRESA</p>
+            </div>
+          </a>
+
+
+          
+        </section>
+        <section class="sect2">
+          <a href="../pages/checkout.php">
+            <div class="buttons-section car-out-button">
+              <i class="fa-solid fa-arrow-turn-down"></i>
+              <p>SAÍDA DE VEÍCULO</p>
+            </div>
+          </a>
+          
+  
+          <a href="../pages/listClients.php">
+            <div class="buttons-section">
+              <i class="fa-solid fa-users"></i>
+              <p>CLIENTES CADASTRADOS</p>
+            </div>
+          </a>
+  
+          <a href="../pages/listVehicles.php">
+            <div class="buttons-section">
+               <img src="../assets/imgs/icon-vehicles.png"/>
+              <p>VEÍCULOS CADASTRADOS</p>
+            </div>
+          </a>
+  
+          <a href="/pages/listUsers.php">
+            <div class="buttons-section">
+              <i class="fa-solid fa-users-gear"></i>
+              <p>USUÁRIOS CADASTRADOS</p>
+            </div>
+          </a>
+
+          <a href="/pages/listCompanys.php">
             <div class="buttons-section">
               <i class="fa-solid fa-building-user"></i>
               <p>EMPRESAS CONVENIADAS</p>
             </div>
           </a>
-
           
         </section>
       </div>
-
+      
       <div class="box2">
         <section class="next-out">
           <h2>Próximas possíveis saídas de veículos</h2>
           <div class="line"></div>
-
+          
           <table class="next-out-table table" id="listDashboard">
             <thead>
               <tr class="collums-list">
@@ -116,7 +124,7 @@
                 <th class="col-4-table">Saída</th>
               </tr>
             </thead>
-
+            
             <tbody>
               <tr class="item-table">
                 <td class="item1">Honda Civic - Preto</td>
@@ -124,25 +132,25 @@
                 <td>Fernando Cunha</td>
                 <td class="item4">18:10</td>
               </tr>
-
+              
               <tr class="item-table">
                 <td class="item1">S10 - Branca</td>
                 <td>BEE4R22 </td>
                 <td>Janaina Silva</td>
                 <td class="item4">18:12</td>
               </tr>
-
+              
               <tr class="item-table">
                 <td class="item1">Sandero - Azul</td>
                 <td>PLS0A00</td>
                 <td>Pedro Santos</td>
                 <td class="item4">18:19</td>
               </tr>
-
+              
               <tr class="item-table">
                 <td class="item1">HB20 - Prata</td>
                 <td>LVS4A50</td>
-
+                
                 <td>Lulu Santos</td>
                 <td class="item4">18:24</td>
               </tr>

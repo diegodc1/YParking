@@ -1,6 +1,7 @@
 <?php 
 require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
+require_once('../dao/CompanyDao.php');
 require_once('../dao/ClientDao.php');
 session_start();
 
@@ -8,8 +9,8 @@ $clientId = filter_input(INPUT_GET, 'id');
 
 $vechicleDao = new VehicleDaoDB($pdo);
 $vehicles = $vechicleDao->findByClientId($clientId);
-
 $clientDao = new ClientDaoDB($pdo);
+$companyDao = new CompanyDaoDB($pdo);
 
 if($clientId){
   $client = $clientDao->findById($clientId);
@@ -79,9 +80,11 @@ if($client === false) {
               <p class="title-info">Convênio de Empresa:</p>
               <span><?= $client->getBussinesPlan();?></span>
             </div>
+
+            <?php $companyName = $companyDao->findById($client->getCompanyId()); ?>
             <div class="col-2">
               <p class="title-info">Empresa:</p>
-              <span><?= $client->getCompanyId();?></span>
+              <span><?= $companyName->getName();?></span>
             </div>
           </div>
         </div>

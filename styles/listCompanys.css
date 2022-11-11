@@ -98,7 +98,8 @@ main {
 .action-buttons {
   width: 70%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1rem;
   align-items: center;
 }
 
