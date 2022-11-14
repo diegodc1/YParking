@@ -1,6 +1,6 @@
 
 <head>
-  <title>Adicionar Usuário</title>
+  <title>Informações Estacionamento</title>
   <link rel="stylesheet" href="../styles/addUser.css">
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -17,7 +17,7 @@
   ?>
 
   <header class="addUser-header">
-    <h1>CADASTRO DE USUÁRIO</h1>
+    <h1>INFORMAÇÕES DO ESTACIONAMENTO</h1>
   </header>
 
   <main>

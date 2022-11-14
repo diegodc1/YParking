@@ -26,7 +26,7 @@
           <span>Deseja cadastrar um veículo para esse cliente?</span>
           <div class="buttons-choice-box">
             <button class="button-choice yes" onclick="show()">Sim</button>
-            <a class="button-choice no">Não</a>
+            <a class="button-choice no" href="addClient.php">Não</a>
           </div>
           <?php require('../components/alertMessage.php')?>          
         </div>
@@ -70,7 +70,7 @@
             </div>
 
           <div class="col-12 buttons-group">
-            <button type="" class="btn btn-primary clear-button">Limpar</button>
+            <button type="reset" class="btn btn-primary clear-button">Limpar</button>
             <button type="submit" class="btn btn-primary submit-button">Cadastrar </button>
           </div>
         </div>

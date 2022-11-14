@@ -1,10 +1,14 @@
 <?php
 require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
+require_once('../dao/ClientDao.php');
 session_start();
 
 $companyDao = new CompanyDaoDB($pdo);
 $companys = $companyDao->findAll(); 
+
+$clientDao = new ClientDaoDB($pdo);
+
 ?>
 
 <head>
@@ -45,6 +49,7 @@ $companys = $companyDao->findAll();
               <th>Nome</th>
               <th>Email</th>
               <th>Telefone</th>
+              <th>Funcionários</th>
               <th>Vagas Reservadas</th>
               <th>Ações</th>
             </tr>
@@ -52,11 +57,13 @@ $companys = $companyDao->findAll();
           <tbody>
             
             <?php 
-              foreach($companys as $company) { ?>
+              foreach($companys as $company) { 
+                $qtdClients= $clientDao->findByClientIdQtd($company->getId()); ?>
                 <tr>
                   <td><?= $company->getName();?></td>
                   <td><?= $company->getEmail();?></td>
                   <td><?= $company->getPhone();?></td>
+                  <td><?= $qtdClients ?></td>
                   <td><?= $company->getSlots();?></td>
                   <td class="td-buttons">
                     <div class="action-buttons">

@@ -11,6 +11,14 @@
   height: 100vh;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(
+    to left bottom,
+    #c7c6c6,
+    #bfbebf,
+    #b7b7b7,
+    #b0afb0,
+    #a8a8a8
+  );
 }
 
 header {
@@ -136,6 +144,10 @@ label {
   transition: all 0.2s linear;
 }
 
+.submit-button:disabled {
+  background-color: var(--green-dark);
+}
+
 .check-box-client {
   width: 1.3rem;
   height: 1.3rem;
@@ -144,4 +156,16 @@ label {
 #inputCompanyUse,
 #labelCompanyInput {
   display: none;
+}
+
+.error-cep {
+  border: 2px solid red !important;
+}
+
+.message-cep-error {
+  display: none;
+  position: absolute;
+  font-size: 1rem;
+  color: red;
+  font-weight: 600;
 }

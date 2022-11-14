@@ -1,4 +1,11 @@
 /*=============== Sidebar Open ====================*/
+.bg-sidebar {
+  background-color: rgba(0, 0, 0, 0.582);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 5;
+}
 aside {
   background: var(--text-light);
   width: 13vw;
@@ -11,6 +18,7 @@ aside {
   z-index: 2;
   left: 0;
   bottom: 0;
+  position: absolute;
 }
 
 aside i {
@@ -155,6 +163,9 @@ a:visited {
   width: 3%;
   justify-content: center;
   align-items: center;
+}
+
+.remove-bg-sidebar {
 }
 
 .close .header-sidebar {

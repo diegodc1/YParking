@@ -69,6 +69,7 @@ class CompanyDaoDB implements CompanyDao {
     $sql->bindValue(':email',$u->getEmail());
     $sql->bindValue(':phone',$u->getPhone());
     $sql->bindValue(':slots',$u->getSlots());
+    $sql->bindValue(':id',$u->getId());
 
     $sql->execute();
 

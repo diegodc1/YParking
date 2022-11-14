@@ -1,9 +1,19 @@
+<?php 
+require_once('../db/config.php');
+require_once('../dao/CompanyDao.php');
+session_start();
+
+
+$companyDao = new CompanyDaoDB($pdo);
+$companys = $companyDao->findAll();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <?php require_once('../components/headConfig.php') ;
-  session_start();?>
+  <?php require_once('../components/headConfig.php') ?>;
+
   <link rel="stylesheet" href="/styles/addClient.css">
   <title>Cadastrar Cliente </title>
 </head>
@@ -27,36 +37,38 @@
           <div class="inputs1 row gx-3 gy-2 align-items-center">
             <div class="col-md-3">
               <label for="inputName" class="form-label">Nome:</label>
-              <input type="text" class="form-control" name="inputName" required>
+              <input type="text" class="form-control" name="inputName" autocomplete="off" required>
             </div>
             <div class="col-3">
               <label for="inputEmail" class="form-label">Email:</label>
-              <input type="email" class="form-control" name="inputEmail" required>
+              <input type="email" class="form-control" name="inputEmail" autocomplete="off" required>
             </div>
             <div class="col-md-3">
               <label for="inputPhoneNumber" class="form-label">Telefone:</label>
-              <input type="text" class="form-control" name="inputPhoneNumber" maxlength="13" OnKeyPress="formatar('##-#####-####', this)" required>
+              <input type="text" class="form-control" name="inputPhoneNumber" maxlength="13" OnKeyPress="formatar('##-#####-####', this)" autocomplete="off" required>
             </div>
             <div class="col-3">
               <label for="inpuZip" class="form-label">CEP:</label>
-              <input type="text" class="form-control" name="inputZipCode" maxlength="9" OnKeyPress="formatar('#####-###', this)"  required>
+              <input type="text" class="form-control" name="inputZipCode" id="inputZipCode" maxlength="9" OnKeyPress="formatar('#####-###', this)" onblur="pesquisacep(this.value);"  autocomplete="off" required>
+              <p class="message-cep-error" id="message-cep-error">CEP inválido!</p>
             </div>
             <div class="col-md-4">
               <label for="inputRoad" class="form-label">Rua:</label>
-              <input type="text" class="form-control" name="inputRoad" required>
+              <input type="text" class="form-control" name="inputRoad" id="inputRoad" autocomplete="off" required>
             </div>
             <div class="col-md-3">
               <label for="inputDistrict" class="form-label">Bairro:</label>
-              <input type="text" class="form-control" name="inputDistrict" required>
+              <input type="text" class="form-control" name="inputDistrict" id="inputDistrict" autocomplete="off" required>
             </div>
             <div class="col-md-2">
               <label for="inputCity" class="form-label">Cidade:</label>
-              <input type="text" class="form-control" name="inputCity" require>
+              <input type="text" class="form-control" name="inputCity" id="inputCity" autocomplete="off"required>
             </div>
             <div class="col-md-2">
               <label for="inputState" class="form-label">Estado:</label>
-              <select name="inputState" class="form-select" require>
-                <option value="AC" selected>Acre</option>
+              <select name="inputState" id="inputState" class="form-select" required>
+                <option value="" selected></option>
+                <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
                 <option value="AP">Amapá</option>
                 <option value="AM">Amazonas</option>
@@ -87,12 +99,12 @@
             </div>
             <div class="col-md-1">
               <label for="inputCity" class="form-label">Numero:</label>
-              <input type="text" class="form-control" name="inputNumber" require>
+              <input type="text" class="form-control" name="inputNumber" autocomplete="off" required>
             </div>
 
             <div class="col-md-2">
               <label for="inputType" class="form-label">Tipo de Uso:</label>
-              <select id="inputType" name="inputType" class="form-select" require>
+              <select id="inputType" name="inputType" class="form-select" required>
                 <option selected value="Horista">Horista</option>
                 <option value="Mensalista">Mensalista</option>
               </select>
@@ -100,7 +112,7 @@
 
             <div class="col-md-2">
               <label for="inputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
-              <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" require onclick="showInput()">
+              <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" required onclick="showInput()">
                 <option selected value="Não">Não</option>
                 <option value="Sim">Sim</option>
               </select>
@@ -108,12 +120,11 @@
 
             <div class="col-md-3">
               <label for="inputCompanyUse" id="labelCompanyInput" class="form-label">Empresa:</label>
-              <select name="inputCompanyUse" id="inputCompanyUse" class="form-select" require>
-                <option selected value="">Selecionar empresa...</option>
-                <option value="1">RP Info</option>
-                <option value="2">JS Hotel</option>
-                <option value="3">Habbib's</option>
-                <option value="4">Hipe</option>
+              <select name="inputCompanyUse" id="inputCompanyUse" class="form-select">
+                <option selected value="0">Selecionar empresa...</option>
+                <?php foreach($companys as $company) { ?>
+                  <option value="<?= $company->getId(); ?>"><?= $company->getName(); ?></option>
+                <?php }?>
               </select>
             </div>
 
@@ -124,8 +135,8 @@
         </div>
 
         <div class="col-12 buttons-group">
-          <button type="" class="btn btn-primary clear-button">Limpar</button>
-          <button type="submit" class="btn btn-primary submit-button">Continuar</button>
+          <button type="reset" class="btn btn-primary clear-button">Limpar</button>
+          <button type="submit" class="btn btn-primary submit-button" id="continue-button">Continuar</button>
         </div>
       </form>
     </section>
@@ -156,6 +167,7 @@
 
     }
   </script>
+  <script src="../js/searchCep.js"></script>
 </body>
 
 </html>

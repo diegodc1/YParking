@@ -1,18 +1,14 @@
 :root {
   --blue-light: #109cf1;
   --green-light: #2ed47a;
+  --green-dark: #1e804a;
   --red-light: #ff3c5f;
   --text-dark: #192a3e;
   --text-light: white;
   --gray-light: #90a0b7;
   --dark-blue-text: #334d6e;
   --icon-light: #c2cfe0;
-  --bg-gray: linear-gradient(-180deg, #bcc5ce 0%, #929ead 98%),
-    radial-gradient(
-      at top left,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(0, 0, 0, 0.3) 100%
-    );
+  --bg-gray: background-image: linear-gradient(to left bottom, #c7c6c6, #bfbebf, #b7b7b7, #b0afb0, #a8a8a8);
 }
 
 * {
@@ -20,6 +16,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+}
+
+
+body {
+  background-image: linear-gradient(to left bottom, #c7c6c6, #bfbebf, #b7b7b7, #b0afb0, #a8a8a8);
 }
 
 /*****************  CONFIRM DELETE MODAL *******************/

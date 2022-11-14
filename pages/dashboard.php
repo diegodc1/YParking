@@ -53,20 +53,20 @@
             </div>
           </a>
           
-          <a href="/pages/addUser.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-user-gear"></i>
-              <p>CADASTRAR USUÁRIO</p>
-            </div>
-          </a>
-
+          
           <a href="/pages/addCompany.php">
             <div class="buttons-section">
               <img src="../assets/imgs/icon-add-companys.png"/>
               <p>CADASTRAR EMPRESA</p>
             </div>
           </a>
-
+          
+          <a href="/pages/addUser.php">
+            <div class="buttons-section">
+              <i class="fa-solid fa-user-gear"></i>
+              <p>CADASTRAR USUÁRIO</p>
+            </div>
+          </a>
 
           
         </section>
@@ -93,13 +93,7 @@
             </div>
           </a>
   
-          <a href="/pages/listUsers.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-users-gear"></i>
-              <p>USUÁRIOS CADASTRADOS</p>
-            </div>
-          </a>
-
+          
           <a href="/pages/listCompanys.php">
             <div class="buttons-section">
               <i class="fa-solid fa-building-user"></i>
@@ -107,6 +101,12 @@
             </div>
           </a>
           
+          <a href="/pages/listUsers.php">
+            <div class="buttons-section">
+              <i class="fa-solid fa-users-gear"></i>
+              <p>USUÁRIOS CADASTRADOS</p>
+            </div>
+          </a>
         </section>
       </div>
       
@@ -216,6 +216,174 @@
             </div>
           </div>
         </section>
+      </div>
+
+      <div class="box3">
+        <h2>Histórico de Movimentações</h2>
+        <div class="line"></div>
+
+          <table class="next-out-table table" id="listDashboardMovements">
+            <thead>
+              <tr class="collums-list">
+                <th class="col-4-table">Movimento</th>
+                <th class="col-4-table">Veículo</th>
+                <th class="col-4-table">Placa</th>
+                <th class="col-4-table">Cliente</th>
+                <th class="col-4-table">Horário</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+              <tr class="item-table">
+                <td class="item1">Entrada</td>
+                <td>Renault Logan</td>
+                <td>BRA2E19</td>
+                <td>Fernando Cunha</td>
+                <td class="item4">18:10</td>
+              </tr>
+            </tbody>
+          </table>
+
       </div>
     </div>
   </main>

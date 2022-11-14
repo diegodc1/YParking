@@ -17,6 +17,7 @@ $number = filter_input(INPUT_POST, 'inputNumber');
 $typeUse = filter_input(INPUT_POST, 'inputType');
 $bussinesPlan = filter_input(INPUT_POST, 'inputBussinesPlan');
 $companyId = filter_input(INPUT_POST, 'inputCompanyUse');
+
 $departureTime = '11:40';
 $address = $road . ", " .  $number . " - " . $district . ", " . $city . " - " . $state;
 
@@ -29,7 +30,10 @@ $newClient->setAddress($address);
 $newClient->setType($typeUse);
 $newClient->setBussinesPlan($bussinesPlan);
 $newClient->setDepartureTime($departureTime);
-$newClient->setCompanyId($companyId);
+
+if($companyId) {
+  $newClient->setCompanyId($companyId);
+}
 
 $clientDao->add($newClient);
 $lastIdClient = $pdo->lastInsertId();

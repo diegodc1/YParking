@@ -16,3 +16,47 @@
   transform: scale(1.022);
   transition: all 0.2s linear;
 }
+
+.table-list {
+  background-color: var(--text-light);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.table-list h2 {
+  font-size: 1.2rem;
+  color: var(--text-dark) !important;
+  font-weight: 600;
+}
+
+.action-buttons {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.action-buttons button {
+  border: none;
+}
+
+.action-buttons i {
+  transition: all 0.5s linear;
+}
+
+.action-buttons i:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s linear;
+}
+
+.trash {
+  color: var(--red-light);
+  opacity: 0.9;
+}
+
+.th-delete {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}

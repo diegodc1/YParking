@@ -35,24 +35,24 @@ $clients = $clientDao->findAll();
           <div class="inputs2 row gx-3 gy-2 align-items-center">
             <div class="col-md-2">
               <label for="inputVehicleBrand" class="form-label">Marca:</label>
-              <input type="text" class="form-control" name="inputVehicleBrand">
+              <input type="text" class="form-control" autocomplete="off" name="inputVehicleBrand" require>
             </div>
             <div class="col-md-2">
               <label for="inputVehicleModel" class="form-label">Modelo:</label>
-              <input type="text" class="form-control" name="inputVehicleModel">
+              <input type="text" class="form-control" autocomplete="off" name="inputVehicleModel" require>
             </div>
             <div class="col-md-1">
               <label for="inputVehiclePlate" class="form-label">Placa:</label>
-              <input type="text" class="form-control" name="inputVehiclePlate">
+              <input type="text" class="form-control" name="inputVehiclePlate" autocomplete="off" require >
             </div>
             <div class="col-md-2">
               <label for="inputVehicleColor" class="form-label">Cor:</label>
-              <input type="text" class="form-control" name="inputVehicleColor">
+              <input type="text" class="form-control" autocomplete="off" name="inputVehicleColor" require>
             </div>
 
             <div class="col-md-2">
               <label for="inputVehicleCategory" class="form-label">Categoria:</label>
-              <select name="inputVehicleCategory" class="form-select">
+              <select name="inputVehicleCategory" class="form-select" require>
                 <option selected>Sedan</option>
                 <option value="SUV">SUV</option>
                 <option value="Hatch">Hatch</option>
@@ -64,7 +64,7 @@ $clients = $clientDao->findAll();
 
             <div class="col-md-2">
               <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
-              <input type="text" class="form-control" name="inputHourOut">
+              <input type="text" class="form-control" name="inputHourOut" autocomplete="off" maxlength="5" OnKeyPress="formatar('##:##', this)" require>
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@ $clients = $clientDao->findAll();
         </div>
 
         <div class="col-12 buttons-group">
-          <button type="" class="btn btn-primary clear-button">Limpar</button>
+          <button type="reset" class="btn btn-primary clear-button">Limpar</button>
           <button type="submit" class="btn btn-primary submit-button">Cadastrar Veículo</button>
         </div>
       </form>
