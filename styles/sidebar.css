@@ -4,7 +4,12 @@
   width: 100vw;
   height: 100vh;
   position: absolute;
-  z-index: 5;
+  z-index: 1;
+  transition: all 4s linear;
+  /* display: none; */
+}
+.remove-bg-sidebar {
+  display: none;
 }
 aside {
   background: var(--text-light);
@@ -14,6 +19,10 @@ aside {
   padding: 3rem 0rem 0rem 0rem;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
+  /* border-right: 2px solid var(--icon-light); */
+  -webkit-box-shadow: 5px 0px 13px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 0px 13px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 0px 13px -8px rgba(0, 0, 0, 0.75);
 
   z-index: 2;
   left: 0;

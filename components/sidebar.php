@@ -37,7 +37,7 @@ if($id) {
 </head>
 
 <body class="sidebar-body">
-  <div class="bg-sidebar">
+    <div class="bg-sidebar remove-bg-sidebar"></div>
     <aside class="close">
       <div class="header-sidebar">
         <img src="/assets/imgs/logo.png" alt="Logo da +Vet" id="logo" />
@@ -83,7 +83,7 @@ if($id) {
         <div class="line"></div>
 
         <button data-bs-toggle="tooltip" data-bs-placement="right" title="Perfil" class="">
-          <a href="../pages/infoParking.php" class="sections">
+          <a href="../pages/parkingSections.php" class="sections">
             <i class="fa-solid fa-square-parking"></i>
             <span>Estacionamento</span>
           </a>
@@ -114,12 +114,14 @@ if($id) {
       </div>
     </aside>
 
-  </div>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <script src="/js/sidebar.js"></script>
   <script>
+
+
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
