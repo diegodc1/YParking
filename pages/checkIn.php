@@ -1,3 +1,24 @@
+<?php 
+require_once('../db/config.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/ClientDao.php');
+session_start();
+
+$vehicleDao = new VehicleDaoDB($pdo);
+$clientDao = new ClientDaoDB($pdo);
+$vehicle = [];
+
+$vehiclePlate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
+
+if($vehiclePlate) {
+  $vehicle = $vehicleDao->findByPlate($vehiclePlate);
+  $clientId = $vehicle->getClientId();
+  $client = $clientDao->findById($clientId);
+  $vehiclePlate = '';
+} 
+
+
+?>
 <head>
 
   <title>Check-in</title>
@@ -34,9 +55,9 @@
       <div class="line"></div>
 
       <div class="search-box">
-        <form action="" method="POST">
-          <input type="text" class="input-search" placeholder="Digite a placa do veículo">
-          <button type="submit">Pesquisar</button>
+        <form action="../pages/checkIn.php" method="POST">
+          <input type="text" class="input-search" name="vehicle-plate" placeholder="Digite a placa do veículo" value="">
+          <input type="submit" class="search-button" value="Pesquisar"></input>
         </form>
       </div>
 
@@ -54,13 +75,15 @@
         </thead>
         <tbody>
           <tr>
-            <td>Hb20</td>
-            <td>FAE2E13</td>
-            <td>Branco</td>
-            <td>Hatch</td>
-            <td>Pedro Silva</td>
+            <td><?php if($vehicle){echo $vehicle->getModel();} else {echo '';};?></td>
+            <td><?php if($vehicle){echo $vehicle->getPlate();}else {echo '';};?></td>
+            <td><?php if($vehicle){echo $vehicle->getColor();} else {echo '';};?></td>
+            <td><?php if($vehicle){echo $vehicle->getCategory();} else {echo '';};?></td>
+            <td><?php if($vehicle){echo $client->getName();} else {echo '';};?></td>
             <td>
-              <a href="#" class="checkin-button">Realizar Entrada</a>
+              <?php if($vehicle) { ?>
+                  <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button">Realizar Entrada</a>
+             <?php } ?>
             </td>
           </tr>
           <tr>
@@ -179,6 +202,74 @@
 
     </div>
   </main>
+
+
+   <!-- Ckeck-in modal-->
+  <div class="modal fade" id="checkinModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body-1">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <h5 class="modal-title" id="exampleModalLabel">Selecione um seção para o veículo</h5>
+          </div>
+          <div class="modal-body-2">
+            <section class="occupation">
+              <div class="boxes-occupation">
+
+                <div class="box-occu 1">
+                  <div class="box-occu-header">
+                    <span>SEÇÃO A</span>
+                  </div>
+                  <div class="line-info">
+                    <p>Ocupação: <span>87%</span></p>
+                    <div class="line-occupation">
+                      <div class="fill-line"></div>
+                    </div>
+                  </div>
+
+                  <a href="" class="select-section-button">Selecionar</a>
+                </div>
+
+                <div class="box-occu 2">
+                  <div class="box-occu-header">
+                    <span>SEÇÃO A</span>
+                  </div>
+                  <div class="line-info">
+                    <p>Ocupação: <span>87%</span></p>
+                    <div class="line-occupation">
+                      <div class="fill-line"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="box-occu 3">
+                  <div class="box-occu-header">
+                    <span>SEÇÃO A</span>
+                  </div>
+                  <div class="line-info">
+                    <p>Ocupação: <span>87%</span></p>
+                    <div class="line-occupation">
+                      <div class="fill-line"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+          <a href="" class="btn btn-primary button-confirm-modal" >Excluir</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

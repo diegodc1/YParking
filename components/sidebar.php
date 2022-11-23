@@ -44,7 +44,7 @@ if($id) {
         <i class="fa-solid fa-bars" onclick="sidebar()"></i>
       </div>
 
-      <div class="menu-sections">
+      <div class="menu-sections close">
         <button data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard" class="">
           <a href="../pages/dashboard.php" class="sections">
             <i class="fa-solid fa-house"></i>

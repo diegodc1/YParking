@@ -18,9 +18,15 @@
   font-family: 'Poppins', sans-serif;
 }
 
-
 body {
-  background-image: linear-gradient(to left bottom, #c7c6c6, #bfbebf, #b7b7b7, #b0afb0, #a8a8a8);
+  background-image: linear-gradient(
+    to left bottom,
+    #c7c6c6,
+    #bfbebf,
+    #b7b7b7,
+    #b0afb0,
+    #a8a8a8
+  );
 }
 
 /*****************  CONFIRM DELETE MODAL *******************/

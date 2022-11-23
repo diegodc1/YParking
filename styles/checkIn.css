@@ -4,7 +4,6 @@ body {
   display: flex;
   background-color: var(--bg-gray);
   align-items: center;
-
 }
 
 .checkin-header {
@@ -52,7 +51,6 @@ main {
   margin-bottom: 1rem;
 }
 
-
 /* Search Input */
 .search-box {
   display: flex;
@@ -69,6 +67,7 @@ main {
   display: flex;
   width: 100%;
   height: 100%;
+  justify-content: space-between;
 }
 
 .input-search {
@@ -80,16 +79,15 @@ main {
 }
 
 .input-search::placeholder {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 500;
   opacity: 0.6;
 }
 
-.search-box button {
-  width: 40%;
+.search-button {
+  width: 20%;
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 100%;
   border: none;
   background-color: var(--blue-light);
@@ -98,8 +96,7 @@ main {
   font-size: 0.8rem;
 }
 
-
-.search-box button:hover {
+.search-button:hover {
   filter: brightness(1.03);
 }
 
@@ -107,13 +104,12 @@ main {
   background-color: var(--blue-light);
   color: var(--text-light);
   border: none;
-  width: 100%;
+  width: 35%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 
 /* Check-in Button */
 .checkin-button {
@@ -141,4 +137,155 @@ main {
 
 .delete-checkin-button:hover {
   filter: brightness(1.08);
+}
+
+.box-occu {
+  background-color: rgb(204, 204, 204);
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 14rem;
+  font-size: 70%;
+}
+
+.box-occu-header {
+  background-color: var(--green-light);
+  padding: 0.5rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.boxes-occupation {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.line-info {
+  display: flex;
+  margin: 2rem 1rem;
+  flex-direction: column;
+}
+
+.line-info p {
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 0.3rem;
+}
+
+.line-info span {
+  color: var(--green-light);
+  font-weight: 700;
+}
+
+.line-occupation {
+  background-color: rgb(116, 115, 115);
+  width: 100%;
+  height: 1.8rem;
+}
+
+.fill-line {
+  background-color: var(--green-light);
+  width: 67%;
+  height: 100%;
+}
+
+.select-section-button {
+  background-color: orange;
+  width: 80%;
+  height: 2rem;
+  border-radius: 5px;
+}
+
+/******************** MODAL *********************/
+.modal-dialog {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40vw !important;
+}
+
+.modal-header {
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+  width: 100%;
+  padding-bottom: 0;
+  width: 60vw !important;
+}
+
+.modal-content {
+  width: 75vw !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.p-question-modal {
+  font-size: 1.3rem;
+}
+
+.p-modal-warning {
+  font-size: 0.9rem;
+}
+
+.modal-body-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.modal-body-1 i {
+  font-size: 3.5rem;
+  color: #ffb03f;
+}
+
+.modal-body-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-blue-text);
+  font-weight: 500;
+}
+
+.modal-footer {
+  border: none;
+  display: flex;
+  flex-wrap: unset !important;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+
+.button-cancel-modal {
+  background-color: #90a0b7;
+  border: none;
+  width: 30%;
+}
+
+.button-confirm-modal {
+  background-color: var(--red-light);
+  border: none;
+  width: 30%;
+  color: var(--text-light) !important;
+}
+
+.button-confirm-modal:hover {
+  background-color: #d82244;
 }

@@ -20,7 +20,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#listDashboardMovements').DataTable({
     paging: false,
-    scrollY: '65vh',
+    scrollY: '10rem',
     scrollCollapse: true,
     info: false,
     autoWidth: false,

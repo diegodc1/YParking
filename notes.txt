@@ -6,6 +6,8 @@ Tem que fazer:
 
 --algumas paginas o tooltip n está funcionando
 
+--emitir relatorios
+
 
 Info:
 ## Na tela de check-in, a pesquisa será feita através da placa do carro.
