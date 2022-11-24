@@ -50,8 +50,14 @@ $sections = $sectionDao->findAll();
           </div>
 
           <div class="col-2">
-            <label for="inputEmail" class="form-label">Cor da seção:</label>
-            <input type="color" class="form-control" id="inputSectionColor" autocomplete="off" name="inputSectionColor" placeholder="" required>
+            <label for="inputSectionColor" class="form-label">Cor da seção:</label>
+            <select name="inputSectionColor" id="inputSectionColor" class="form-select">
+              <option value="#2ED47A" class="select-op1">Verde</option>
+              <option value="#885AF8" class="select-op2">Roxo</option>
+              <option value="#F7685B" class="select-op3">Vermelho</option>
+              <option value="#FFB946" class="select-op4">Amarelo</option>
+              <option value="#109CF1" class="select-op5">Azul</option>
+            </select>
           </div>
 
           <div class="row mt-3 submit-box">
@@ -125,6 +131,8 @@ $sections = $sectionDao->findAll();
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="../js/dataTable.js"></script>
+
+
 </body>
 
 </html>

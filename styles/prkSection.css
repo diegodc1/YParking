@@ -147,3 +147,44 @@ main {
   width: 50%;
   height: 40%;
 }
+
+.color-select {
+  background-color: red;
+  width: 2rem;
+  height: 2rem;
+}
+
+.select-op1,
+.select-op2,
+.select-op3,
+.select-op4,
+.select-op5 {
+  color: white;
+  height: 1rem !important;
+}
+
+select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+  background-color: none;
+}
+
+.select-op1,
+.select-op1:hover {
+  background-color: #2ed47a;
+  text-decoration: none;
+}
+.select-op2 {
+  background-color: #885af8;
+}
+.select-op3 {
+  background-color: #f7685b;
+}
+.select-op4 {
+  background-color: #ffb946;
+}
+
+.select-op5 {
+  background-color: #109cf1;
+}

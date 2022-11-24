@@ -9,10 +9,9 @@ Tem que fazer:
 --emitir relatorios
 
 
-Info:
-## Na tela de check-in, a pesquisa será feita através da placa do carro.
-
-
-
-## Notas 18/11
--- Refazer layou do dashboard, coloca uma box em pé, e outra no lado, colocando infos das seções.
+## Notas 24/11
+-- Terminar checkin
+-- Verificar se a seção já está cheia
+-- Deixar os cards das seções dinamicos.
+-- criar um banco temporario para os checkins, e deixar o banco checkin como fixo. 
+-- criar algo que "finalize" e "comece" o dia do estacionamento.

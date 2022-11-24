@@ -146,6 +146,7 @@ class VehicleDaoDB implements VehicleDao {
       $v->setCategory($data['vehicle_category']);
       $v->setBrand($data['vehicle_brand']);
       $v->setDepartureTime($data['vehicle_departure_time']);
+      $v->setClientId($data['vehicle_client_id']);
 
       return $v;
     } else {

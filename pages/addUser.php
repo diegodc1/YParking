@@ -53,14 +53,14 @@
             <label for="inputConfirmPassword" class="form-label">Confirme a senha:</label>
             <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="" required>
           </div>
-
-          <div class="type-user-use col-md-3">
+<div class="type-user-use col-md-3">
             <label for="inputAccess" class="form-label">Tipo de usuário:</label>
             <select id="inputAccess" class="form-select" name="inputAccess">
               <option selected value="0">Normal</option>
               <option value="1">Administrador</option>
             </select>
           </div>
+          
 
           <div class="row mt-3 submit-box">
             <a href="../pages/listUsers.php" class="cancel-button col-md-2">Cancelar</a>

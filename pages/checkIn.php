@@ -2,10 +2,12 @@
 require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
+require_once('../dao/SectionDao.php');
 session_start();
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
+$sectionDao = new SectionDaoDB($pdo);
 $vehicle = [];
 
 $vehiclePlate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
@@ -16,6 +18,8 @@ if($vehiclePlate) {
   $client = $clientDao->findById($clientId);
   $vehiclePlate = '';
 } 
+
+$sections = $sectionDao->findAll();
 
 
 ?>
@@ -89,6 +93,8 @@ if($vehiclePlate) {
           <tr>
         </tbody>
       </table>
+      <?php require('../components/alertMessage.php')?>
+
     </div>
 
     <div class="checkin-historic-box">
@@ -214,50 +220,31 @@ if($vehiclePlate) {
         </div>
         <div class="modal-body">
           <div class="modal-body-1">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <h5 class="modal-title" id="exampleModalLabel">Selecione um seção para o veículo</h5>
+            <i class="fa-solid fa-square-parking"></i>
+            <h5 class="modal-title" id="exampleModalLabel">Selecione uma seção para o veículo</h5>
           </div>
           <div class="modal-body-2">
             <section class="occupation">
               <div class="boxes-occupation">
 
-                <div class="box-occu 1">
-                  <div class="box-occu-header">
-                    <span>SEÇÃO A</span>
-                  </div>
-                  <div class="line-info">
-                    <p>Ocupação: <span>87%</span></p>
-                    <div class="line-occupation">
-                      <div class="fill-line"></div>
-                    </div>
-                  </div>
 
-                  <a href="" class="select-section-button">Selecionar</a>
-                </div>
-
-                <div class="box-occu 2">
-                  <div class="box-occu-header">
-                    <span>SEÇÃO A</span>
-                  </div>
-                  <div class="line-info">
-                    <p>Ocupação: <span>87%</span></p>
-                    <div class="line-occupation">
-                      <div class="fill-line"></div>
+                <?php 
+                  foreach($sections as $section) { ?>
+                    <div class="box-occu 1">
+                      <div class="box-occu-header" style="background-color: <?= $section->getColor(); ?>">
+                        <span><?= $section->getName(); ?></span>
+                      </div>
+                      <div class="line-info">
+                        <p>Ocupação: <span style="color: <?= $section->getColor(); ?>">87%</span></p>
+                        <div class="line-occupation">
+                          <div class="fill-line" style="background-color: <?= $section->getColor(); ?>" ></div>
+                        </div>
+                      </div>
+                      <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button">Selecionar</a>
                     </div>
-                  </div>
-                </div>
+                  <?php } ?>
 
-                <div class="box-occu 3">
-                  <div class="box-occu-header">
-                    <span>SEÇÃO A</span>
-                  </div>
-                  <div class="line-info">
-                    <p>Ocupação: <span>87%</span></p>
-                    <div class="line-occupation">
-                      <div class="fill-line"></div>
-                    </div>
-                  </div>
-                </div>
+                    
 
               </div>
             </section>
@@ -265,7 +252,6 @@ if($vehiclePlate) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-          <a href="" class="btn btn-primary button-confirm-modal" >Excluir</a>
         </div>
       </div>
     </div>
