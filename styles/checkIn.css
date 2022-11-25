@@ -199,7 +199,7 @@ main {
 
 .fill-line {
   background-color: var(--green-light);
-  width: 67%;
+  /* width: 67%; */
   height: 100%;
 }
 

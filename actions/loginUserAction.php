@@ -13,6 +13,7 @@ if($usuarioDao->findUserLogin($email, $password) != false) {
   $_SESSION['user_id'] = $user->getId();
   $_SESSION['user_name'] = $user->getName();
   $_SESSION['user_function'] = $user->getFunction();
+  $_SESSION['user_access'] = $user->getAccess();
  
   header("Location: ../pages/dashboard.php");
 } else {

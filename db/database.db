@@ -95,6 +95,29 @@ CREATE TABLE checkout (
 );
 
 
+CREATE TABLE checkin_daily (
+	ckdin_id SERIAL,
+	ckdin_vehicle_id INT NOT NULL,
+	ckdin_client_id INT NOT NULL, 
+	ckdin_section_id INT NOT NULL,
+	ckdin_time TIME NOT NULL, 
+	ckdin_user_id INT NOT NULL,
+	ckdin_status VARCHAR(15),
+	PRIMARY KEY (ckdin_id)
+);
+
+CREATE TABLE checkout_daily (
+	ckdout_id SERIAL,
+	ckdout_vehicle_id INT NOT NULL,
+	ckdout_client_id INT NOT NULL, 
+	ckdout_section_id INT NOT NULL,
+	ckdout_time TIME NOT NULL, 
+	ckdout_user_id INT NOT NULL,
+	ckdout_status VARCHAR(15),
+	PRIMARY KEY (ckdout_id)
+);
+
+
 ----------------
 Add users:
 

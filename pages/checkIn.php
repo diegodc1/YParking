@@ -3,11 +3,13 @@ require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/SectionDao.php');
+require_once('../dao/CheckinDao.php');
 session_start();
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
+$checkinDao = new CheckinDaoDB($pdo);
 $vehicle = [];
 
 $vehiclePlate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
@@ -20,7 +22,7 @@ if($vehiclePlate) {
 } 
 
 $sections = $sectionDao->findAll();
-
+$checkinsToday = $checkinDao->findAllDaily();
 
 ?>
 <head>
@@ -99,7 +101,7 @@ $sections = $sectionDao->findAll();
 
     <div class="checkin-historic-box">
       <div class="header box2">
-        <h2>HISTÓRICO DE ENTRADAS</h2>
+        <h2>HISTÓRICO DE ENTRADAS DE HOJE</h2>
       </div>
 
       <div class="line"></div>
@@ -118,86 +120,29 @@ $sections = $sectionDao->findAll();
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>BLAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Hb20</td>
-              <td>FAE2E13</td>
-              <td>Branco</td>
-              <td>Pedro Silva</td>
-              <td>12:30</td>
-              <td>
-                <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
-              </td>
-            </tr>
+            <?php 
+              foreach($checkinsToday as $checkin) { 
+                  $vehicleCheckin = $vehicleDao->findById($checkin->getVehicleId());
+                  $clientCheckin = $clientDao->findById($checkin->getClientId());
+                ?>
+              
+                <tr>
+                  <td><?= $vehicleCheckin->getModel()?></td>
+                  <td><?= $vehicleCheckin->getPlate()?></td>
+                  <td><?= $vehicleCheckin->getColor()?></td>
+                  <td><?= $clientCheckin->getName()?></td>
+                  <td><?= substr($checkin->getTime(), 0, 5)?></td>
+                  <td>
+                  <?php if($_SESSION['user_access'] == 1) { ?>
+                      <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
+                  <?php } else { ?>
+                      <a href="#" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;">Cancelar / Excluir</a>
+                  <?php }?>
+                  
+                    
+                  </td>
+              </tr>
+              <?php } ?>
           </tbody>
         </table>
       </div>
@@ -226,26 +171,33 @@ $sections = $sectionDao->findAll();
           <div class="modal-body-2">
             <section class="occupation">
               <div class="boxes-occupation">
-
-
                 <?php 
-                  foreach($sections as $section) { ?>
+                  foreach($sections as $section) { 
+                    $sectionSlots = $section->getSlots();
+                    $checkinDaily = $checkinDao->returnSlotsBySectionId($section->getId());
+                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
+                    ?>
+
                     <div class="box-occu 1">
+
                       <div class="box-occu-header" style="background-color: <?= $section->getColor(); ?>">
                         <span><?= $section->getName(); ?></span>
                       </div>
+
                       <div class="line-info">
-                        <p>Ocupação: <span style="color: <?= $section->getColor(); ?>">87%</span></p>
+                        <p>Ocupação: <span style="color: <?= $section->getColor(); ?>"><?= $fillPorcent ?></span></p>
                         <div class="line-occupation">
-                          <div class="fill-line" style="background-color: <?= $section->getColor(); ?>" ></div>
+                          <div class="fill-line" style="background-color: <?= $section->getColor()?>; width:<?= $fillPorcent?>" ></div>
                         </div>
                       </div>
-                      <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button">Selecionar</a>
-                    </div>
+
+                      <?php if($fillPorcent == '100%') { ?>
+                         <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button" style="pointer-events: none; opacity: 0.5">Selecionar</a> 
+                      <?php } else { ?>
+                        <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button">Selecionar</a>
+                      <?php } ?>        
+                    </div>                                 
                   <?php } ?>
-
-                    
-
               </div>
             </section>
           </div>

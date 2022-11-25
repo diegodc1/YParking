@@ -1,12 +1,26 @@
+<?php 
 
+require_once('../db/config.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/SectionDao.php');
+require_once('../dao/CheckinDao.php');
+session_start();
+
+$vehicleDao = new VehicleDaoDB($pdo);
+$sectionDao = new SectionDaoDB($pdo);
+$checkinDao = new CheckinDaoDB($pdo);
+
+$sections = $sectionDao->findAll();
+$checkinsToday = $checkinDao->findAllDaily();
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt_br">
   
 
 <head>
-  <?php require_once('../components/headConfig.php'); 
-    session_start();?>
+  <?php require_once('../components/headConfig.php')?>; 
   <link rel="stylesheet" href="/styles/dashboard.css">
   <title>Dashboard</title>
 
@@ -372,41 +386,28 @@
             <h2>Ocupação do Estacionamento</h2>
             <div class="boxes-occupation">
 
-              <div class="box-occu 1">
-                <div class="box-occu-header">
-                  <span>SEÇÃO A</span>
-                </div>
-                <div class="line-info">
-                  <p>Ocupação: <span>87%</span></p>
-                  <div class="line-occupation">
-                    <div class="fill-line"></div>
-                  </div>
-                </div>
-              </div>
+              <?php 
+                  foreach($sections as $section) { 
+                    $sectionSlots = $section->getSlots();
+                    $checkinDaily = $checkinDao->returnSlotsBySectionId($section->getId());
+                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
+                    ?>
 
-              <div class="box-occu 2">
-                <div class="box-occu-header">
-                  <span>SEÇÃO A</span>
-                </div>
-                 <div class="line-info">
-                  <p>Ocupação: <span>87%</span></p>
-                  <div class="line-occupation">
-                    <div class="fill-line"></div>
-                  </div>
-                </div>
-              </div>
+                    <div class="box-occu 1">
 
-              <div class="box-occu 3">
-                <div class="box-occu-header">
-                  <span>SEÇÃO A</span>
-                </div>
-                 <div class="line-info">
-                  <p>Ocupação: <span>87%</span></p>
-                  <div class="line-occupation">
-                    <div class="fill-line"></div>
-                  </div>
-                </div>
-              </div>
+                      <div class="box-occu-header" style="background-color: <?= $section->getColor(); ?>">
+                        <span><?= $section->getName(); ?></span>
+                      </div>
+
+                      <div class="line-info">
+                        <p>Ocupação: <span style="color: <?= $section->getColor(); ?>"><?= $fillPorcent ?></span></p>
+                        <div class="line-occupation">
+                          <div class="fill-line" style="background-color: <?= $section->getColor()?>; width:<?= $fillPorcent?>" ></div>
+                        </div>
+                      </div>    
+                    </div>                                 
+                  <?php } ?>
+
 
             </div>
           </section>

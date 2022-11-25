@@ -8,10 +8,12 @@ Tem que fazer:
 
 --emitir relatorios
 
+##Talvez:
+--O usuario poder escolher o layout do dashboard.
 
-## Notas 24/11
--- Terminar checkin
--- Verificar se a seção já está cheia
--- Deixar os cards das seções dinamicos.
--- criar um banco temporario para os checkins, e deixar o banco checkin como fixo. 
+
+## Notas 25/11
 -- criar algo que "finalize" e "comece" o dia do estacionamento.
+-- mostrar na tabela de historico de checkins, o setor que o veículo foi colocado.
+-- Excluir/Cancelar checkin na pagina de checkin.
+-- fazer checkout

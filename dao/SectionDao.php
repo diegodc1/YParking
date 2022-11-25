@@ -20,7 +20,7 @@ class SectionDaoDB implements SectionDao {
 
   public function findAll(){
     $sections = [];
-    $sql = $this->pdo->query("SELECT * FROM parking_sections");
+    $sql = $this->pdo->query("SELECT * FROM parking_sections ORDER BY prk_sect_name");
 
     if($sql->rowCount() > 0) {
       $data = $sql->fetchAll();

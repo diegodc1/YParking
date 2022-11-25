@@ -14,9 +14,7 @@ class CheckinDaoDB implements CheckinDao {
     $sql->bindValue(':sectionId', $u->getSectionId());
     $sql->bindValue(':time', $u->getTime());
     $sql->bindValue(':userId', $u->getUserId());
-
     $sql->execute();
-
     $u->setId($this->pdo->lastInsertId());
     return $u;
   }
@@ -42,7 +40,6 @@ class CheckinDaoDB implements CheckinDao {
     }
     return $checkins;
   }
-
 
   public function findById($id){
     $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_id = :id");
@@ -85,5 +82,54 @@ class CheckinDaoDB implements CheckinDao {
     $sql = $this->pdo->prepare("DELETE FROM checkin WHERE ckin_id = :id");
     $sql->bindValue(':id', $id);
     $sql->execute();  
+  }
+
+
+
+  //======= Daily Ckeckin Funcions =======// 
+  public function addDaily(Checkin $u){
+
+    $sql = $this->pdo->prepare("INSERT INTO checkin_daily (ckdin_vehicle_id, ckdin_client_id, ckdin_section_id, ckdin_time, ckdin_user_id, ckdin_status) VALUES (:vehicleId, :clientId, :sectionId, :time, :userId, 'Ativo')");
+    $sql->bindValue(':vehicleId', $u->getVehicleId());
+    $sql->bindValue(':clientId', $u->getClientId());
+    $sql->bindValue(':sectionId', $u->getSectionId());
+    $sql->bindValue(':time', $u->getTime());
+    $sql->bindValue(':userId', $u->getUserId());
+    $sql->execute();
+
+    return $u;
+  }
+
+  public function returnSlotsBySectionId($idSection){
+    $sql = $this->pdo->prepare("SELECT * FROM checkin_daily WHERE ckdin_section_id = :idSection");
+    $sql->bindValue(':idSection', $idSection);
+    $sql->execute();
+
+    return $sql->rowCount();
+  }
+
+
+
+   public function findAllDaily() {
+    $checkinsDaily = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkin_daily ORDER BY ckdin_time DESC");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckdin_id']);
+        $u->setVehicleId($checkin['ckdin_vehicle_id']);
+        $u->setClientId($checkin['ckdin_client_id']);
+        $u->setSectionId($checkin['ckdin_section_id']);
+        $u->setTime($checkin['ckdin_time']);
+        $u->setUserId($checkin['ckdin_user_id']);
+        $u->setStatus($checkin['ckdin_status']);
+
+        $checkinsDaily[] = $u;
+      }
+    }
+    return $checkinsDaily;
   }
 }

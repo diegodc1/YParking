@@ -26,6 +26,7 @@ $newCheckIn->setUserId($userId);
 $newCheckIn->setTime($time);
 
 $checkinDao->add($newCheckIn);
+$checkinDao->addDaily($newCheckIn);
 
 $_SESSION['message-type'] = 'success';
 $_SESSION['icon-message'] = '#check-circle-fill';
