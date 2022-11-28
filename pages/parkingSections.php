@@ -122,6 +122,8 @@ $sections = $sectionDao->findAll();
             <?php } ?>
           </tbody>
         </table>
+
+        <a href="../actions/endOperationAction.php">Finalizar Operações</a>
       </div>  
     </div>
   </main>

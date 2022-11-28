@@ -8,6 +8,7 @@ class Checkin {
   private $time;
   private $userId;
   private $status;
+  private $date;
 
   public function getId() {
     return $this->id;
@@ -64,6 +65,14 @@ class Checkin {
   public function setStatus($status) {
     $this->status = $status;
   }
+
+  public function getDate() {
+    return $this->date;
+  }
+
+  public function setDate($date) {
+    $this->date = $date;
+  }
 }
 
 interface CheckinDao {
@@ -74,6 +83,7 @@ interface CheckinDao {
   public function delete($id);
 
   public function addDaily(Checkin $u);
-  public function findAllDaily();
-  public function returnSlotsBySectionId($idSection);
+  public function findAllDaily($date);
+  public function returnSlotsByDate($date, $sectionId);
 }
+

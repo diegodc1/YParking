@@ -21,8 +21,12 @@ if($vehiclePlate) {
   $vehiclePlate = '';
 } 
 
+date_default_timezone_set('America/Sao_Paulo');
+$date = date("Y/m/d");
+
+
 $sections = $sectionDao->findAll();
-$checkinsToday = $checkinDao->findAllDaily();
+$checkinsToday = $checkinDao->findAllDaily($date);
 
 ?>
 <head>
@@ -53,6 +57,8 @@ $checkinsToday = $checkinDao->findAllDaily();
   </header>
 
   <main>
+    <?php  require_once('../components/alertMessage.php') ?>
+
     <div class="checkin-box">
       <div class="header-box">
         <h2>REALIZAR ENTRADA DE VEÍCULO</h2>
@@ -134,7 +140,7 @@ $checkinsToday = $checkinDao->findAllDaily();
                   <td><?= substr($checkin->getTime(), 0, 5)?></td>
                   <td>
                   <?php if($_SESSION['user_access'] == 1) { ?>
-                      <a href="#" class="delete-checkin-button">Cancelar / Excluir</a>
+                      <a href="../actions/deleteCheckinAction.php?checkinid=<?=$checkin->getId()?>" class="delete-checkin-button">Cancelar / Excluir</a>
                   <?php } else { ?>
                       <a href="#" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;">Cancelar / Excluir</a>
                   <?php }?>
@@ -174,7 +180,7 @@ $checkinsToday = $checkinDao->findAllDaily();
                 <?php 
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
-                    $checkinDaily = $checkinDao->returnSlotsBySectionId($section->getId());
+                    $checkinDaily = $checkinDao->returnSlotsByDate($date, $section->getId());
                     $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
                     ?>
 

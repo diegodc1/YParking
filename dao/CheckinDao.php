@@ -8,12 +8,14 @@ class CheckinDaoDB implements CheckinDao {
   }
 
   public function add(Checkin $u){
-    $sql = $this->pdo->prepare("INSERT INTO checkin (ckin_vehicle_id, ckin_client_id, ckin_section_id, ckin_time, ckin_user_id) VALUES (:vehicleId, :clientId, :sectionId, :time, :userId)");
+    $sql = $this->pdo->prepare("INSERT INTO checkin (ckin_vehicle_id, ckin_client_id, ckin_section_id, ckin_time, ckin_user_id, ckin_date, ckin_status) VALUES (:vehicleId, :clientId, :sectionId, :time, :userId, :date, :status)");
     $sql->bindValue(':vehicleId', $u->getVehicleId());
     $sql->bindValue(':clientId', $u->getClientId());
     $sql->bindValue(':sectionId', $u->getSectionId());
     $sql->bindValue(':time', $u->getTime());
     $sql->bindValue(':userId', $u->getUserId());
+    $sql->bindValue(':status', $u->getStatus());
+    $sql->bindValue(':date', $u->getDate());
     $sql->execute();
     $u->setId($this->pdo->lastInsertId());
     return $u;
@@ -34,6 +36,8 @@ class CheckinDaoDB implements CheckinDao {
         $u->setSectionId($checkin['ckin_section_id']);
         $u->setTime($checkin['ckin_time']);
         $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']);
+        $u->setDate($checkin['ckin_date']);
 
         $checkins[] = $u;
       }
@@ -56,6 +60,8 @@ class CheckinDaoDB implements CheckinDao {
       $u->setSectionId($data['ckin_section_id']);
       $u->setTime($data['ckin_time']);
       $u->setUserId($data['ckin_user_id']);
+      $u->setStatus($data['ckin_status']); 
+      $u->setDate($data['ckin_date']);
 
       return $u;
     } else {
@@ -100,36 +106,38 @@ class CheckinDaoDB implements CheckinDao {
     return $u;
   }
 
-  public function returnSlotsBySectionId($idSection){
-    $sql = $this->pdo->prepare("SELECT * FROM checkin_daily WHERE ckdin_section_id = :idSection");
-    $sql->bindValue(':idSection', $idSection);
+  public function returnSlotsByDate($date, $sectionId){
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date AND ckin_section_id = :sectionId");
+    $sql->bindValue(':date', $date);
+    $sql->bindValue(':sectionId', $sectionId);
     $sql->execute();
 
     return $sql->rowCount();
   }
 
-
-
-   public function findAllDaily() {
+   public function findAllDaily($date) {
     $checkinsDaily = [];
 
-    $sql = $this->pdo->query("SELECT * FROM checkin_daily ORDER BY ckdin_time DESC");
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date");
+    $sql->bindValue(':date', $date);
+    $sql->execute();
     if($sql->rowCount() > 0) {
       $data = $sql->fetchAll();
 
       foreach($data as $checkin) {
         $u = new Checkin;
-        $u->setId($checkin['ckdin_id']);
-        $u->setVehicleId($checkin['ckdin_vehicle_id']);
-        $u->setClientId($checkin['ckdin_client_id']);
-        $u->setSectionId($checkin['ckdin_section_id']);
-        $u->setTime($checkin['ckdin_time']);
-        $u->setUserId($checkin['ckdin_user_id']);
-        $u->setStatus($checkin['ckdin_status']);
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']);
+        $u->setDate($checkin['ckin_date']);
 
         $checkinsDaily[] = $u;
       }
     }
     return $checkinsDaily;
-  }
+  } 
 }

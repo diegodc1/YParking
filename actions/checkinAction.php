@@ -17,6 +17,10 @@ $userId = $_SESSION['user_id'];
 
 date_default_timezone_set('America/Sao_Paulo');
 $time = date('H:i:s');
+$date = date("d/m/Y");
+$status = "Ativo"; 
+
+echo $status;
 
 $newCheckIn = new Checkin;
 $newCheckIn->setVehicleId($vehicleId);
@@ -24,9 +28,11 @@ $newCheckIn->setClientId($clientId);
 $newCheckIn->setSectionId($sectionId);
 $newCheckIn->setUserId($userId);
 $newCheckIn->setTime($time);
+$newCheckIn->setStatus($status);
+$newCheckIn->setDate($date);
 
 $checkinDao->add($newCheckIn);
-$checkinDao->addDaily($newCheckIn);
+// $checkinDao->addDaily($newCheckIn);
 
 $_SESSION['message-type'] = 'success';
 $_SESSION['icon-message'] = '#check-circle-fill';

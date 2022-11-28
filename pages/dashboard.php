@@ -10,8 +10,12 @@ $vehicleDao = new VehicleDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
 
+date_default_timezone_set('America/Sao_Paulo');
+$date = date("Y/m/d");
+
 $sections = $sectionDao->findAll();
-$checkinsToday = $checkinDao->findAllDaily();
+$checkinsToday = $checkinDao->findAllDaily($date);
+
 
 ?>
 
@@ -78,8 +82,7 @@ $checkinsToday = $checkinDao->findAllDaily();
               <p>CADASTRAR USUÁRIO</p>
             </div>
           </a>
-
-          
+        
         </section>
         <section class="sect2">
           <a href="../pages/checkout.php">
@@ -118,6 +121,8 @@ $checkinsToday = $checkinDao->findAllDaily();
               <p>USUÁRIOS CADASTRADOS</p>
             </div>
           </a>
+
+  
         </section>
         </div>
       
@@ -389,7 +394,7 @@ $checkinsToday = $checkinDao->findAllDaily();
               <?php 
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
-                    $checkinDaily = $checkinDao->returnSlotsBySectionId($section->getId());
+                    $checkinDaily = $checkinDao->returnSlotsByDate($date, $section->getId());
                     $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
                     ?>
 

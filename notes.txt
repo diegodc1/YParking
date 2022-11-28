@@ -17,3 +17,17 @@ Tem que fazer:
 -- mostrar na tabela de historico de checkins, o setor que o veículo foi colocado.
 -- Excluir/Cancelar checkin na pagina de checkin.
 -- fazer checkout
+-- Colocar data e horário nos movimentos
+-- Não Excluir, e sim desativar
+-- Colocar no banco de dados quem excluiu
+-- Mudar a "titulariedade" do veículo, ou seja, mudar o dono.
+-- tela principal que da pra fazer check-in e checkout na mesma tela
+-- O sistema deve informar o valor final para cobrar
+    *Possibilidade do estacionamento mudar o valor das cobranças.
+
+
+
+-- status checkin
+  Ativo
+  Finalizado
+  Cancelado

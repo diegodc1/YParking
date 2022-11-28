@@ -73,6 +73,7 @@ CREATE TABLE checkin (
 	ckin_section_id INT NOT NULL,
 	ckin_time TIME NOT NULL, 
 	ckin_user_id INT NOT NULL,
+	ckin_status character varying(20)[] COLLATE pg_catalog."default"
 	PRIMARY KEY (ckin_id),
 	FOREIGN KEY (ckin_vehicle_id) REFERENCES vehicles (vehicle_id),
 	FOREIGN KEY (ckin_client_id) REFERENCES clients (client_id),
