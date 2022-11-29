@@ -59,12 +59,31 @@ $(document).ready(function () {
   })
 })
 
+$(document).ready(function () {
+  $('#checkinCancel').DataTable({
+    scrollY: '20rem',
+    search: {
+      search: ''
+    },
+    stateSave: true,
+
+    scrollCollapse: true,
+    paging: false,
+    // info: false,
+    ordering: false,
+    autoWidth: false,
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+    }
+  })
+})
+
 // Table to checkin list
 $(document).ready(function () {
   $('#checkin').DataTable({
-    scrollY: '18rem',
+    scrollY: '16rem',
     scrollCollapse: true,
-    paging: false,
+    // paging: false,
     info: false,
     ordering: false,
     autoWidth: false,

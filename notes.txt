@@ -12,7 +12,7 @@ Tem que fazer:
 --O usuario poder escolher o layout do dashboard.
 
 
-## Notas 25/11
+## Notas 29/11
 -- criar algo que "finalize" e "comece" o dia do estacionamento.
 -- mostrar na tabela de historico de checkins, o setor que o veículo foi colocado.
 -- Excluir/Cancelar checkin na pagina de checkin.
@@ -24,6 +24,9 @@ Tem que fazer:
 -- tela principal que da pra fazer check-in e checkout na mesma tela
 -- O sistema deve informar o valor final para cobrar
     *Possibilidade do estacionamento mudar o valor das cobranças.
+
+-- Finalizar check-out
+-- Colocar nas tabelas em qual seção ta o veículo
 
 
 

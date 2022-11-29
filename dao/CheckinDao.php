@@ -84,9 +84,10 @@ class CheckinDaoDB implements CheckinDao {
     return true;
   }
 
-  public function delete($id){
-    $sql = $this->pdo->prepare("DELETE FROM checkin WHERE ckin_id = :id");
+  public function cancel($id){
+    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status WHERE ckin_id = :id");
     $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Cancelado');
     $sql->execute();  
   }
 
@@ -118,7 +119,7 @@ class CheckinDaoDB implements CheckinDao {
    public function findAllDaily($date) {
     $checkinsDaily = [];
 
-    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date");
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date ORDER BY ckin_time DESC");
     $sql->bindValue(':date', $date);
     $sql->execute();
     if($sql->rowCount() > 0) {
@@ -139,5 +140,47 @@ class CheckinDaoDB implements CheckinDao {
       }
     }
     return $checkinsDaily;
+  } 
+
+  public function findAllDailyVehicleId($date, $vehicleId) {
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date AND ckin_vehicle_id = :vehicleId AND ckin_status = :status ORDER BY ckin_time DESC");
+    $sql->bindValue(':date', $date);
+    $sql->bindValue(':vehicleId', $vehicleId);
+    $sql->bindValue(':status', 'Ativo');
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+      $search = true;
+    } else {
+      $search = false;
+    }
+    return $search;
+  } 
+
+  public function findAllCheckinActive(){
+    $checkinsActive = [];
+
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_status = :status ORDER BY ckin_time ASC");
+    $sql->bindValue(':status', 'Ativo');
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']);
+        $u->setDate($checkin['ckin_date']);
+
+        $checkinsActive[] = $u;
+      }
+    }
+    return $checkinsActive;
   } 
 }

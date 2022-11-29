@@ -80,10 +80,12 @@ interface CheckinDao {
   public function findAll();
   public function findById($id);
   public function update(Checkin $u);
-  public function delete($id);
+  public function cancel($id);
 
   public function addDaily(Checkin $u);
   public function findAllDaily($date);
+  public function findAllCheckinActive();
+  public function findAllDailyVehicleId($date, $vehicleId);
   public function returnSlotsByDate($date, $sectionId);
 }
 
