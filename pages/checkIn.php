@@ -66,21 +66,18 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
   <main>
   
     <div class="box-left">
+    <!------------------------- CHECK-IN ---------------------------------->
       <div class="checkin-box">
         <div class="header-box">
           <h2>REALIZAR ENTRADA DE VEÍCULO</h2>
         </div>
-
         <div class="line"></div>
-
         <div class="search-box">
           <form action="../pages/checkIn.php" method="POST">
             <input type="text" class="input-search" name="vehicle-plate" placeholder="Digite a placa do veículo" value="">
             <input type="submit" class="search-button" value="Pesquisar"></input>
           </form>
         </div>
-
-        <!-- Searching Vehicle Table -->
         <table id="" class="table">
           <thead>
             <tr>
@@ -101,17 +98,17 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               <td><?php if($vehicle){echo $client->getName();} else {echo '';};?></td>
               <td>
                 <?php if($vehicle) { ?>
-                    <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button">Check-in</a>
-              <?php } ?>
+                  <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button">Check-in</a>
+                <?php } ?>
               </td>
             </tr>
             <tr>
           </tbody>
         </table>
         <?php require('../components/alertMessage.php')?>
-
       </div>
 
+    <!------------------------ CHECK-IN HISTORIC ---------------------------->
       <div class="checkin-historic-box">
         <div class="header box2">
           <h2>HISTÓRICO DE ENTRADAS DE HOJE</h2>
@@ -120,12 +117,9 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
           <?php } else { ?>
               <a href="#" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;">Cancelar</a>
           <?php }?>
-
         </div>
 
         <div class="line"></div>
-
-        <!-- Historic Table -->
         <div class="table-list">
           <table id="checkin" class="table" style="width:100%">
             <thead>
@@ -135,6 +129,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                 <th>Cor</th>
                 <th>Cliente</th>
                 <th>Horár. Entrada</th>
+                <th>Seção</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -143,34 +138,33 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                 foreach($checkinsToday as $checkin) { 
                     $vehicleCheckin = $vehicleDao->findById($checkin->getVehicleId());
                     $clientCheckin = $clientDao->findById($checkin->getClientId());
-                  ?>
-                
+                    $section = $sectionDao->findById($checkin->getSectionId());
+                  ?>               
                   <tr>
                     <td><?= $vehicleCheckin->getModel()?></td>
                     <td><?= $vehicleCheckin->getPlate()?></td>
                     <td><?= $vehicleCheckin->getColor()?></td>
                     <td><?= $clientCheckin->getName()?></td>
                     <td><?= substr($checkin->getTime(), 0, 5)?></td>
+                    <td><?= $section->getName()?></td>
                     <td><?= $checkin->getStatus()?></td>
-                </tr>
+                  </tr>
                 <?php } ?>
             </tbody>
           </table>
         </div>
-
-
       </div>
     </div>
 
+
+    <!---------------------- CHECK-OUT  ---------------------------->
     <div class="box-right">
       <div class="checkout-box">
         <div class="header-box">
           <h2>REALIZAR SAÍDA DE VEÍCULO</h2>
         </div>
-
         <div class="line"></div>
-
-        <table id="" class="table">
+        <table id="listCheckoutVehicles" class="table">
           <thead>
             <tr>
               <th>Modelo</th>
@@ -178,6 +172,8 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               <th>Cor</th>
               <th>Categoria</th>
               <th>Cliente</th>
+              <th>Seção</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -188,31 +184,68 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               $vehicleIdCk =  $active->getVehicleId();
               $vehicleCk = $vehicleDao->findById($vehicleIdCk);
               $clientCk = $clientDao->findById($vehicleCk->getClientId());
-              ?>
-            
+              $sectionck = $sectionDao->findById($active->getSectionId());
+              ?>        
               <tr>
                 <td><?= $vehicleCk->getModel()?></td>
                 <td><?= $vehicleCk->getPlate()?></td>
                 <td><?= $vehicleCk->getColor()?></td>
                 <td><?= $vehicleCk->getCategory()?></td>
                 <td><?= $clientCk->getName()?></td>
-                <td><a href="" data-bs-toggle="modal" data-bs-target="checkoutModal<?= $vehicle->getId()?>" class="checkin-button">Check-out</a> </td>
+                <td><?= $sectionck->getName()?></td>
+                <td><?= $active->getStatus()?></td>
+                <td><a href="" data-bs-toggle="modal" data-bs-target="#checkoutModal<?= $vehicleCk->getId()?>" class="checkout-button">Check-out</a> </td>
               </tr>
-           <?php } ?>
-            
-       
+
+               <!------------------------- Ckeck-out modal-------------------------->
+              <div class="modal fade" id="checkoutModal<?= $vehicleCk->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog ">
+                  <div class="modal-content checkout">
+
+                    <div class="modal-header checkout">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="modal-body-1">
+                        <img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img">
+                        <h5 class="modal-title" id="exampleModalLabel">Realizar check-out deste veículo?</h5>
+                      </div>
+
+                      <div class="modal-body-2">
+                        <section class="info-vehicle-checkout">
+                            <div class="info-col-1">
+  
+                              <p>Modelo: <a><?= $vehicleCk->getModel()?></a></p>
+                              <p>Categoria: <a><?= $vehicleCk->getCategory()?></a></p>
+                              <p>Cor: <a><?= $vehicleCk->getColor()?></a></p>
+                            </div>
+                            <div class="info-col-2">
+                              <p>Placa: <a><?= $vehicleCk->getPlate()?></a></p>                              
+                              <p>Cliente: <a><?= $clientCk->getName()?></a></p>
+                            </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                      <a href="../actions/checkoutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>" class="btn btn-secondary btn-confirm-checkout">Confirmar</a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+           <?php } ?>            
           </tbody>
         </table>
-
       </div>
     </div>
-
   </main>
 
   
 
-   
-  <!-- Cancel check-in modal -->
+  <!----------------------- Cancel check-in modal --------------------------->
   <div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -277,67 +310,10 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
   </div>
 
 
-   <!-- Ckeck-in modal-->
-  <div class="modal fade" id="checkoutModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-          <div class="modal-body-1">
-            <i class="fa-solid fa-square-parking"></i>
-            <h5 class="modal-title" id="exampleModalLabel">Selecione uma seção para o veículo</h5>
-          </div>
-
-          <div class="modal-body-2">
-            <section class="occupation">
-              <div class="boxes-occupation">
-                <?php 
-                  foreach($sections as $section) { 
-                    $sectionSlots = $section->getSlots();
-                    $checkinDaily = $checkinDao->returnSlotsByDate($date, $section->getId());
-                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
-                    ?>
-
-                    <div class="box-occu 1">
-
-                      <div class="box-occu-header" style="background-color: <?= $section->getColor(); ?>">
-                        <span><?= $section->getName(); ?></span>
-                      </div>
-
-                      <div class="line-info">
-                        <p>Ocupação: <span style="color: <?= $section->getColor(); ?>"><?= $fillPorcent ?></span></p>
-                        <div class="line-occupation">
-                          <div class="fill-line" style="background-color: <?= $section->getColor()?>; width:<?= $fillPorcent?>" ></div>
-                        </div>
-                      </div>
-
-                      <?php if($fillPorcent == '100%') { ?>
-                          <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button" style="pointer-events: none; opacity: 0.5">Selecionar</a> 
-                      <?php } else { ?>
-                        <a href="../actions/checkinAction.php?vehicle=<?=$vehicle->getId()?>&section=<?= $section->getId(); ?>" class="select-section-button">Selecionar</a>
-                      <?php } ?>        
-                    </div>                                 
-                  <?php } ?>
-              </div>
-            </section>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
+  
 
 
-  <!-- Ckeck-in modal-->
+  <!------------------------- Ckeck-in modal--------------------------->
   <div class="modal fade" id="checkinModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -396,12 +372,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
     </div>
   </div>
 
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> -->
   <script src="../js/tooltip.js"></script>
-  <!-- <script src="../js/dataTable.js"></script> -->
-
 </body>
 
 </html>

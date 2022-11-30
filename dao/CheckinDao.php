@@ -54,7 +54,7 @@ class CheckinDaoDB implements CheckinDao {
       $data = $sql->fetch();
 
       $u = new Checkin;;
-      $u->setId($data['ckcin_id']);
+      $u->setId($data['ckin_id']);
       $u->setVehicleId($data['ckin_vehicle_id']);
       $u->setClientId($data['ckin_client_id']);
       $u->setSectionId($data['ckin_section_id']);
@@ -78,6 +78,16 @@ class CheckinDaoDB implements CheckinDao {
     $sql->bindValue(':time', $u->getTime());
     $sql->bindValue(':userId', $u->getUserId());
     $sql->bindValue(':id', $u->getId());
+
+    $sql->execute();
+    
+    return true;
+  }
+
+  public function updateStatus($status, $id){
+    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status WHERE ckin_id = :id");
+    $sql->bindValue(':status', $status);
+    $sql->bindValue(':id', $id);
 
     $sql->execute();
     
@@ -143,8 +153,7 @@ class CheckinDaoDB implements CheckinDao {
   } 
 
   public function findAllDailyVehicleId($date, $vehicleId) {
-    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date AND ckin_vehicle_id = :vehicleId AND ckin_status = :status ORDER BY ckin_time DESC");
-    $sql->bindValue(':date', $date);
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_vehicle_id = :vehicleId AND ckin_status = :status ORDER BY ckin_time DESC");
     $sql->bindValue(':vehicleId', $vehicleId);
     $sql->bindValue(':status', 'Ativo');
     $sql->execute();

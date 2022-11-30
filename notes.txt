@@ -13,6 +13,7 @@ Tem que fazer:
 
 
 ## Notas 29/11
+-- Quando fazer checkout, tem que retirar o veículo das seções.
 -- criar algo que "finalize" e "comece" o dia do estacionamento.
 -- mostrar na tabela de historico de checkins, o setor que o veículo foi colocado.
 -- Excluir/Cancelar checkin na pagina de checkin.

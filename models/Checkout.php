@@ -1,6 +1,6 @@
 <?php 
 
-class Checkin {
+class Checkout {
   private $id;
   private $vehicleId;
   private $clientId;
@@ -9,6 +9,9 @@ class Checkin {
   private $userId;
   private $status;
   private $date;
+  private $timeCkin;
+  private $dateCkin;
+  private $idCkin;
 
   public function getId() {
     return $this->id;
@@ -73,20 +76,42 @@ class Checkin {
   public function setDate($date) {
     $this->date = $date;
   }
+
+  public function getCkinTime() {
+    return $this->timeCkin;
+  }
+
+  public function setCkinTime($timeCkin) {
+    $this->timeCkin = $timeCkin;
+  }
+
+  public function getCkinDate() {
+    return $this->dateCkin;
+  }
+
+  public function setCkinDate($dateCkin) {
+    $this->dateCkin = $dateCkin;
+  }
+
+  public function getCkinId() {
+    return $this->idCkin;
+  }
+
+  public function setCkinId($idCkin) {
+    $this->idCkin = $idCkin;
+  }
 }
 
-interface CheckinDao {
-  public function add(Checkin $u);
+interface CheckoutDao {
+  public function add(Checkout $u);
   public function findAll();
   public function findById($id);
-  public function update(Checkin $u);
-  public function updateStatus($status, $id);
+  public function update(Checkout $u);
   public function cancel($id);
 
-  public function addDaily(Checkin $u);
+  public function addDaily(Checkout $u);
   public function findAllDaily($date);
-  public function findAllCheckinActive();
+  // public function findAllCheckinActive();
   public function findAllDailyVehicleId($date, $vehicleId);
   public function returnSlotsByDate($date, $sectionId);
 }
-

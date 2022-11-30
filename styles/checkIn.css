@@ -240,10 +240,23 @@ main {
   background-color: var(--text-light);
   padding: 1rem;
   border-radius: 5px;
+  height: 100%;
 }
 
 .box-right .header-box h2 {
   font-size: 1.3rem;
+}
+
+.checkout-button {
+  background-color: #d46019;
+
+  border: none;
+  text-decoration: none;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 5px;
+  color: var(--text-light) !important;
+  font-weight: 600;
+  font-size: 0.8rem;
 }
 
 /******************** MODAL *********************/
@@ -269,6 +282,14 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.modal-content.checkout {
+  width: 40vw !important;
+}
+
+.modal-header.checkout {
+  width: 40vw !important;
 }
 
 .modal-title {
@@ -316,7 +337,7 @@ main {
   width: 100%;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1rem;
 }
 
 .button-cancel-modal {
@@ -336,6 +357,43 @@ main {
   background-color: #d82244;
 }
 
+/******************** MODAL CHECKOUT  *******************/
+.info-vehicle-checkout {
+  display: flex;
+  gap: 4rem;
+}
+
+.info-col-1,
+.info-col-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info-col-1 p,
+.info-col-2 p {
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.info-col-1 a,
+.info-col-2 a {
+  font-weight: 400;
+}
+
+.btn-confirm-checkout {
+  background-color: var(--green-light);
+  border: none;
+  width: 30%;
+  color: var(--text-light) !important;
+}
+
+.checkout-img {
+  width: 14%;
+  height: 24%;
+}
+
 .alert {
-  width: 50%;
+  width: 80%;
 }
