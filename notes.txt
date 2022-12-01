@@ -13,25 +13,22 @@ Tem que fazer:
 
 
 ## Notas 29/11
--- Quando fazer checkout, tem que retirar o veículo das seções.
--- criar algo que "finalize" e "comece" o dia do estacionamento.
--- mostrar na tabela de historico de checkins, o setor que o veículo foi colocado.
 -- Excluir/Cancelar checkin na pagina de checkin.
--- fazer checkout
+-- Colar na BD o id do usuario que fez o cancelamento do checkin
+-- Quando cancelar checkin tem que dar um justificativa
 -- Colocar data e horário nos movimentos
 -- Não Excluir, e sim desativar
 -- Colocar no banco de dados quem excluiu
 -- Mudar a "titulariedade" do veículo, ou seja, mudar o dono.
--- tela principal que da pra fazer check-in e checkout na mesma tela
 -- O sistema deve informar o valor final para cobrar
     *Possibilidade do estacionamento mudar o valor das cobranças.
-
--- Finalizar check-out
--- Colocar nas tabelas em qual seção ta o veículo
-
+--colocar/criar mais niveis de acesso ao sistema
 
 
 -- status checkin
   Ativo
   Finalizado
   Cancelado
+
+
+--Tem que ter na entrega:

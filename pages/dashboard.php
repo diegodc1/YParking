@@ -394,7 +394,7 @@ $checkinsToday = $checkinDao->findAllDaily($date);
               <?php 
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
-                    $checkinDaily = $checkinDao->returnSlotsByDate($date, $section->getId());
+                    $checkinDaily = $checkinDao->returnSlotsCkeckin($section->getId());
                     $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
                     ?>
 

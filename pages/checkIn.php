@@ -60,7 +60,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
   <?php require_once('../components/sidebar.php') ?>
 
   <header class="checkin-header">
-    <h1>ENTRADA DE VEÍCULO</h1>
+    <h1>REALIZAR ENTRADA E SAÍDA DE VEÍCULO</h1>
   </header>
 
   <main>
@@ -69,7 +69,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
     <!------------------------- CHECK-IN ---------------------------------->
       <div class="checkin-box">
         <div class="header-box">
-          <h2>REALIZAR ENTRADA DE VEÍCULO</h2>
+          <h2>ENTRADA DE VEÍCULO</h2>
         </div>
         <div class="line"></div>
         <div class="search-box">
@@ -161,7 +161,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
     <div class="box-right">
       <div class="checkout-box">
         <div class="header-box">
-          <h2>REALIZAR SAÍDA DE VEÍCULO</h2>
+          <h2>SAÍDA DE VEÍCULO</h2>
         </div>
         <div class="line"></div>
         <table id="listCheckoutVehicles" class="table">
@@ -170,7 +170,6 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               <th>Modelo</th>
               <th>Placa</th>
               <th>Cor</th>
-              <th>Categoria</th>
               <th>Cliente</th>
               <th>Seção</th>
               <th>Status</th>
@@ -190,7 +189,6 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                 <td><?= $vehicleCk->getModel()?></td>
                 <td><?= $vehicleCk->getPlate()?></td>
                 <td><?= $vehicleCk->getColor()?></td>
-                <td><?= $vehicleCk->getCategory()?></td>
                 <td><?= $clientCk->getName()?></td>
                 <td><?= $sectionck->getName()?></td>
                 <td><?= $active->getStatus()?></td>
@@ -248,9 +246,9 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
   <!----------------------- Cancel check-in modal --------------------------->
   <div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content cancelCheckin">
 
-        <div class="modal-header">
+        <div class="modal-header cancelCheckin">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -267,7 +265,6 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                     <th>Cor</th>
                     <th>Cliente</th>
                     <th>Horár. Entrada</th>
-                    <th>Status</th>
                     <th></th>
         
                   </tr>
@@ -277,6 +274,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                     foreach($checkinsToday as $checkin) { 
                         $vehicleCheckin = $vehicleDao->findById($checkin->getVehicleId());
                         $clientCheckin = $clientDao->findById($checkin->getClientId());
+                        $sectionCheckin= $sectionDao->findById($checkin->getSectionId());
                       ?>
                     
                       <tr>
@@ -285,32 +283,74 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                         <td><?= $vehicleCheckin->getColor()?></td>
                         <td><?= $clientCheckin->getName()?></td>
                         <td><?= substr($checkin->getTime(), 0, 5)?></td>
-                        <td><?= $checkin->getStatus()?></td>
                         <td>  
                         <?php if($checkin->getStatus() == 'Cancelado') { ?>
                           <a href="" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;"> Cancelar</a>
                         <?php } else { ?>
-                          <a href="../actions/deleteCheckinAction.php?checkinid=<?= $checkin->getId(); ?>" class="delete-checkin-button"> Cancelar</a>
+                          <a href="" class="delete-checkin-button" data-bs-toggle="modal" data-bs-target="#confirmCancelCheckin<?= $checkin->getId(); ?>"> Cancelar</a>
                         <?php } ?>
-                 
                         </td>
                       </tr>
+
+
+                       <div class="modal fade" id="confirmCancelCheckin<?= $checkin->getId(); ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content cancelCheckin">
+
+                            <div class="modal-header cancelCheckin">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-body-header">
+                                  <i class="fa-solid fa-circle-xmark"></i>
+                                  <h5 class="modal-title" id="exampleModalLabel">Cancelar Check-in</h5>
+                                </div>
+                                <div class="table-list">
+                                  <section class="info-checkin-cancel">
+                                      <div class="info-col-1">
+                                        <?php $date = $checkin->getDate() ;?>
+                                        <p>Veículo: <a><?= $vehicleCheckin->getModel();?></a></p>
+                                        <p>Cliente: <a><?= $clientCheckin->getName()?></a></p>
+                                        <p>Data: <a><?= date('d/m/Y', strtotime($date)) ?></a></p> 
+                                      </div>
+                                      <div class="info-col-2">
+                                        <p>Placa: <a><?= $vehicleCheckin->getPlate()?></a></p>  
+                                        <p>Seção: <a><?= $sectionCheckin->getName()?></a></p>                            
+                                        <p>Horário: <a><?= $checkin->getTime()?></a></p>                                                            
+                                      </div>
+                                  </section>
+                                </div>
+
+                                <div class="cancel-reason-box">
+                                  <h5>Informe o motivo do cancelamento:</h5>
+                                  <form action="../actions/deleteCheckinAction.php?checkinid=<?= $checkin->getId(); ?>" method="POST">
+                                    <textarea name="cancelReasonInput" id="cancelReasonInput" cols="50" rows="4" style="resize: none" required></textarea>
+
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                      <input type="submit" class="delete-checkin-button" value="Confirmar">                                  
+                                    </div>
+                                  </form>
+                                </div>
+                            </div>                      
+                          </div>
+                        </div>
+                      </div>
+
                     <?php } ?>
                 </tbody>
               </table>
             </div>
         </div>
-
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
         </div>
-
       </div>
     </div>
   </div>
 
 
-  
+
 
 
   <!------------------------- Ckeck-in modal--------------------------->
@@ -334,7 +374,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                 <?php 
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
-                    $checkinDaily = $checkinDao->returnSlotsByDate($date, $section->getId());
+                    $checkinDaily = $checkinDao->returnSlotsCkeckin($section->getId());
                     $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
                     ?>
 

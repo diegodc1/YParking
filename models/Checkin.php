@@ -81,12 +81,13 @@ interface CheckinDao {
   public function findById($id);
   public function update(Checkin $u);
   public function updateStatus($status, $id);
-  public function cancel($id);
+  public function cancel($id, $reason);
 
   public function addDaily(Checkin $u);
   public function findAllDaily($date);
   public function findAllCheckinActive();
   public function findAllDailyVehicleId($date, $vehicleId);
+  public function returnSlotsCkeckin($vehicleId);
   public function returnSlotsByDate($date, $sectionId);
 }
 

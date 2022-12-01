@@ -58,5 +58,5 @@ $checkinDao->updateStatus($status, $ckinId);
 
 $_SESSION['message-type'] = 'success';
 $_SESSION['icon-message'] = '#check-circle-fill';
-$_SESSION['insert_user_message'] = "Checkin do veículo realizado com sucesso!";
+$_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
 header("Location: ../pages/checkin.php");

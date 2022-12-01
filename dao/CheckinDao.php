@@ -94,10 +94,11 @@ class CheckinDaoDB implements CheckinDao {
     return true;
   }
 
-  public function cancel($id){
-    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status WHERE ckin_id = :id");
+  public function cancel($id, $reason){
+    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status, ckin_cancel_reason = :reason WHERE ckin_id = :id");
     $sql->bindValue(':id', $id);
     $sql->bindValue(':status', 'Cancelado');
+    $sql->bindValue(':reason', $reason);
     $sql->execute();  
   }
 
@@ -120,6 +121,15 @@ class CheckinDaoDB implements CheckinDao {
   public function returnSlotsByDate($date, $sectionId){
     $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_date = :date AND ckin_section_id = :sectionId");
     $sql->bindValue(':date', $date);
+    $sql->bindValue(':sectionId', $sectionId);
+    $sql->execute();
+
+    return $sql->rowCount();
+  }
+
+  public function returnSlotsCkeckin($sectionId){
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_section_id = :sectionId AND ckin_status = :status");
+    $sql->bindValue(':status', 'Ativo');
     $sql->bindValue(':sectionId', $sectionId);
     $sql->execute();
 

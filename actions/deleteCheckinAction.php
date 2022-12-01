@@ -6,9 +6,10 @@ require_once('../dao/CheckinDao.php');
 $checkinDao = new CheckinDaoDB($pdo);
 
 $checkin_id = filter_input(INPUT_GET, 'checkinid');
+$cancel_reason = filter_input(INPUT_POST, 'cancelReasonInput');
 
 if($checkin_id){
-  $checkinDao->cancel($checkin_id);
+  $checkinDao->cancel($checkin_id, $cancel_reason);
   $_SESSION['message-type'] = 'success';
   $_SESSION['icon-message'] = '#check-circle-fill';
   $_SESSION['insert_user_message'] = "Checkin cancelado com sucesso!";
