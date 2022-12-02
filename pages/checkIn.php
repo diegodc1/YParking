@@ -4,21 +4,29 @@ require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/CheckinDao.php');
+require_once('../dao/CheckoutDao.php');
 session_start();
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
+$checkoutDao = new CheckoutDaoDB($pdo);
 $vehicle = [];
 
 $vehiclePlate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
 
 if($vehiclePlate) {
   $vehicle = $vehicleDao->findByPlate($vehiclePlate);
-  $clientId = $vehicle->getClientId();
-  $client = $clientDao->findById($clientId);
-  $vehiclePlate = '';
+
+  if($vehicle != false){
+    $clientId = $vehicle->getClientId();
+    $client = $clientDao->findById($clientId);
+    $vehiclePlate = '';
+  } else {
+    header("Location: ../components/noFindPlate.php");
+  }
+  
 } 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -28,11 +36,13 @@ $date = date("Y/m/d");
 $sections = $sectionDao->findAll();
 $checkinsToday = $checkinDao->findAllDaily($date);
 $checkinsActive = $checkinDao->findAllCheckinActive();
+$lastCheckouts = $checkoutDao->findAll();
+$allCheckins = $checkinDao->findAll();
 
 ?>
 <head>
 
-  <title>Check-in</title>
+  <title>Entrada e Saída de Veículos</title>
 
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -126,27 +136,28 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               <tr>
                 <th>Modelo</th>
                 <th>Placa</th>
-                <th>Cor</th>
                 <th>Cliente</th>
-                <th>Horár. Entrada</th>
                 <th>Seção</th>
+                <th>Data</th>
+                <th>Horár. Entrada</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <?php 
-                foreach($checkinsToday as $checkin) { 
+                foreach($allCheckins as $checkin) { 
                     $vehicleCheckin = $vehicleDao->findById($checkin->getVehicleId());
                     $clientCheckin = $clientDao->findById($checkin->getClientId());
                     $section = $sectionDao->findById($checkin->getSectionId());
+                    $dateAllCkin = $checkin->getDate();
                   ?>               
                   <tr>
                     <td><?= $vehicleCheckin->getModel()?></td>
                     <td><?= $vehicleCheckin->getPlate()?></td>
-                    <td><?= $vehicleCheckin->getColor()?></td>
                     <td><?= $clientCheckin->getName()?></td>
-                    <td><?= substr($checkin->getTime(), 0, 5)?></td>
                     <td><?= $section->getName()?></td>
+                    <td><?= date('d/m/Y', strtotime($dateAllCkin))?></td>
+                    <td><?= substr($checkin->getTime(), 0, 5)?></td>
                     <td><?= $checkin->getStatus()?></td>
                   </tr>
                 <?php } ?>
@@ -160,8 +171,13 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
     <!---------------------- CHECK-OUT  ---------------------------->
     <div class="box-right">
       <div class="checkout-box">
-        <div class="header-box">
+        <div class="header-box checkout-box">
           <h2>SAÍDA DE VEÍCULO</h2>
+          <?php if($_SESSION['user_access'] == 1) { ?>
+              <a type="" class="delete-checkin-button" data-bs-toggle="modal" data-bs-target="#cancelCkOutModal"> Chekouts Realizados </a>
+          <?php } else { ?>
+              <a href="#" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;">Cancelar</a>
+          <?php }?>
         </div>
         <div class="line"></div>
         <table id="listCheckoutVehicles" class="table">
@@ -172,8 +188,8 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               <th>Cor</th>
               <th>Cliente</th>
               <th>Seção</th>
-              <th>Status</th>
-              <th>Ações</th>
+              <th>Data Entr.</th>
+              <th>Check-out</th>
             </tr>
           </thead>
           <tbody>
@@ -184,6 +200,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
               $vehicleCk = $vehicleDao->findById($vehicleIdCk);
               $clientCk = $clientDao->findById($vehicleCk->getClientId());
               $sectionck = $sectionDao->findById($active->getSectionId());
+              $dateCkin = $active->getDate();
               ?>        
               <tr>
                 <td><?= $vehicleCk->getModel()?></td>
@@ -191,8 +208,8 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                 <td><?= $vehicleCk->getColor()?></td>
                 <td><?= $clientCk->getName()?></td>
                 <td><?= $sectionck->getName()?></td>
-                <td><?= $active->getStatus()?></td>
-                <td><a href="" data-bs-toggle="modal" data-bs-target="#checkoutModal<?= $vehicleCk->getId()?>" class="checkout-button">Check-out</a> </td>
+                <td><?= date('d/m/Y', strtotime($dateCkin))?></td>
+                <td class="td-checkout"><a href="" data-bs-toggle="modal" data-bs-target="#checkoutModal<?= $vehicleCk->getId()?>" class="checkout-button"><img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img"></a></td>
               </tr>
 
                <!------------------------- Ckeck-out modal-------------------------->
@@ -284,7 +301,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                         <td><?= $clientCheckin->getName()?></td>
                         <td><?= substr($checkin->getTime(), 0, 5)?></td>
                         <td>  
-                        <?php if($checkin->getStatus() == 'Cancelado') { ?>
+                        <?php if($checkin->getStatus() == 'Cancelado' || $checkin->getStatus() == 'Finalizado') { ?>
                           <a href="" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;"> Cancelar</a>
                         <?php } else { ?>
                           <a href="" class="delete-checkin-button" data-bs-toggle="modal" data-bs-target="#confirmCancelCheckin<?= $checkin->getId(); ?>"> Cancelar</a>
@@ -308,7 +325,9 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
                                 <div class="table-list">
                                   <section class="info-checkin-cancel">
                                       <div class="info-col-1">
-                                        <?php $date = $checkin->getDate() ;?>
+                                        <?php $date = $checkin->getDate();
+                                              $userCancelId = $_SESSION['user_id'];
+                                        ;?>
                                         <p>Veículo: <a><?= $vehicleCheckin->getModel();?></a></p>
                                         <p>Cliente: <a><?= $clientCheckin->getName()?></a></p>
                                         <p>Data: <a><?= date('d/m/Y', strtotime($date)) ?></a></p> 
@@ -323,7 +342,7 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
 
                                 <div class="cancel-reason-box">
                                   <h5>Informe o motivo do cancelamento:</h5>
-                                  <form action="../actions/deleteCheckinAction.php?checkinid=<?= $checkin->getId(); ?>" method="POST">
+                                  <form action="../actions/cancelCheckinAction.php?checkinid=<?= $checkin->getId(); ?>&userId=<?=$userCancelId?>" method="POST">
                                     <textarea name="cancelReasonInput" id="cancelReasonInput" cols="50" rows="4" style="resize: none" required></textarea>
 
                                     <div class="modal-footer">
@@ -349,6 +368,117 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
     </div>
   </div>
 
+
+
+
+<!-- Historic Checkouts Modal -->
+  <div class="modal fade" id="cancelCkOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content cancelCheckin">
+
+        <div class="modal-header cancelCheckin">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        
+
+        <div class="modal-body">
+            <h5 class="modal-title" id="exampleModalLabel">Histórico de Check-outs</h5>
+            <div class="table-list">
+              <table id="checkoutCancel" class="table" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Modelo</th>
+                    <th>Placa</th>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>Horár. Saída</th>
+                    <th></th>
+        
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php 
+                    foreach($lastCheckouts as $checkout) { 
+                        $vehicleCheckout = $vehicleDao->findById($checkout->getVehicleId());
+                        $clientCheckout = $clientDao->findById($checkout->getClientId());
+                        $sectionCheckout = $sectionDao->findById($checkout->getSectionId());
+                        $dateCkout = $checkout->getDate();
+                      ?>
+                    
+                      <tr>
+                        <td><?= $vehicleCheckout->getModel()?></td>
+                        <td><?= $vehicleCheckout->getPlate()?></td>
+                        <td><?= $clientCheckout->getName()?></td>
+                        <td><?= date('d/m/Y', strtotime($dateCkout))?></td>
+                        <td><?= substr($checkout->getTime(), 0, 5)?></td>
+                        <td>  
+                        <?php if($checkout->getStatus() == 'Cancelado') { ?>
+                          <a href="" class="delete-checkin-button" style="pointer-events: none; opacity: 0.5;"> Cancelar</a>
+                        <?php } else { ?>
+                          <a href="" class="delete-checkin-button" data-bs-toggle="modal" data-bs-target="#confirmCancelCheckout<?= $checkout->getId(); ?>"> Cancelar</a>
+                        <?php } ?>
+                        </td>
+                      </tr>
+
+
+                       <div class="modal fade" id="confirmCancelCheckout<?= $checkout->getId(); ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content cancelCheckin">
+
+                            <div class="modal-header cancelCheckin">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-body-header">
+                                  <i class="fa-solid fa-circle-xmark"></i>
+                                  <h5 class="modal-title" id="exampleModalLabel">Cancelar Check-out</h5>
+                                </div>
+                                <div class="table-list">
+                                  <section class="info-checkin-cancel">
+                                      <div class="info-col-1">
+                                        <?php $date = $checkout->getDate();
+                                              $userCancelCkoutId = $_SESSION['user_id'];
+                                        ;?>
+                                        <p>Veículo: <a><?= $vehicleCheckout->getModel();?></a></p>
+                                        <p>Cliente: <a><?= $clientCheckout->getName()?></a></p>
+                                        <p>Data: <a><?= date('d/m/Y', strtotime($date)) ?></a></p> 
+                                      </div>
+                                      <div class="info-col-2">
+                                        <p>Placa: <a><?= $vehicleCheckout->getPlate()?></a></p>  
+                                        <p>Seção: <a><?= $sectionCheckout->getName()?></a></p>                            
+                                        <p>Horário: <a><?= $checkout->getTime()?></a></p>                                                            
+                                      </div>
+                                  </section>
+                                </div>
+
+                                <div class="cancel-reason-box">
+                                  <h5>Informe o motivo do cancelamento:</h5>
+                                  <form action="../actions/cancelCheckoutAction.php?checkoutid=<?= $checkout->getId(); ?>&userId=<?=$userCancelCkoutId?>&ckin=<?=$checkout->getCkinId() ?>" method="POST">
+                                    <textarea name="cancelCkOutReasonInput" id="cancelCkOutReasonInput" cols="50" rows="4" style="resize: none" required></textarea>
+
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                      <input type="submit" class="delete-checkin-button" value="Confirmar">                                  
+                                    </div>
+                                  </form>
+                                </div>
+                            </div>                      
+                          </div>
+                        </div>
+                      </div>
+
+                    <?php } ?>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -411,6 +541,10 @@ $checkinsActive = $checkinDao->findAllCheckinActive();
       </div>
     </div>
   </div>
+
+
+  
+
 
   <script src="../js/tooltip.js"></script>
 </body>

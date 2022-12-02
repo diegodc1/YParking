@@ -77,6 +77,24 @@ $(document).ready(function () {
     }
   })
 })
+$(document).ready(function () {
+  $('#checkoutCancel').DataTable({
+    scrollY: '16rem',
+    search: {
+      search: ''
+    },
+    stateSave: true,
+
+    scrollCollapse: true,
+    paging: false,
+    // info: false,
+    ordering: false,
+    autoWidth: false,
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+    }
+  })
+})
 
 // Table to checkin list
 $(document).ready(function () {

@@ -117,3 +117,13 @@ body {
   background-color: #d82244;
 }
 /*///////////////////////////////////////////////////////*/
+
+.alert.message {
+  position: absolute;
+  top: 0;
+  right:0;
+  z-index: 20;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  width: 35vw;
+}

@@ -62,10 +62,30 @@ main {
 .box1 {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 2rem;
   background-color: var(--text-light);
   border-radius: 5px;
-  padding-top: 3rem;
+  align-items: center;
+  /* padding: 0rem 6rem; */
+}
+
+.secLarge {
+  display: flex;
+  width: 31rem;
+  align-items: center;
+  justify-content: center;
+}
+.secLarge a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.section-main {
+  display: flex;
+  gap: 1rem;
 }
 
 .buttons-section {
@@ -87,12 +107,53 @@ main {
   text-decoration: none;
 }
 
+.big-button {
+  width: 100%;
+  height: 5rem;
+  border-radius: 5px;
+  height: 7rem;
+  transition: all 0.3s linear;
+}
+
+.big-button:hover {
+  cursor: pointer;
+  transform: scale(1.023);
+  transition: all 0.3s linear;
+}
+
 .car-entry-button {
   background-color: var(--green-light);
+  border-radius: 5px 0px 0px 5px;
+}
+.car-out-button {
+  background-color: var(--red-light);
+  border-radius: 0px 5px 5px 0px;
+}
+
+.car-entry-button,
+.car-out-button {
+  background-color: none;
+  padding: 0;
+  display: flex;
+  font-weight: 700;
+  color: var(--text-light);
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  width: 100%;
+  height: 100%;
+}
+
+.car-entry-button p,
+.car-out-button p {
+  margin: 0;
 }
 
 .car-out-button {
-  background-color: var(--red-light);
+  background-color: none;
+  padding: 0;
+  display: flex;
 }
 
 .buttons-section:hover {

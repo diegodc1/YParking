@@ -13,9 +13,6 @@ Tem que fazer:
 
 
 ## Notas 29/11
--- Excluir/Cancelar checkin na pagina de checkin.
--- Colar na BD o id do usuario que fez o cancelamento do checkin
--- Quando cancelar checkin tem que dar um justificativa
 -- Colocar data e horário nos movimentos
 -- Não Excluir, e sim desativar
 -- Colocar no banco de dados quem excluiu

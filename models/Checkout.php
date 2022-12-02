@@ -107,7 +107,7 @@ interface CheckoutDao {
   public function findAll();
   public function findById($id);
   public function update(Checkout $u);
-  public function cancel($id);
+  public function cancel($id, $reason, $userId, $ckinId);
 
   public function addDaily(Checkout $u);
   public function findAllDaily($date);

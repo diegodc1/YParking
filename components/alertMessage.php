@@ -1,7 +1,7 @@
 <?php 
   if(isset($_SESSION['insert_user_message'])) {
     ?>
-      <div class="alert alert-<?php echo $_SESSION['message-type'] ?> col-md-4 alert-dismissible fade show" role="alert">
+      <div class="alert alert-<?php echo $_SESSION['message-type'] ?> col-md-4 alert-dismissible fade show message" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="<?php echo $_SESSION['icon-message'] ?>"/></svg>
         <?php echo $_SESSION['insert_user_message']?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

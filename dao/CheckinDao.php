@@ -24,13 +24,13 @@ class CheckinDaoDB implements CheckinDao {
   public function findAll(){
     $checkins = [];
 
-    $sql = $this->pdo->query("SELECT * FROM checkin");
+    $sql = $this->pdo->query("SELECT * FROM checkin ORDER BY ckin_date DESC, ckin_time DESC");
     if($sql->rowCount() > 0) {
       $data = $sql->fetchAll();
 
       foreach($data as $checkin) {
         $u = new Checkin;
-        $u->setId($checkin['ckcin_id']);
+        $u->setId($checkin['ckin_id']);
         $u->setVehicleId($checkin['ckin_vehicle_id']);
         $u->setClientId($checkin['ckin_client_id']);
         $u->setSectionId($checkin['ckin_section_id']);
@@ -94,11 +94,12 @@ class CheckinDaoDB implements CheckinDao {
     return true;
   }
 
-  public function cancel($id, $reason){
-    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status, ckin_cancel_reason = :reason WHERE ckin_id = :id");
+  public function cancel($id, $reason, $userId){
+    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :status, ckin_cancel_reason = :reason, ckin_cancel_user = :userId WHERE ckin_id = :id");
     $sql->bindValue(':id', $id);
     $sql->bindValue(':status', 'Cancelado');
     $sql->bindValue(':reason', $reason);
+    $sql->bindValue(':userId', $userId);
     $sql->execute();  
   }
 
@@ -179,7 +180,7 @@ class CheckinDaoDB implements CheckinDao {
   public function findAllCheckinActive(){
     $checkinsActive = [];
 
-    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_status = :status ORDER BY ckin_time ASC");
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_status = :status ORDER BY ckin_date DESC, ckin_time DESC");
     $sql->bindValue(':status', 'Ativo');
     $sql->execute();
 

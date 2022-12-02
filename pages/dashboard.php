@@ -45,85 +45,90 @@ $checkinsToday = $checkinDao->findAllDaily($date);
 
       <div class="main-box1">
         <div class="box1">
+
+          <section class="secLarge">
+            <a href="../pages/checkIn.php" class="big-button">
+              <div class="car-entry-button">
+                <i class="fa-solid fa-arrow-turn-up"></i>
+                <p>ENTRADA</p>
+              </div>
+
+              <div class="car-out-button">
+                <i class="fa-solid fa-arrow-turn-down"></i>
+                <p>SAÍDA</p>
+              </div> 
+            </a> 
+          </section>
         
-        <section class="sect1">
-          <a href="../pages/checkIn.php">
-            <div class="buttons-section car-entry-button">
-              <i class="fa-solid fa-arrow-turn-up"></i>
-              <p>ENTRADA DE VEÍCULO</p>
-            </div>
-          </a>
+          <section class="section-main">
+            <section class="sect1">
+              <a href="/pages/addClient.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-user-plus"></i>
+                  <p>CADASTRAR CLIENTE</p>
+                </div>
+              </a>
 
-          <a href="/pages/addClient.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-user-plus"></i>
-              <p>CADASTRAR CLIENTE</p>
-            </div>
-          </a>
+              <a href="/pages/addVehicle.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-car"></i>
+                  <p>CADASTRAR VEÍCULO</p>
+                </div>
+              </a>
+              
+              
+              <a href="/pages/addCompany.php">
+                <div class="buttons-section">
+                  <img src="../assets/imgs/icon-add-companys.png"/>
+                  <p>CADASTRAR EMPRESA</p>
+                </div>
+              </a>
+              
+              <a href="/pages/addUser.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-user-gear"></i>
+                  <p>CADASTRAR USUÁRIO</p>
+                </div>
+              </a>
+            
+            </section>
 
-          <a href="/pages/addVehicle.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-car"></i>
-              <p>CADASTRAR VEÍCULO</p>
-            </div>
-          </a>
-          
-          
-          <a href="/pages/addCompany.php">
-            <div class="buttons-section">
-              <img src="../assets/imgs/icon-add-companys.png"/>
-              <p>CADASTRAR EMPRESA</p>
-            </div>
-          </a>
-          
-          <a href="/pages/addUser.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-user-gear"></i>
-              <p>CADASTRAR USUÁRIO</p>
-            </div>
-          </a>
-        
-        </section>
-        <section class="sect2">
-          <a href="../pages/checkout.php">
-            <div class="buttons-section car-out-button">
-              <i class="fa-solid fa-arrow-turn-down"></i>
-              <p>SAÍDA DE VEÍCULO</p>
-            </div>
-          </a>
-          
-  
-          <a href="../pages/listClients.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-users"></i>
-              <p>CLIENTES CADASTRADOS</p>
-            </div>
-          </a>
-  
-          <a href="../pages/listVehicles.php">
-            <div class="buttons-section">
-               <img src="../assets/imgs/icon-vehicles.png"/>
-              <p>VEÍCULOS CADASTRADOS</p>
-            </div>
-          </a>
-  
-          
-          <a href="/pages/listCompanys.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-building-user"></i>
-              <p>EMPRESAS CONVENIADAS</p>
-            </div>
-          </a>
-          
-          <a href="/pages/listUsers.php">
-            <div class="buttons-section">
-              <i class="fa-solid fa-users-gear"></i>
-              <p>USUÁRIOS CADASTRADOS</p>
-            </div>
-          </a>
+            <section class="sect2">
+            
+      
+              <a href="../pages/listClients.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-users"></i>
+                  <p>CLIENTES CADASTRADOS</p>
+                </div>
+              </a>
+      
+              <a href="../pages/listVehicles.php">
+                <div class="buttons-section">
+                  <img src="../assets/imgs/icon-vehicles.png"/>
+                  <p>VEÍCULOS CADASTRADOS</p>
+                </div>
+              </a>
+      
+              
+              <a href="/pages/listCompanys.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-building-user"></i>
+                  <p>EMPRESAS CONVENIADAS</p>
+                </div>
+              </a>
+              
+              <a href="/pages/listUsers.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-users-gear"></i>
+                  <p>USUÁRIOS CADASTRADOS</p>
+                </div>
+              </a>
 
-  
-        </section>
+      
+            </section>
+          </section>
+          
         </div>
       
         <div class="box2">

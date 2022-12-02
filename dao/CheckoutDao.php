@@ -27,7 +27,7 @@ class CheckoutDaoDB implements CheckoutDao {
   public function findAll(){
     $checkouts = [];
 
-    $sql = $this->pdo->query("SELECT * FROM checkout");
+    $sql = $this->pdo->query("SELECT * FROM checkout ORDER BY ckout_date DESC,ckout_time DESC");
     if($sql->rowCount() > 0) {
       $data = $sql->fetchAll();
 
@@ -96,11 +96,18 @@ class CheckoutDaoDB implements CheckoutDao {
     return true;
   }
 
-  public function cancel($id){
-    $sql = $this->pdo->prepare("UPDATE Checkout SET ckout_status = :status WHERE ckout_id = :id");
+  public function cancel($id, $reason, $userId, $ckinId){
+    $sql = $this->pdo->prepare("UPDATE checkout SET ckout_status = :status, ckout_cancel_reason = :reason, ckout_cancel_user = :userId WHERE ckout_id = :id");
     $sql->bindValue(':id', $id);
     $sql->bindValue(':status', 'Cancelado');
+    $sql->bindValue(':reason', $reason);
+    $sql->bindValue(':userId', $userId);
     $sql->execute();  
+
+    $sql = $this->pdo->prepare("UPDATE checkin SET ckin_status = :statusCkin WHERE ckin_id = :idCkin");
+    $sql->bindValue(':statusCkin', 'Ativo');
+    $sql->bindValue(':idCkin', $ckinId);
+    $sql->execute();
   }
 
   //======= Daily Ckeckout Funcions =======// 

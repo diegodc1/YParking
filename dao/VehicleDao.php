@@ -94,6 +94,7 @@ class VehicleDaoDB implements VehicleDao {
     } else {
       return false;
     }
+
   }
 
 

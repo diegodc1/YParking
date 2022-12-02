@@ -81,7 +81,7 @@ interface CheckinDao {
   public function findById($id);
   public function update(Checkin $u);
   public function updateStatus($status, $id);
-  public function cancel($id, $reason);
+  public function cancel($id, $reason, $userId);
 
   public function addDaily(Checkin $u);
   public function findAllDaily($date);
