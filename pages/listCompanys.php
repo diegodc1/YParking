@@ -43,7 +43,7 @@ $clientDao = new ClientDaoDB($pdo);
 
       <div class="table-list">
         <?php require('../components/alertMessage.php')?>
-        <table id="listClientsVehicles" class="table" style="width:100%">
+        <table id="listCompanys" class="table" style="width:100%">
           <thead>
             <tr>
               <th>Nome</th>

@@ -238,6 +238,10 @@ main {
   margin-top: 2rem;
 }
 
+.boxes-occupation {
+  display: flex;
+  width: 80%;
+}
 .free-slots,
 .busy-slots {
   display: flex;

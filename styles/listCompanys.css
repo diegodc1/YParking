@@ -1,6 +1,5 @@
 body {
   width: 100vw;
-  height: 100vh;
   display: flex;
   /* flex-direction: column; */
   /* gap: 8rem; */
@@ -19,7 +18,7 @@ body {
   height: 5vh;
   font-size: 0.8rem;
   z-index: 10;
-  position: absolute;
+  position: fixed;
   top: 0;
 }
 
@@ -36,18 +35,14 @@ main {
   align-items: center;
   height: 100vh;
   width: 100vw;
+  padding-top: 2rem;
 }
 
 .main-content {
   width: 80%;
-  height: 100vh;
   display: flex;
-  /* justify-content: center; */
-  margin-top: 5rem;
-  height: 100vh;
   flex-direction: column;
-  gap: 1.5rem;
-  /* margin-top: 1.5rem; */
+  gap: 1rem;
 }
 
 .button-box {
@@ -73,7 +68,7 @@ main {
   color: var(--text-light) !important;
   border-radius: 5px;
   font-weight: 600;
-  width: 15%;
+  width: 14rem;
   display: flex;
   align-items: center;
   justify-content: center;

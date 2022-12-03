@@ -66,7 +66,7 @@ $allCheckins = $checkinDao->findAll();
 
 </head>
 
-<body>
+<body class="body-checkin">
   <?php require_once('../components/sidebar.php') ?>
 
   <header class="checkin-header">
@@ -96,7 +96,7 @@ $allCheckins = $checkinDao->findAll();
               <th>Cor</th>
               <th>Categoria</th>
               <th>Cliente</th>
-              <th>Ações</th>
+              <th>Check-in</th>
             </tr>
           </thead>
           <tbody>
@@ -108,7 +108,7 @@ $allCheckins = $checkinDao->findAll();
               <td><?php if($vehicle){echo $client->getName();} else {echo '';};?></td>
               <td>
                 <?php if($vehicle) { ?>
-                  <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button">Check-in</a>
+                  <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button"><i class="fa-solid fa-circle-up"></i></a>
                 <?php } ?>
               </td>
             </tr>

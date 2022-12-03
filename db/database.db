@@ -8,19 +8,21 @@ CREATE TABLE users (
 	PRIMARY KEY (user_id) 
 );
 
+-- DROP TABLE IF EXISTS public.companys;
+
 CREATE TABLE companys (
 	company_id SERIAL,
 	company_name VARCHAR(120),
 	company_email  VARCHAR(50),
-	company_phone INTEGER,
 	company_slots INTEGER,
+	company_phone VARCHAR(20),
 	PRIMARY KEY (company_id)
 );
 
 CREATE TABLE clients (
 	client_id SERIAL,
 	client_name VARCHAR(100),
-	client_phone INTEGER,
+	client_phone VARCHAR(20),
 	client_email VARCHAR(50),
 	client_cep INTEGER,
 	client_address VARCHAR(150),
@@ -36,11 +38,13 @@ CREATE TABLE vehicles (
 	vehicle_id SERIAL,
 	vehicle_name VARCHAR(100),
 	vehicle_plate VARCHAR(10),
+	vehicle_brand VARCHAR(30),
 	vehicle_model VARCHAR(40),
 	vehicle_color VARCHAR(20),
 	vehicle_category VARCHAR(15),
 	vehicle_departure_time VARCHAR(10),
 	vehicle_client_id INTEGER,
+	
 	PRIMARY KEY (vehicle_id),
 	FOREIGN KEY (vehicle_client_id) REFERENCES clients (client_id)
 );
@@ -60,8 +64,8 @@ CREATE TABLE movements (
 CREATE TABLE parking_sections (
 	prk_sect_id SERIAL,
 	prk_sect_name VARCHAR(30),
-	prk_sect_slots INT,
 	prk_sect_color VARCHAR(10),
+	prk_sect_slots INT,
 	PRIMARY KEY (prk_sect_id)
 );
 
@@ -71,9 +75,11 @@ CREATE TABLE checkin (
 	ckin_vehicle_id INT NOT NULL,
 	ckin_client_id INT NOT NULL, 
 	ckin_section_id INT NOT NULL,
+	ckin_date DATE NOT NULL,
 	ckin_time TIME NOT NULL, 
 	ckin_user_id INT NOT NULL,
-	ckin_status character varying(20)[] COLLATE pg_catalog."default"
+	ckin_status VARCHAR(20),
+	ckin_cancel_reason VARCHAR(600),
 	PRIMARY KEY (ckin_id),
 	FOREIGN KEY (ckin_vehicle_id) REFERENCES vehicles (vehicle_id),
 	FOREIGN KEY (ckin_client_id) REFERENCES clients (client_id),
@@ -86,36 +92,20 @@ CREATE TABLE checkout (
 	ckout_vehicle_id INT NOT NULL,
 	ckout_client_id INT NOT NULL, 
 	ckout_section_id INT NOT NULL,
+	ckout_date DATE NOT NULL,
 	ckout_time TIME NOT NULL, 
 	ckout_user_id INT NOT NULL,
+	ckout_status VARCHAR(20),
+	ckout_cancel_reason VARCHAR(600),
+	ckout_cancel_user INTEGER,
+	ckout_ckin_id integer,
+	ckout_ckin_date date,
+	ckout_ckin_time time with time zone,
 	PRIMARY KEY (ckout_id),
 	FOREIGN KEY (ckout_vehicle_id) REFERENCES vehicles (vehicle_id),
 	FOREIGN KEY (ckout_client_id) REFERENCES clients (client_id),
 	FOREIGN KEY (ckout_section_id) REFERENCES parking_sections (prk_sect_id),
 	FOREIGN KEY (ckout_user_id) REFERENCES users (user_id)
-);
-
-
-CREATE TABLE checkin_daily (
-	ckdin_id SERIAL,
-	ckdin_vehicle_id INT NOT NULL,
-	ckdin_client_id INT NOT NULL, 
-	ckdin_section_id INT NOT NULL,
-	ckdin_time TIME NOT NULL, 
-	ckdin_user_id INT NOT NULL,
-	ckdin_status VARCHAR(15),
-	PRIMARY KEY (ckdin_id)
-);
-
-CREATE TABLE checkout_daily (
-	ckdout_id SERIAL,
-	ckdout_vehicle_id INT NOT NULL,
-	ckdout_client_id INT NOT NULL, 
-	ckdout_section_id INT NOT NULL,
-	ckdout_time TIME NOT NULL, 
-	ckdout_user_id INT NOT NULL,
-	ckdout_status VARCHAR(15),
-	PRIMARY KEY (ckdout_id)
 );
 
 

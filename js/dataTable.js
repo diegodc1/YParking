@@ -8,6 +8,15 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
+  $('#listCompanys').DataTable({
+    scrollY: '50vh',
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+    }
+  })
+})
+
+$(document).ready(function () {
   $('#listSections').DataTable({
     paging: false,
     autoWidth: false,
