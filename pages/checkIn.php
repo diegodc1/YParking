@@ -14,7 +14,8 @@ $checkinDao = new CheckinDaoDB($pdo);
 $checkoutDao = new CheckoutDaoDB($pdo);
 $vehicle = [];
 
-$vehiclePlate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
+$plate = trim(filter_input(INPUT_POST, 'vehicle-plate'));
+$vehiclePlate = preg_replace('/[-\@\.\;\" "]+/', '', $plate);
 
 if($vehiclePlate) {
   $vehicle = $vehicleDao->findByPlate($vehiclePlate);

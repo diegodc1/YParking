@@ -10,6 +10,7 @@ class Client {
   private $bussinesPlan;
   private $departureTime;
   private $companyId;
+  private $status;
 
   public function getId() {
     return $this->id;
@@ -90,14 +91,24 @@ class Client {
   public function setCompanyId($companyId) {
     $this->companyId = $companyId;
   }
+
+  public function getStatus() {
+    return $this->status;
+  }
+
+  public function setStatus($status) {
+    $this->status = $status;
+  }
 }
 
 interface ClientDao {
   public function add(Client $u);
   public function findAll();
+  public function findAllAtive();
   public function findByIdReturnName($id);
   public function findById($id);
   public function findByClientIdQtd($companyId);
   public function update(Client $u);
   public function delete($id);
+  public function disable($id);
 }

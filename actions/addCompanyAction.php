@@ -6,10 +6,10 @@ session_start();
 
 $companyDao = new CompanyDaoDB($pdo);
 
-$name = filter_input(INPUT_POST, 'inputName');
-$email = filter_input(INPUT_POST, 'inputEmail');
-$phone = filter_input(INPUT_POST, 'inputPhone');
-$slots = filter_input(INPUT_POST, 'inputSlots');
+$name = trim(filter_input(INPUT_POST, 'inputName'));
+$email = trim(filter_input(INPUT_POST, 'inputEmail'));
+$phone = trim(filter_input(INPUT_POST, 'inputPhone'));
+$slots = trim(filter_input(INPUT_POST, 'inputSlots'));
 
 $newCompany = new Company();
 $newCompany->setName($name);

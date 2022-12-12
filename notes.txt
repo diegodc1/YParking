@@ -22,10 +22,8 @@ Tem que fazer:
 --colocar/criar mais niveis de acesso ao sistema
 
 
--- status checkin
-  Ativo
-  Finalizado
-  Cancelado
+--COLOCAR NO BANCO DE DADOS TABELA CLIENTES:
+  -> client_status (character varying (15))
 
 
 --Tem que ter na entrega:

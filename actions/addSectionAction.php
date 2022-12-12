@@ -6,7 +6,7 @@ session_start();
 $sectionDao = new SectionDaoDB($pdo);
 
 $name = ucwords(strtolower(trim(filter_input(INPUT_GET, 'inputNameSection'))));
-$slots = filter_input(INPUT_GET, 'inputSlotsSection');
+$slots = trim(filter_input(INPUT_GET, 'inputSlotsSection'));
 $color = filter_input(INPUT_GET, 'inputSectionColor');
 
 $newSection = new Section();

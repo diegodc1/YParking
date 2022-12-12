@@ -5,12 +5,12 @@ session_start();
 
 $usuarioDao = new UsuarioDaoDB($pdo);
 
-$name = filter_input(INPUT_POST, 'inputName');
-$email = filter_input(INPUT_POST, 'inputEmail');
-$function = filter_input(INPUT_POST, 'inputFunction');
-$password = filter_input(INPUT_POST, 'inputPassword');
-$confirmPassword = filter_input(INPUT_POST, 'inputConfirmPassword');
-$access = filter_input(INPUT_POST, 'inputAccess');
+$name = ucwords(strtolower(trim(filter_input(INPUT_POST, 'inputName'))));
+$email = trim(filter_input(INPUT_POST, 'inputEmail'));
+$function = trim(filter_input(INPUT_POST, 'inputFunction'));
+$password = trim(filter_input(INPUT_POST, 'inputPassword'));
+$confirmPassword = trim(filter_input(INPUT_POST, 'inputConfirmPassword'));
+$access = trim(filter_input(INPUT_POST, 'inputAccess'));
 
 
 if($usuarioDao->findByEmail($email) === false) {

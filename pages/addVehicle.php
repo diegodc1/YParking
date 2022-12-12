@@ -5,7 +5,7 @@ require_once('../dao/ClientDao.php');
 
 
 $clientDao = new ClientDaoDB($pdo);
-$clients = $clientDao->findAll();
+$clients = $clientDao->findAllAtive();
 ?>
 
 

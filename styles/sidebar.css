@@ -2,15 +2,17 @@
 .bg-sidebar {
   background-color: rgba(0, 0, 0, 0.582);
   width: 100vw;
-  /* height: 100vh; */
+  height: 100%;
   /* height: 100%; */
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  top: 0;
+  z-index: 4;
   transition: all 4s linear;
   /* display: none; */
 }
 .remove-bg-sidebar {
   display: none;
+  transition: all 4s linear;
 }
 aside {
   background: var(--text-light);
@@ -25,7 +27,7 @@ aside {
   -moz-box-shadow: 5px 0px 13px -8px rgba(0, 0, 0, 0.75);
   box-shadow: 5px 0px 13px -8px rgba(0, 0, 0, 0.75);
 
-  z-index: 2;
+  z-index: 5;
   left: 0;
   bottom: 0;
   position: fixed;
@@ -83,7 +85,7 @@ aside i {
   padding: 1rem;
   border-radius: 10px;
   font-size: 1rem;
-  transition: all 0.9s;
+  transition: all 0.3s linear;
 }
 
 .sections:hover {
@@ -103,6 +105,12 @@ a:visited {
 
 .menu-sections a {
   text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu-sections i {
+  width: 1rem;
 }
 
 .line {
@@ -124,22 +132,24 @@ a:visited {
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s;
-  -webkit-transition: all 0.25s;
+  -webkit-transition: all 0.5s;
   z-index: 11;
+  height: 4rem;
 }
 
 .info-user {
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+  transition: all 1s linear;
 }
 
 .info-user span {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .info-user p {
-  font-size: 0.7rem;
+  font-size: 0.8rem !important;
 }
 
 .info-user img {
@@ -204,14 +214,10 @@ a:visited {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: absolute; */
-  transition: all 0.5s;
-  -webkit-transition: all 0.25s;
+  /* transition: all 0.1s; */
+  /* -webkit-transition: all 0.5s; */
   z-index: 11;
-}
-
-.close.footer-sidebar #log-out {
-  margin-right: 1rem;
+  width: 100%;
 }
 
 .close.footer-sidebar #log-out {

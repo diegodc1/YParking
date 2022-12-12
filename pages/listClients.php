@@ -50,6 +50,7 @@ $vehicleDao = new VehicleDaoDB($pdo);
               <th>Tipo</th>
               <th>Convênio</th>
               <th>Veículos</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -63,6 +64,7 @@ $vehicleDao = new VehicleDaoDB($pdo);
                   <td><?= $client->getType();?></td>
                   <td><?= $client->getBussinesPlan();?></td>
                   <td><?= $clientVehicleQtd ?></td>
+                  <td><?= $client->getStatus();?></td>
                   <td>
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/viewClient.php?id=<?= $client->getId() ?>"><i class="fa-solid fa-eye eye"></i></a></button>
@@ -84,15 +86,15 @@ $vehicleDao = new VehicleDaoDB($pdo);
                   <div class="modal-body">
                     <div class="modal-body-1">
                       <i class="fa-solid fa-circle-exclamation"></i>
-                      <h5 class="modal-title" id="exampleModalLabel">Excluir este usuário?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Desativar Cliente</h5>
                     </div>
                     <div class="modal-body-2">
-                      <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
+                      <p class="p-modal-warning"><span>Você realmente deseja desativar este cliente?</p>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../actions/deleteClientAction.php?id=<?= $client->getId(); ?>" class="btn btn-primary button-confirm-modal" >Excluir</a>
+                    <a href="../actions/deleteClientAction.php?id=<?= $client->getId(); ?>" class="btn btn-primary button-confirm-modal" >Desativar</a>
                   </div>
                 </div>
               </div>

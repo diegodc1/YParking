@@ -9,7 +9,7 @@ class ClientDaoDB implements ClientDao {
   }
 
   public function add(Client $u){
-    $sql = $this->pdo->prepare("INSERT INTO clients (client_name, client_email, client_cep, client_phone, client_address, client_type, client_bussines_plan, client_departure_time, client_company_id) VALUES (:name, :email, :cep, :phone, :address, :type, :bussines, :departureTime, :companyId)");
+    $sql = $this->pdo->prepare("INSERT INTO clients (client_name, client_email, client_cep, client_phone, client_address, client_type, client_bussines_plan, client_departure_time, client_company_id, client_status) VALUES (:name, :email, :cep, :phone, :address, :type, :bussines, :departureTime, :companyId, :status)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':phone', $u->getPhone());
@@ -19,6 +19,7 @@ class ClientDaoDB implements ClientDao {
     $sql->bindValue(':bussines', $u->getBussinesPlan());
     $sql->bindValue(':departureTime', $u->getDepartureTime());
     $sql->bindValue(':companyId', $u->getCompanyId());
+    $sql->bindValue(':status', $u->getStatus());
 
     $sql->execute();
 
@@ -45,6 +46,34 @@ class ClientDaoDB implements ClientDao {
         $u->setBussinesPlan($client['client_bussines_plan']);
         $u->setDepartureTime($client['client_departure_time']);
         $u->setCompanyId($client['client_company_id']);
+        $u->setStatus($client['client_status']);
+
+        $clients[] = $u;
+      }
+    }
+    return $clients;
+  }
+
+  public function findAllAtive(){
+    $clients = [];
+
+    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_status = 'Ativo'");
+    if ($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach ($data as $client) {
+        $u = new Client;
+        $u->setId($client['client_id']);
+        $u->setName($client['client_name']);
+        $u->setEmail($client['client_email']);
+        $u->setPhone($client['client_phone']);
+        $u->setAddress($client['client_address']);
+        $u->setCep($client['client_cep']);
+        $u->setType($client['client_type']);
+        $u->setBussinesPlan($client['client_bussines_plan']);
+        $u->setDepartureTime($client['client_departure_time']);
+        $u->setCompanyId($client['client_company_id']);
+        $u->setStatus($client['client_status']);
 
         $clients[] = $u;
       }
@@ -100,6 +129,7 @@ class ClientDaoDB implements ClientDao {
       $u->setBussinesPlan($data['client_bussines_plan']);
       $u->setDepartureTime($data['client_departure_time']);
       $u->setCompanyId($data['client_company_id']);
+      $u->setStatus($data['client_status']);
 
       return $u;
     } else {
@@ -127,6 +157,13 @@ class ClientDaoDB implements ClientDao {
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM clients WHERE client_id = :id");
     $sql->bindValue(':id', $id);
+    $sql->execute();  
+  }
+
+   public function disable($id){
+    $sql = $this->pdo->prepare("UPDATE clients SET client_status = :status WHERE client_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Desativado');
     $sql->execute();  
   }
 }

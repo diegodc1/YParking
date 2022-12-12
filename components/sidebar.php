@@ -108,7 +108,6 @@ if($id) {
         </div>
 
         <div class="log-out" id="log-out">
-
           <a href="../index.php"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
       </div>

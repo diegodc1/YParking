@@ -12,12 +12,13 @@ if(!empty($_POST['selectedClients'])) {
   if(count($idClient) < 2) {
     $vehicleDao = new VehicleDaoDB($pdo);
     
-    $brand = filter_input(INPUT_POST, 'inputVehicleBrand');
-    $model = filter_input(INPUT_POST, 'inputVehicleModel');
-    $plate = filter_input(INPUT_POST, 'inputVehiclePlate');
-    $color = filter_input(INPUT_POST, 'inputVehicleColor');
-    $category = filter_input(INPUT_POST, 'inputVehicleCategory');
-    $departureTime = filter_input(INPUT_POST, 'inputHourOut');
+    $brand = trim(filter_input(INPUT_POST, 'inputVehicleBrand'));
+    $model = trim(filter_input(INPUT_POST, 'inputVehicleModel'));
+    $plate = trim(filter_input(INPUT_POST, 'inputVehiclePlate'));
+    $color = trim(filter_input(INPUT_POST, 'inputVehicleColor'));
+    $category = trim(filter_input(INPUT_POST, 'inputVehicleCategory'));
+    $departureTime = trim(filter_input(INPUT_POST, 'inputHourOut'));
+    $newPlate = preg_replace('/[-\@\.\;\" "]+/', '', $plate);
     $clientId = $idClient[0];
 
     $newVehicle = new Vehicle();
