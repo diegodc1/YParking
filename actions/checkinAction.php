@@ -19,6 +19,7 @@ $vehicle = $vehicleDao->findById($vehicleId);
 $clientId = $vehicle->getClientId();
 $sectionId = filter_input(INPUT_GET, 'section');
 $userId = $_SESSION['user_id'];
+$client = $clientDao->findById($clientId);
 
 //Pega a data atual
 date_default_timezone_set('America/Sao_Paulo');
@@ -31,28 +32,44 @@ $time = date('H:i:s');
 $date = date("d/m/Y");
 $status = "Ativo"; 
 
-if($checkinsVehicle === false) {
-  $newCheckIn = new Checkin;
-  $newCheckIn->setVehicleId($vehicleId);
-  $newCheckIn->setClientId($clientId);
-  $newCheckIn->setSectionId($sectionId);
-  $newCheckIn->setUserId($userId);
-  $newCheckIn->setTime($time);
-  $newCheckIn->setStatus($status);
-  $newCheckIn->setDate($date);
+//Verifica se o cliente está com o cadastro ativo
+if($client->getStatus() === 'Ativo') {
 
-  $checkinDao->add($newCheckIn);
+  //Verifica se o veículo está com o cadastro ativo
+  if($vehicle->getStatus() === 'Ativo'){
+    if($checkinsVehicle === false) {
+    $newCheckIn = new Checkin;
+    $newCheckIn->setVehicleId($vehicleId);
+    $newCheckIn->setClientId($clientId);
+    $newCheckIn->setSectionId($sectionId);
+    $newCheckIn->setUserId($userId);
+    $newCheckIn->setTime($time);
+    $newCheckIn->setStatus($status);
+    $newCheckIn->setDate($date);
 
-  $_SESSION['message-type'] = 'success';
-  $_SESSION['icon-message'] = '#check-circle-fill';
-  $_SESSION['insert_user_message'] = "Checkin do veículo realizado com sucesso!";
-  header("Location: ../pages/checkin.php");
+    $checkinDao->add($newCheckIn);
+
+    $_SESSION['message-type'] = 'success';
+    $_SESSION['icon-message'] = '#check-circle-fill';
+    $_SESSION['insert_user_message'] = "Checkin do veículo realizado com sucesso!";
+    header("Location: ../pages/checkin.php");
+    } else {
+      $_SESSION['message-type'] = 'danger';
+      $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+      $_SESSION['insert_user_message'] = "Este veículo já está com um check-in ativo!";
+      header("Location: ../pages/checkin.php");
+    }
+  } else {
+    $_SESSION['message-type'] = 'danger';
+    $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+    $_SESSION['insert_user_message'] = "Veículo está com o cadastro desativado! Reative para prosseguir com está ação!";
+    header("Location: ../pages/checkin.php");
+  }
 } else {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
-  $_SESSION['insert_user_message'] = "Este veículo já está com um check-in ativo!";
+  $_SESSION['insert_user_message'] = "Proprietário do veículo está com seu cadastro desativado! Reative para prosseguir com está ação!";
   header("Location: ../pages/checkin.php");
 }
-
 
 

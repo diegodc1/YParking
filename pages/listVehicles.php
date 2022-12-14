@@ -31,7 +31,7 @@ $clientDao = new ClientDaoDB($pdo);
     <div class="main-content">
       
       <div class="button-box">
-       
+        <a href="dashboard.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <a href="/pages/addVehicle.php" class="add-user-button">Cadastrar Veículo</a>
       </div>
 
@@ -47,6 +47,7 @@ $clientDao = new ClientDaoDB($pdo);
               <th>Categoria</th>
               <th>Horário Saída</th>  
               <th>Cliente</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -61,10 +62,16 @@ $clientDao = new ClientDaoDB($pdo);
                   <td><?= $vehicle->getCategory(); ?></td>
                   <td><?= $vehicle->getDepartureTime(); ?></td>
                   <td><?= $client = $clientDao->findByIdReturnName($vehicle->getClientId())?></td>
+                  <td><?= $vehicle->getStatus()?></td>
                   <td>
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editVehicle.php?id=<?= $vehicle->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $vehicle->getId()?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                      <?php 
+                        if($vehicle->getStatus() === 'Ativo') { ?>
+                          <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $vehicle->getId()?>"><i class="fa-solid fa-ban trash"></i></a></button>
+                        <?php } else { ?>
+                          <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmReactModal<?= $vehicle->getId()?>"><i class="fa-solid fa-power-off reactivate"></i></a></button>
+                        <?php }?>
                     </div>
                   </td>
                 </tr>
@@ -81,15 +88,39 @@ $clientDao = new ClientDaoDB($pdo);
                   <div class="modal-body">
                     <div class="modal-body-1">
                       <i class="fa-solid fa-circle-exclamation"></i>
-                      <h5 class="modal-title" id="exampleModalLabel">Excluir este veículo?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Desativar este veículo?</h5>
                     </div>
                     <div class="modal-body-2">
-                      <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
+                      <p class="p-modal-warning">Você realmente deseja desativar este veículo</p>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../actions/deleteVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal">Excluir</a>
+                    <a href="../actions/disableVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal">Desativar</a>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Confirm active modal-->
+            <div class="modal fade" id="confirmReactModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="modal-body-1">
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      <h5 class="modal-title" id="exampleModalLabel">Reativar este veículo?</h5>
+                    </div>
+                    <div class="modal-body-2">
+                      <p class="p-modal-warning">Você realmente deseja reativar este veículo?</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="../actions/reactivateVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal react">Excluir</a>
                   </div>
                 </div>
             </div>
@@ -111,7 +142,4 @@ $clientDao = new ClientDaoDB($pdo);
   <script src="../js/dataTable.js"></script>
 
 </body>
-
-
-
 </html>

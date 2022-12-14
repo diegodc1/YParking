@@ -23,6 +23,7 @@ $vehicleDao = new VehicleDaoDB($pdo);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="../styles/listClients.css">
+  <link rel="stylesheet" href="../styles/style.css">
 </head>
 
 <body>
@@ -37,12 +38,13 @@ $vehicleDao = new VehicleDaoDB($pdo);
   <main>
     <div class="main-content">
       <div class="button-box">
+          <a href="dashboard.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <a href="/pages/addClient.php" class="add-user-button">Cadastrar Cliente</a>
       </div>
 
       <div class="table-list">
         <?php require('../components/alertMessage.php')?>
-        <table id="listClientsVehicles" class="table" style="width:100%">
+        <table id="listClients" class="table" style="width:100%">
           <thead>
             <tr>
               <th>Nome</th>
@@ -69,7 +71,12 @@ $vehicleDao = new VehicleDaoDB($pdo);
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/viewClient.php?id=<?= $client->getId() ?>"><i class="fa-solid fa-eye eye"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editClient.php?id=<?= $client->getId() ?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $client->getId();?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                      <?php 
+                        if($client->getStatus() === 'Ativo'){ ?>
+                            <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $client->getId();?>"><i class="fa-solid fa-ban trash"></i></a></button>
+                        <?php } else { ?>
+                            <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmActiveModal<?= $client->getId();?>"><i class="fa-solid fa-power-off reactivate"></i></a></button>
+                        <?php } ?>  
                     </div>
                   </td>
                 </tr>
@@ -94,7 +101,31 @@ $vehicleDao = new VehicleDaoDB($pdo);
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../actions/deleteClientAction.php?id=<?= $client->getId(); ?>" class="btn btn-primary button-confirm-modal" >Desativar</a>
+                    <a href="../actions/disableClientAction.php?id=<?= $client->getId(); ?>" class="btn btn-primary button-confirm-modal" >Desativar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="confirmActiveModal<?= $client->getId();?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="modal-body-1">
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      <h5 class="modal-title" id="exampleModalLabel">Reativar Cliente</h5>
+                    </div>
+                    <div class="modal-body-2">
+                      <p class="p-modal-warning"><span>Você realmente deseja reativar este cliente?</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="../actions/reactivateClientAction.php?id=<?= $client->getId(); ?>" class="btn btn-primary button-confirm-modal act" >Reativar</a>
                   </div>
                 </div>
               </div>

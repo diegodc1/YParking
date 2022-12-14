@@ -79,6 +79,8 @@ interface CheckinDao {
   public function add(Checkin $u);
   public function findAll();
   public function findById($id);
+  public function findActiveByClientId($id);
+  public function findActiveByVehicleId($id);
   public function update(Checkin $u);
   public function updateStatus($status, $id);
   public function cancel($id, $reason, $userId);

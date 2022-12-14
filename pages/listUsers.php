@@ -46,39 +46,22 @@ $users = $usuarioDao->findAll();
       </svg>
     
     <div class="main-content">
+        <?php require('../components/alertMessage.php')?>
+
       <div class="button-box">
-        <p></p>
-        <?php 
-        if(isset($_SESSION['insert_user_message'])) {
-          ?>
-            <div class="alert alert-<?php echo $_SESSION['message-type'] ?> col-md-4 alert-dismissible fade show message-box" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="<?php echo $_SESSION['icon-message'] ?>"/></svg>
-              <?php echo $_SESSION['insert_user_message']?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          <?php
-          unset($_SESSION['insert_user_message']);
-          echo "<script> let div = document.querySelector('.alert');
-            function removeAlert() {
-              let div = document.querySelector('.alert').style.display=\"none\";
-            }
-          
-            setTimeout(removeAlert, 4000);
-          </script>";
-        } else { ?>
-            <p></p>
-        <?php } ?>
+        <a href="dashboard.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <a href="/pages/addUser.php" class="add-user-button">Cadastrar Usuário</a>
       </div>
 
-      <div class="table-list">
-        <table id="listClientsVehicles" class="table" style="width:100%">
+      <div class="table-list main-list-users">
+        <table id="listUsers" class="table" style="width:100%; height: 100%">
           <thead>
             <tr>
               <th>Nome</th>
               <th>Email</th>
               <th>Cargo</th>
               <th>Nível de acesso</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -94,45 +77,74 @@ $users = $usuarioDao->findAll();
                   } else {
                     echo "Comum";
                   } ?></td>
+                  <td><?= $user->getStatus(); ?></td>
                   <td>
                     <div class="action-buttons">
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-eye eye"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                      <?php  if($user->getStatus() === 'Ativo') { ?>
+                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $user->getId(); ?>"><i class="fa-solid fa-ban trash"></i></a></button>
+                      <?php } else { ?>
+                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmReactModal<?= $user->getId(); ?>"><i class="fa-solid fa-power-off reactivate"></i></a></button>
+                      <?php }?>
                     </div>
                   </td>
                 </tr>
+
+                <!-- Confirm disable modal-->
+                <div class="modal fade" id="confirmDelModal<?= $user->getId(); ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="modal-body-1">
+                          <i class="fa-solid fa-circle-exclamation"></i>
+                          <h5 class="modal-title" id="exampleModalLabel">Desativar este usuário?</h5>
+                        </div>
+                        <div class="modal-body-2">
+                          <p class="p-modal-warning">Você realmente deseja desativar este cliente?</p>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="../actions/disableUserAction.php?id=<?= $user->getId(); ?>" class="btn btn-primary button-confirm-modal" >Desativar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Confirm active modal-->
+                <div class="modal fade" id="confirmReactModal<?= $user->getId(); ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="modal-body-1">
+                          <i class="fa-solid fa-circle-exclamation"></i>
+                          <h5 class="modal-title" id="exampleModalLabel">Reativar este usuário?</h5>
+                        </div>
+                        <div class="modal-body-2">
+                          <p class="p-modal-warning">Você realmente deseja reaativar este cliente?</p>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="../actions/reactivateUserAction.php?id=<?= $user->getId(); ?>" class="btn btn-primary button-confirm-modal reac" >Reativar</a>
+                      </div>
+                    </div>
+                  </div>
               <?php } ?>
           </tbody>
-
         </table>
       </div>
     </div>
   </main>
-
-  <!-- Confirm delete modal-->
-  <div class="modal fade" id="confirmDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-body-1">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <h5 class="modal-title" id="exampleModalLabel">Excluir este usuário?</h5>
-          </div>
-          <div class="modal-body-2">
-            <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-          <a href="../actions/deleteUserAction.php?id=<?= $user->getId(); ?>" class="btn btn-primary button-confirm-modal" >Excluir</a>
-        </div>
-      </div>
-    </div>
   </div>
 
 

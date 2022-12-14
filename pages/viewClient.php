@@ -81,12 +81,14 @@ if($client === false) {
               <span><?= $client->getBussinesPlan();?></span>
             </div>
 
-            <?php $companyName = $companyDao->findById($client->getCompanyId()); ?>
-            <div class="col-2">
-              <p class="title-info">Empresa:</p>
-              <span><?= $companyName->getName();?></span>
-            </div>
-          </div>
+            <?php $companyName = $companyDao->findById($client->getCompanyId()); 
+            
+            if($companyName) { ?>
+              <div class="col-2">
+                <p class="title-info">Empresa:</p>
+                <span><?= $companyName->getName();?></span>
+              </div>
+            <?php } ?>
         </div>
 
         <div class="table-list">

@@ -68,6 +68,62 @@ class CheckinDaoDB implements CheckinDao {
       return false;
     }
   }
+  
+  //Retorna os check-ins ativos de determinado cliente
+  public function findActiveByClientId($id){
+    $checkins = [];
+
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_client_id = :id AND ckin_status = :status");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']); 
+        $u->setDate($checkin['ckin_date']);
+
+        $checkins[] = $u; 
+      }     
+    } 
+    return $checkins;
+  }
+  public function findActiveByVehicleId($id){
+    $checkins = [];
+
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_vehicle_id = :id AND ckin_status = :status");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']); 
+        $u->setDate($checkin['ckin_date']);
+
+        $checkins[] = $u; 
+      }     
+    } 
+    return $checkins;
+  }
 
   public function update(Checkin $u){
     $sql = $this->pdo->prepare("UPDATE checkin SET ckin_vehicle_id = :vehicleId, ckin_clientId = :clientId, ckin_section_id = :sectionId, ckin_time = :time, ckin_user_id = userId WHERE ckin_id = :id");
@@ -102,7 +158,6 @@ class CheckinDaoDB implements CheckinDao {
     $sql->bindValue(':userId', $userId);
     $sql->execute();  
   }
-
 
 
   //======= Daily Ckeckin Funcions =======// 

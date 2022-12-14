@@ -29,6 +29,34 @@ body {
   );
 }
 
+/******* Back button **********/
+
+.back-button {
+  background-color: var(--dark-blue-text) !important;
+  border: none;
+  text-decoration: none;
+  transition: all 0.4s linear;
+  font-weight: 600;
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  width: 10% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.back-button:hover {
+  background-color: var(--dark-blue-text);
+  transform: scale(1.06);
+  transition: all 0.3s linear;
+}
+
+.back-button i {
+  margin-right: 0.1rem;
+}
+
+
 /*****************  CONFIRM DELETE MODAL *******************/
 .modal-dialog {
   display: flex !important;

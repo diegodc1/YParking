@@ -30,6 +30,7 @@ CREATE TABLE clients (
 	client_bussines_plan VARCHAR(10),
 	client_departure_time VARCHAR(10),
 	client_company_id INTEGER,
+	client_status VARCHAR(15),
 	PRIMARY KEY (client_id),
 	FOREIGN KEY (client_company_id) REFERENCES companys (company_id)
 );

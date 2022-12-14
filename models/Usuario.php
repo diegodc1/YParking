@@ -7,6 +7,7 @@ class Usuario
   private $function;
   private $access;
   private $password;
+  private $status;
 
   public function getId() {
     return $this->id;
@@ -55,6 +56,14 @@ class Usuario
   public function setPassword($p) {
     $this->password = password_hash($p, PASSWORD_DEFAULT);
   }
+
+  public function getStatus() {
+    return $this->status;
+  }
+
+  public function setStatus($s) {
+    $this->status = $s;
+  }
 }
 
 interface UsuarioDao {
@@ -65,4 +74,5 @@ interface UsuarioDao {
   public function update(Usuario $u);
   public function updatePerfil(Usuario $u, $pass);
   public function delete($id);
+  public function disable($id);
 }

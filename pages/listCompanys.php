@@ -38,6 +38,7 @@ $clientDao = new ClientDaoDB($pdo);
   <main>
     <div class="main-content">
       <div class="button-box">
+        <a href="dashboard.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <a href="/pages/addCompany.php" class="add-user-button">Cadastrar Empresa</a>
       </div>
 

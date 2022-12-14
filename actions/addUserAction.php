@@ -11,6 +11,7 @@ $function = trim(filter_input(INPUT_POST, 'inputFunction'));
 $password = trim(filter_input(INPUT_POST, 'inputPassword'));
 $confirmPassword = trim(filter_input(INPUT_POST, 'inputConfirmPassword'));
 $access = trim(filter_input(INPUT_POST, 'inputAccess'));
+$status = 'Ativo';
 
 
 if($usuarioDao->findByEmail($email) === false) {
@@ -21,6 +22,7 @@ if($usuarioDao->findByEmail($email) === false) {
     $newUser->setFunction($function);
     $newUser->setPassword($password);
     $newUser->setAccess($access);
+    $newUser->setStatus($status);
 
     $usuarioDao->add($newUser);
 

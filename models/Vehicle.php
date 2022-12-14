@@ -10,6 +10,7 @@ class Vehicle {
   private $departureTime;
   private $clientId;
   private $client;
+  private $status;
 
   public function getId() {
     return $this->id;
@@ -81,6 +82,13 @@ class Vehicle {
 
   public function setClient($client) {
     $this->client= $client; 
+  }
+  public function getStatus() {
+    return $this->status;
+  }
+
+  public function setStatus($status) {
+    $this->status= $status; 
   }
 }
 

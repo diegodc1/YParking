@@ -20,10 +20,10 @@ Tem que fazer:
 -- O sistema deve informar o valor final para cobrar
     *Possibilidade do estacionamento mudar o valor das cobranças.
 --colocar/criar mais niveis de acesso ao sistema
+-- se o user tiver desativado não pode fazer login.
 
-
---COLOCAR NO BANCO DE DADOS TABELA CLIENTES:
-  -> client_status (character varying (15))
 
 
 --Tem que ter na entrega:
+
+

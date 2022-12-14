@@ -16,6 +16,7 @@ $checkoutDao = new CheckoutDaoDB($pdo);
 $vehicleId = filter_input(INPUT_GET, 'vehicle');
 $vehicle = $vehicleDao->findById($vehicleId);
 $clientId = $vehicle->getClientId();
+$client = $clientDao->findById($clientId);
 $ckinId = filter_input(INPUT_GET, 'ckin');
 $sectionId = filter_input(INPUT_GET, 'section');
 $userId = $_SESSION['user_id'];
@@ -27,36 +28,39 @@ $ckinTime = $checkin->getTime();
 $ckinDate = $checkin->getDate();
 
 
-//Pega a data atual
+//Pega a data e horario atual
 date_default_timezone_set('America/Sao_Paulo');
-
 $time = date('H:i:s');
 $date = date("d/m/Y");
 $status = "Finalizado"; 
 
+if($vehicleId) {
+  $newCheckout = new Checkout;
+  $newCheckout->setVehicleId($vehicleId);
+  $newCheckout->setClientId($clientId);
+  $newCheckout->setSectionId($sectionId);
+  $newCheckout->setUserId($userId);
+  $newCheckout->setTime($time);
+  $newCheckout->setStatus($status);
+  $newCheckout->setDate($date);
+  $newCheckout->setCkinTime($ckinTime);
+  $newCheckout->setCkinDate($ckinDate);
+  $newCheckout->setCkinId($ckinId);
 
-$newCheckout = new Checkout;
-$newCheckout->setVehicleId($vehicleId);
-$newCheckout->setClientId($clientId);
-$newCheckout->setSectionId($sectionId);
-$newCheckout->setUserId($userId);
-$newCheckout->setTime($time);
-$newCheckout->setStatus($status);
-$newCheckout->setDate($date);
-$newCheckout->setCkinTime($ckinTime);
-$newCheckout->setCkinDate($ckinDate);
-$newCheckout->setCkinId($ckinId);
+  $checkoutDao->add($newCheckout);
 
-$checkoutDao->add($newCheckout);
+  $updateCheckin = new Checkin;
+  $updateCheckin->setStatus($status);
 
+  $checkinDao->updateStatus($status, $ckinId);
 
-$updateCheckin = new Checkin;
-$updateCheckin->setStatus($status);
-
-
-$checkinDao->updateStatus($status, $ckinId);
-
-$_SESSION['message-type'] = 'success';
-$_SESSION['icon-message'] = '#check-circle-fill';
-$_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
-header("Location: ../pages/checkin.php");
+  $_SESSION['message-type'] = 'success';
+  $_SESSION['icon-message'] = '#check-circle-fill';
+  $_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
+  header("Location: ../pages/checkin.php");
+} else {
+  $_SESSION['message-type'] = 'danger';
+  $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+  $_SESSION['insert_user_message'] = 'Houve um erro neste processo!';
+  header("Location: ../pages/checkin.php");
+}

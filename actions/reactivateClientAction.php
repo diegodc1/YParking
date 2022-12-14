@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/VehicleDao.php');
@@ -12,13 +12,12 @@ $id = filter_input(INPUT_GET, 'id');
 $vehicleDao->findByClientIdQtd($id);
 $clientVehicleQtd = $vehicleDao->findByClientIdQtd($id);
 
-
-if ($id) {
-$clientDao->disable($id);
-$_SESSION['message-type'] = 'success';
-$_SESSION['icon-message'] = '#check-circle-fill';
-$_SESSION['insert_user_message'] = 'Cliente desativado com sucesso!';
-header("Location: ../pages/listClients.php");
+if($id){
+  $clientDao->reactivate($id);
+  $_SESSION['message-type'] = 'success';
+  $_SESSION['icon-message'] = '#check-circle-fill';
+  $_SESSION['insert_user_message'] = 'Cliente reativado com sucesso!';
+  header("Location: ../pages/listClients.php");
 } else {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';

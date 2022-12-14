@@ -9,12 +9,13 @@ class UsuarioDaoDB implements UsuarioDAO {
 
   // Add user no BD.
   public function add(Usuario $u) {
-    $sql = $this->pdo->prepare("INSERT INTO users (user_name, user_email, user_function, user_access, user_password) VALUES (:name, :email, :function, :access, :password)");
+    $sql = $this->pdo->prepare("INSERT INTO users (user_name, user_email, user_function, user_access, user_password, user_staus) VALUES (:name, :email, :function, :access, :password, :status)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':function', $u->getFunction());
     $sql->bindValue(':access', $u->getAccess());
     $sql->bindValue(':password', $u->getPassword());
+    $sql->bindValue(':status', $u->getStatus());
 
     $sql->execute();
     
@@ -37,6 +38,7 @@ class UsuarioDaoDB implements UsuarioDAO {
         $u->setFunction($user['user_function']);
         $u->setAccess($user['user_access']);
         $u->setPassword($user['user_password']);
+        $u->setStatus($user['user_status']);
 
         $users[] = $u;
       }
@@ -59,6 +61,7 @@ class UsuarioDaoDB implements UsuarioDAO {
       $u->setFunction($data['user_function']);
       $u->setAccess($data['user_access']);
       $u->setPassword($data['user_password']);
+      $u->setStatus($data['user_status']);
 
       return $u;
     } else {
@@ -81,6 +84,7 @@ class UsuarioDaoDB implements UsuarioDAO {
       $u->setFunction($data['user_function']);
       $u->setAccess($data['user_access']);
       $u->setPassword($data['user_password']);
+      $u->setStatus($data['user_status']);
 
       return $u;
     } else {
@@ -102,6 +106,7 @@ class UsuarioDaoDB implements UsuarioDAO {
         $u->setFunction($data['user_function']);
         $u->setAccess($data['user_access']);
         $u->setPassword($data['user_password']);
+        $u->setStatus($data['user_status']);
 
         return $u;
     } else {
@@ -143,6 +148,20 @@ class UsuarioDaoDB implements UsuarioDAO {
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM users WHERE user_id = :id");
     $sql->bindValue(':id', $id);
+    $sql->execute();  
+  }
+
+  public function disable($id){
+    $sql = $this->pdo->prepare("UPDATE users SET user_status = :status WHERE user_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Desativado');
+    $sql->execute();  
+  }
+
+  public function reactivate($id){
+    $sql = $this->pdo->prepare("UPDATE users SET user_status = :status WHERE user_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
 }

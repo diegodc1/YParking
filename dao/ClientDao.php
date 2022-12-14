@@ -160,10 +160,17 @@ class ClientDaoDB implements ClientDao {
     $sql->execute();  
   }
 
-   public function disable($id){
+  public function disable($id){
     $sql = $this->pdo->prepare("UPDATE clients SET client_status = :status WHERE client_id = :id");
     $sql->bindValue(':id', $id);
     $sql->bindValue(':status', 'Desativado');
+    $sql->execute();  
+  }
+
+  public function reactivate($id){
+    $sql = $this->pdo->prepare("UPDATE clients SET client_status = :status WHERE client_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
 }

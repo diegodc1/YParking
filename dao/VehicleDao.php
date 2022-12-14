@@ -9,7 +9,7 @@ class VehicleDaoDB implements VehicleDao {
   }  
   
   public function add(Vehicle $u){
-    $sql = $this->pdo->prepare("INSERT INTO vehicles (vehicle_model, vehicle_plate, vehicle_color, vehicle_category, vehicle_departure_time, vehicle_client_id, vehicle_brand) VALUES (:model, :plate, :color, :category, :depTime, :clientId, :brand)");
+    $sql = $this->pdo->prepare("INSERT INTO vehicles (vehicle_model, vehicle_plate, vehicle_color, vehicle_category, vehicle_departure_time, vehicle_client_id, vehicle_brand, vehicle_status) VALUES (:model, :plate, :color, :category, :depTime, :clientId, :brand, :status)");
     $sql->bindValue(':model', $u->getModel());
     $sql->bindValue(':plate', $u->getPlate());
     $sql->bindValue(':color', $u->getColor());
@@ -17,6 +17,7 @@ class VehicleDaoDB implements VehicleDao {
     $sql->bindValue(':brand', $u->getBrand());
     $sql->bindValue(':depTime', $u->getDepartureTime());
     $sql->bindValue(':clientId', $u->getClientId());
+    $sql->bindValue(':status', $u->getStatus());
 
     $sql->execute();
 
@@ -41,6 +42,7 @@ class VehicleDaoDB implements VehicleDao {
         $u->setBrand($vehicle['vehicle_brand']);
         $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
+        $u->setStatus($vehicle['vehicle_status']);
 
         $vehicles[] = $u;
       }
@@ -67,6 +69,7 @@ class VehicleDaoDB implements VehicleDao {
         $u->setBrand($vehicle['vehicle_brand']);
         $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
+        $u->setStatus($vehicle['vehicle_status']);
       }
     }
 
@@ -89,7 +92,7 @@ class VehicleDaoDB implements VehicleDao {
       $u->setBrand($data['vehicle_brand']);
       $u->setDepartureTime($data['vehicle_departure_time']);
       $u->setClientId($data['vehicle_client_id']);
-
+      $u->setStatus($data['vehicle_status']);
       return $u;
     } else {
       return false;
@@ -118,7 +121,7 @@ class VehicleDaoDB implements VehicleDao {
         $u->setBrand($vehicle['vehicle_brand']);
         $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
-
+        $u->setStatus($vehicle['vehicle_status']);
         $vehicles[] = $u;
       } 
     } 
@@ -148,7 +151,8 @@ class VehicleDaoDB implements VehicleDao {
       $v->setBrand($data['vehicle_brand']);
       $v->setDepartureTime($data['vehicle_departure_time']);
       $v->setClientId($data['vehicle_client_id']);
-
+      $v->setStatus($data['vehicle_status']);
+    
       return $v;
     } else {
       return false;
@@ -172,6 +176,20 @@ class VehicleDaoDB implements VehicleDao {
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM vehicles WHERE vehicle_id = :id");
     $sql->bindValue(':id', $id);
+    $sql->execute();  
+  }
+
+  public function disable($id){
+    $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_status = :status WHERE vehicle_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Desativado');
+    $sql->execute();  
+  }
+
+  public function reactivate($id){
+    $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_status = :status WHERE vehicle_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
 }

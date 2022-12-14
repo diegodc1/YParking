@@ -111,4 +111,5 @@ interface ClientDao {
   public function update(Client $u);
   public function delete($id);
   public function disable($id);
+  public function reactivate($id);
 }

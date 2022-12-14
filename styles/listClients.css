@@ -54,6 +54,7 @@ main {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
 }
 
 .submit-button {
@@ -128,4 +129,19 @@ main {
 .trash {
   color: var(--red-light);
   opacity: 0.9;
+}
+
+.reactivate {
+  color: var(--green-light);
+  opacity: 0.9;
+}
+
+.button-confirm-modal.act {
+  background-color: var(--green-light);
+}
+
+.button-confirm-modal.act:hover {
+  background-color: var(--green-light);
+
+  filter: brightness(1.08button-box);
 }
