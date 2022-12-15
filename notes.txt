@@ -21,7 +21,7 @@ Tem que fazer:
     *Possibilidade do estacionamento mudar o valor das cobranças.
 --colocar/criar mais niveis de acesso ao sistema
 -- se o user tiver desativado não pode fazer login.
-
+-- esqueceu senha
 
 
 --Tem que ter na entrega:

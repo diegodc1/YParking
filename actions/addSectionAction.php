@@ -19,6 +19,5 @@ $sectionDao->add($newSection);
 $_SESSION['message-type'] = 'success';
 $_SESSION['icon-message'] = '#check-circle-fill';
 $_SESSION['insert_user_message'] = "Seção cadastrada com sucesso!";
-header("Location: ../pages/parkingSections.php");
+header("Location: ../pages/parking.php");
 exit();
-

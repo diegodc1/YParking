@@ -3,7 +3,8 @@ require_once('../models/Checkin.php');
 
 class CheckinDaoDB implements CheckinDao {
   private $pdo;
-   public function __construct(PDO $driver) {
+  
+  public function __construct(PDO $driver) {
     $this->pdo = $driver;
   }
 

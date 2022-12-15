@@ -110,6 +110,27 @@ CREATE TABLE checkout (
 );
 
 
+CREATE TABLE prices (
+	prc_id SERIAL,
+	prc_car_15 MONEY,
+	prc_car_30 MONEY,
+	prc_car_1h MONEY,
+	prc_car_2h MONEY,
+	prc_car_3h MONEY,
+	prc_car_6h MONEY,
+	prc_car_day MONEY,
+	prc_mtbike_15 MONEY,
+	prc_mtbike_30 MONEY,
+	prc_mtbike_1h MONEY,
+	prc_mtbike_2h MONEY,
+	prc_mtbike_3h MONEY,
+	prc_mtbike_6h MONEY,
+	prc_mtbike_day MONEY,
+
+	PRIMARY KEY (price_id)
+);
+
+
 ----------------
 Add users:
 
