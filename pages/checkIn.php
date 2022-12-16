@@ -5,6 +5,7 @@ require_once('../dao/ClientDao.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/CheckinDao.php');
 require_once('../dao/CheckoutDao.php');
+require_once('../dao/CheckoutDao.php');
 session_start();
 
 $vehicleDao = new VehicleDaoDB($pdo);
@@ -64,11 +65,23 @@ $allCheckins = $checkinDao->findAll();
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <script src="../js/tooltip.js"></script>
   <script src="../js/dataTable.js"></script>
-
 </head>
 
 <body class="body-checkin">
-  <?php require_once('../components/sidebar.php') ?>
+  <?php require_once('../components/sidebar.php') ;
+  
+    if(isset($_SESSION['showModalCkout']) && ($_SESSION['showModalCkout']) === 'true') {
+      echo "<script>
+              $(document).ready(() => {
+                $('#totalValue').modal('show');
+              })
+            </script>";
+    } 
+
+    unset($_SESSION['showModalCkout']);
+  ?>
+
+  
 
   <header class="checkin-header">
     <h1>REALIZAR ENTRADA E SAÍDA DE VEÍCULO</h1>
@@ -231,7 +244,6 @@ $allCheckins = $checkinDao->findAll();
                       <div class="modal-body-2">
                         <section class="info-vehicle-checkout">
                             <div class="info-col-1">
-  
                               <p>Modelo: <a><?= $vehicleCk->getModel()?></a></p>
                               <p>Categoria: <a><?= $vehicleCk->getCategory()?></a></p>
                               <p>Cor: <a><?= $vehicleCk->getColor()?></a></p>
@@ -241,18 +253,26 @@ $allCheckins = $checkinDao->findAll();
                               <p>Cliente: <a><?= $clientCk->getName()?></a></p>
                             </div>
                         </section>
+
+                        <div class="div-line"></div>
+
+                        <section class="price-value-sec">
+                          <p>Valor Total: </p>
+                          <p class="price-value">R$24,40</p>
+                        </section>
                       </div>
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer ckout">
                       <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                      <a href="../actions/checkoutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>" class="btn btn-secondary btn-confirm-checkout">Confirmar</a>
+                      <a href="../actions/checkoutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>" class="btn btn-secondary btn-confirm-checkout" >Confirmar</a>
                     </div>
 
                   </div>
                 </div>
               </div>
-           <?php } ?>            
+           <?php } ?>    
+           <script></script>        
           </tbody>
         </table>
       </div>
@@ -372,7 +392,7 @@ $allCheckins = $checkinDao->findAll();
 
 
 
-<!-- Historic Checkouts Modal -->
+  <!-- Historic Checkouts Modal --> 
   <div class="modal fade" id="cancelCkOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content cancelCheckin">
@@ -481,11 +501,10 @@ $allCheckins = $checkinDao->findAll();
     </div>
   </div>
 
-
-
+ 
 
   <!------------------------- Ckeck-in modal--------------------------->
-  <div class="modal fade" id="checkinModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="checkinModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleodalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -543,11 +562,55 @@ $allCheckins = $checkinDao->findAll();
     </div>
   </div>
 
+  
+  <!-- Total Price -->
+  <div  class="modal fade" id="totalValue" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content checkout">
+
+        <div class="modal-header checkout">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-body-1">
+              <img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img">
+              <h5 class="modal-title" id="exampleModalLabel">Valor total</h5>
+            </div>
+
+            <div class="modal-body-2">
+              <?php 
+                  $lastCkoutId = $_SESSION['lastCkoutId'];
+                  unset($_SESSION['lastCkoutId']);
+                  $lastCheckOut = $checkoutDao->findById($lastCkoutId);
+              ?>
+
+              <div class="div-line"></div>
+
+              <section class="price-value-sec">
+                <p>Valor Total: </p>
+                <p class="price-value"><?= $lastCheckOut->getTotalValue()?></p>
+              </section>
+            </div>
+          </div>
+
+          <div class="modal-footer ckout">
+            <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Confirmar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+ 
 
   
 
 
   <script src="../js/tooltip.js"></script>
+ 
 </body>
 
 </html>

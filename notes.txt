@@ -22,6 +22,8 @@ Tem que fazer:
 --colocar/criar mais niveis de acesso ao sistema
 -- se o user tiver desativado não pode fazer login.
 -- esqueceu senha
+-- edição seções
+--ARRUMAR MODAL DE MOSTRAR PREÇO!!!! ta bugando com o modal de checkin!!!
 
 
 --Tem que ter na entrega:

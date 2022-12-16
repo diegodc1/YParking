@@ -351,6 +351,7 @@ main {
 
 .modal-body-2 {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -434,6 +435,29 @@ main {
   height: 24%;
 }
 
+.div-line {
+  width: 100%;
+  border: 1px dotted var(--gray-light);
+  opacity: 0.6;
+}
+
+.price-value-sec {
+  display: flex;
+  margin-top: 1rem;
+  flex-direction: column;
+}
+
+.price-value-sec p {
+  margin: 0;
+}
+
+.price-value-sec p:first-child {
+  font-weight: 700;
+}
+
+.modal-footer.ckout {
+  margin-bottom: 3rem;
+}
 /****************** Modal confirm cancel check-in  ****************/
 .modal-body-header {
   display: flex;

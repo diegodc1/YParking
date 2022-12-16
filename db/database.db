@@ -109,6 +109,9 @@ CREATE TABLE checkout (
 	FOREIGN KEY (ckout_user_id) REFERENCES users (user_id)
 );
 
+ALTER TABLE IF EXISTS public.checkout
+    ADD COLUMN ckout_total_value money;
+
 
 CREATE TABLE prices (
 	prc_id SERIAL,

@@ -12,6 +12,7 @@ class Checkout {
   private $timeCkin;
   private $dateCkin;
   private $idCkin;
+  private $totalValue;
 
   public function getId() {
     return $this->id;
@@ -99,6 +100,14 @@ class Checkout {
 
   public function setCkinId($idCkin) {
     $this->idCkin = $idCkin;
+  }
+
+  public function getTotalValue() {
+    return $this->totalValue;
+  }
+
+  public function setTotalValue($value) {
+    $this->totalValue = $value;
   }
 }
 

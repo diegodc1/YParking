@@ -142,7 +142,7 @@ $prices = $priceDao->findAll();
                 <p>Até 15min: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car15Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar15())?>"> 
+                  <input type="text" name="car15Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar15())?>" required> 
                 </div>
              
               </div>
@@ -151,7 +151,7 @@ $prices = $priceDao->findAll();
                 <p>De 15min a 30min: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car30Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar30())?>">
+                  <input type="text" name="car30Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar30())?>" required>
                 </div>
               </div>
 
@@ -159,7 +159,7 @@ $prices = $priceDao->findAll();
                 <p>De 30min a 1h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car1hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar1h())?>">
+                  <input type="text" name="car1hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar1h())?>" required>
                 </div>
               </div>
 
@@ -167,7 +167,7 @@ $prices = $priceDao->findAll();
                 <p>De 1h a 2h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car2hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar2h())?>">
+                  <input type="text" name="car2hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar2h())?>" required>
                 </div>
               </div>
 
@@ -175,7 +175,7 @@ $prices = $priceDao->findAll();
                 <p>De 2h a 3h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car3hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar3h())?>">
+                  <input type="text" name="car3hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar3h())?>" required>
                 </div>
               </div>
 
@@ -183,7 +183,7 @@ $prices = $priceDao->findAll();
                 <p>De 3h a 6h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="car6hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar6h())?>">
+                  <input type="text" name="car6hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCar6h())?>" required>
                 </div>
               </div>
 
@@ -191,7 +191,7 @@ $prices = $priceDao->findAll();
                 <p>Diária: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="carDayPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarDay())?>">
+                  <input type="text" name="carDayPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarDay())?>" required>
                 </div>
               </div>
             </div>
@@ -203,7 +203,7 @@ $prices = $priceDao->findAll();
                 <p>Até 15min: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike15Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike15())?>">
+                  <input type="text" name="mtbike15Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike15())?>" required>
                 </div>
               </div>
 
@@ -211,7 +211,7 @@ $prices = $priceDao->findAll();
                 <p>De 15min a 30min: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike30Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike30())?>">
+                  <input type="text" name="mtbike30Price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike30())?>" required>
                 </div>
               </div>
 
@@ -219,7 +219,7 @@ $prices = $priceDao->findAll();
                 <p>De 30min a 1h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike1hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike1h())?>">
+                  <input type="text" name="mtbike1hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike1h())?>" required>
                 </div>
               </div>
 
@@ -227,7 +227,7 @@ $prices = $priceDao->findAll();
                 <p>De 1h a 2h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike2hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike2h())?>">
+                  <input type="text" name="mtbike2hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike2h())?>" required>
                 </div>
               </div>
 
@@ -235,7 +235,7 @@ $prices = $priceDao->findAll();
                 <p>De 2h a 3h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike3hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike3h())?>">
+                  <input type="text" name="mtbike3hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike3h())?>" required>
                 </div>
               </div>
 
@@ -243,7 +243,7 @@ $prices = $priceDao->findAll();
                 <p>De 3h a 6h: </p>
                 <div class="input-price-box">
                   <span>R$</span>
-                  <input type="text" name="mtbike6hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike6h())?>">
+                  <input type="text" name="mtbike6hPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbike6h())?>" required>
                 </div>
               </div>
 
@@ -274,8 +274,10 @@ $prices = $priceDao->findAll();
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <h5 class="modal-title" id="exampleModalLabel">Atualizar Preços</h5>
                   </div>
-                  <div class="modal-body-2">
+                  <div class="modal-body-2 priceModal">
                     <p class="p-modal-warning"><span>Você realmente deseja atualizar os preços?</p>
+                    <label for="inputPassword">Informe sua senha:</label>
+                    <input type="password" name="inputPassword" class="inputPassword">
                   </div>
                 </div>
                 <div class="modal-footer">

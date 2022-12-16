@@ -1,5 +1,6 @@
 <?php
 require_once('../models/Checkout.php');
+// session_start();
 
 class CheckoutDaoDB implements CheckoutDao {
   private $pdo;
@@ -8,7 +9,7 @@ class CheckoutDaoDB implements CheckoutDao {
   }
 
   public function add(Checkout $u){
-    $sql = $this->pdo->prepare("INSERT INTO checkout (ckout_vehicle_id, ckout_client_id, ckout_section_id, ckout_time, ckout_user_id, ckout_date, ckout_status, ckout_ckin_time, ckout_ckin_date, ckout_ckin_id) VALUES (:vehicleId, :clientId, :sectionId, :time, :userId, :date, :status, :ckinTime, :ckinDate, :ckinId)");
+    $sql = $this->pdo->prepare("INSERT INTO checkout (ckout_vehicle_id, ckout_client_id, ckout_section_id, ckout_time, ckout_user_id, ckout_date, ckout_status, ckout_ckin_time, ckout_ckin_date, ckout_ckin_id, ckout_total_value) VALUES (:vehicleId, :clientId, :sectionId, :time, :userId, :date, :status, :ckinTime, :ckinDate, :ckinId, :ckTotalValue)");
     $sql->bindValue(':vehicleId', $u->getVehicleId());
     $sql->bindValue(':clientId', $u->getClientId());
     $sql->bindValue(':sectionId', $u->getSectionId());
@@ -19,8 +20,11 @@ class CheckoutDaoDB implements CheckoutDao {
     $sql->bindValue(':ckinTime', $u->getCkinTime());
     $sql->bindValue(':ckinDate', $u->getCkinDate());
     $sql->bindValue(':ckinId', $u->getCkinId());
+    $sql->bindValue(':ckTotalValue', $u->getTotalValue());
     $sql->execute();
+    $_SESSION['lastCkoutId'] = $this->pdo->lastInsertId();
     $u->setId($this->pdo->lastInsertId());
+
     return $u;
   } 
 
@@ -44,6 +48,7 @@ class CheckoutDaoDB implements CheckoutDao {
         $u->setCkinTime($checkout['ckout_ckin_time']);
         $u->setCkinDate($checkout['ckout_ckin_date']);
         $u->setCkinId($checkout['ckout_ckin_id']);
+        $u->setTotalValue($checkout['ckout_total_value']);
 
         $checkouts[] = $u;
       }
@@ -71,6 +76,8 @@ class CheckoutDaoDB implements CheckoutDao {
       $u->setCkinTime($data['ckout_ckin_time']);
       $u->setCkinDate($data['ckout_ckin_date']);
       $u->setCkinId($data['ckout_ckin_id']);
+      $u->setTotalValue($data['ckout_total_value']);
+
 
       return $u;
     } else {
@@ -158,6 +165,8 @@ class CheckoutDaoDB implements CheckoutDao {
         $u->setCkinTime($data['ckout_ckin_time']);
         $u->setCkinDate($data['ckout_ckin_date']);
         $u->setCkinId($data['ckout_ckin_id']);
+        $u->setTotalValue($data['ckout_total_value']);
+
 
         $checkoutsDaily[] = $u;
       }

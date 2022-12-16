@@ -300,3 +300,22 @@ select:focus {
   transition: all 0.3s linear;
   filter: brightness(1.09);
 }
+
+.modal-body-2.priceModal {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.modal-body-2.priceModal label {
+  font-size: 1rem;
+}
+
+.modal-body-2.priceModal input {
+  border: 1px solid #ced4da;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+.modal-body-2.priceModal input:focus {
+  border: 1px solid #86b7fe;
+}
