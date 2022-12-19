@@ -115,6 +115,7 @@ interface CheckoutDao {
   public function add(Checkout $u);
   public function findAll();
   public function findById($id);
+  public function findLastCheckout();
   public function update(Checkout $u);
   public function cancel($id, $reason, $userId, $ckinId);
 

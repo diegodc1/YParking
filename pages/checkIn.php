@@ -55,16 +55,18 @@ $allCheckins = $checkinDao->findAll();
   <!-- Data Table style -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="../js/tooltip.js"></script>
+  <script src="../js/dataTable.js"></script>
+  <script src="../js/tooltip.js"></script>
 
   <!-- Style -->
   <link rel="stylesheet" href="../stylesstyle.css">
   <link rel="stylesheet" href="../styles/checkIn.css">
 
-   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-  <script src="../js/tooltip.js"></script>
-  <script src="../js/dataTable.js"></script>
+
 </head>
 
 <body class="body-checkin">
@@ -73,8 +75,10 @@ $allCheckins = $checkinDao->findAll();
     if(isset($_SESSION['showModalCkout']) && ($_SESSION['showModalCkout']) === 'true') {
       echo "<script>
               $(document).ready(() => {
-                $('#totalValue').modal('show');
+                $('#totalValueModal').addClass('open');
               })
+              document.querySelector('#totalValueModal').classList.add('open');
+              console.log(document.querySelector('#totalValueModal'));
             </script>";
     } 
 
@@ -253,13 +257,6 @@ $allCheckins = $checkinDao->findAll();
                               <p>Cliente: <a><?= $clientCk->getName()?></a></p>
                             </div>
                         </section>
-
-                        <div class="div-line"></div>
-
-                        <section class="price-value-sec">
-                          <p>Valor Total: </p>
-                          <p class="price-value">R$24,40</p>
-                        </section>
                       </div>
                     </div>
 
@@ -275,7 +272,9 @@ $allCheckins = $checkinDao->findAll();
            <script></script>        
           </tbody>
         </table>
+        
       </div>
+      
     </div>
   </main>
 
@@ -501,7 +500,9 @@ $allCheckins = $checkinDao->findAll();
     </div>
   </div>
 
- 
+
+
+
 
   <!------------------------- Ckeck-in modal--------------------------->
   <div class="modal fade" id="checkinModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleodalLabel" aria-hidden="true">
@@ -525,8 +526,7 @@ $allCheckins = $checkinDao->findAll();
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
                     $checkinDaily = $checkinDao->returnSlotsCkeckin($section->getId());
-                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
-                    ?>
+                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%"; ?>
 
                     <div class="box-occu 1">
 
@@ -537,7 +537,7 @@ $allCheckins = $checkinDao->findAll();
                       <div class="line-info">
                         <p>Ocupação: <span style="color: <?= $section->getColor(); ?>"><?= $fillPorcent ?></span></p>
                         <div class="line-occupation">
-                          <div class="fill-line" style="background-color: <?= $section->getColor()?>; width:<?= $fillPorcent?>" ></div>
+                          <div class="fill-line" style="background-color: <?= $section->getColor()?>; width:<?= $fillPorcent ?>" ></div>
                         </div>
                       </div>
 
@@ -551,7 +551,7 @@ $allCheckins = $checkinDao->findAll();
               </div>
             </section>
           </div>
-
+        
         </div>
 
         <div class="modal-footer">
@@ -562,54 +562,24 @@ $allCheckins = $checkinDao->findAll();
     </div>
   </div>
 
+
+
+
+
   
-  <!-- Total Price -->
-  <div  class="modal fade" id="totalValue" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-      <div class="modal-content checkout">
-
-        <div class="modal-header checkout">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-            <div class="modal-body-1">
-              <img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img">
-              <h5 class="modal-title" id="exampleModalLabel">Valor total</h5>
-            </div>
-
-            <div class="modal-body-2">
-              <?php 
-                  $lastCkoutId = $_SESSION['lastCkoutId'];
-                  unset($_SESSION['lastCkoutId']);
-                  $lastCheckOut = $checkoutDao->findById($lastCkoutId);
-              ?>
-
-              <div class="div-line"></div>
-
-              <section class="price-value-sec">
-                <p>Valor Total: </p>
-                <p class="price-value"><?= $lastCheckOut->getTotalValue()?></p>
-              </section>
-            </div>
-          </div>
-
-          <div class="modal-footer ckout">
-            <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Confirmar</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+  
 
 
  
 
   
 
-
+  <!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="../js/tooltip.js"></script>
+  <script src="../js/dataTable.js"></script>
+  <script src="../js/tooltip.js"></script> -->
  
 </body>
 

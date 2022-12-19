@@ -85,6 +85,34 @@ class CheckoutDaoDB implements CheckoutDao {
     }
   }
 
+
+  public function findLastCheckout(){
+    $sql = $this->pdo->query("SELECT * FROM checkout ORDER BY ckout_id DESC LIMIT 1");
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetch();
+
+      $u = new Checkout;;
+      $u->setId($data['ckout_id']);
+      $u->setVehicleId($data['ckout_vehicle_id']);
+      $u->setClientId($data['ckout_client_id']);
+      $u->setSectionId($data['ckout_section_id']);
+      $u->setTime($data['ckout_time']);
+      $u->setUserId($data['ckout_user_id']);
+      $u->setStatus($data['ckout_status']); 
+      $u->setDate($data['ckout_date']);
+      $u->setCkinTime($data['ckout_ckin_time']);
+      $u->setCkinDate($data['ckout_ckin_date']);
+      $u->setCkinId($data['ckout_ckin_id']);
+      $u->setTotalValue($data['ckout_total_value']);
+
+
+      return $u;
+    } else {
+      return false;
+    }
+  }
+
   public function update(Checkout $u){
     $sql = $this->pdo->prepare("UPDATE Checkout SET ckout_vehicle_id = :vehicleId, ckout_clientId = :clientId, ckout_section_id = :sectionId, ckout_time = :time, ckout_user_id = userId WHERE ckout_id = :id");
 

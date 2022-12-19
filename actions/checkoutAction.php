@@ -45,6 +45,9 @@ $checkOutDateTime = new DateTime($CkoutDateTime);
 
 $interval = $checkOutDateTime->getTimestamp() - $checkInDateTime->getTimestamp(); 
 
+$interMin = $interval / 60;
+$interHours = $interMin / 60;
+
 if($vehicle->getModel() != 'Moto') {
   if($interval <= 900) {
     $value = $prices->getPrcCar15();
@@ -101,11 +104,11 @@ if($vehicleId) {
 
   $checkinDao->updateStatus($status, $ckinId);
   $_SESSION['checkinId'] = $ckinId;
-  $_SESSION['showModalCkout'] = 'true';
-  $_SESSION['message-type'] = 'success';
-  $_SESSION['icon-message'] = '#check-circle-fill';
-  $_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
-  header("Location: ../pages/checkin.php");
+  // $_SESSION['showModalCkout'] = 'true';
+  // $_SESSION['message-type'] = 'success';
+  // $_SESSION['icon-message'] = '#check-circle-fill';
+  // $_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
+  header("Location: ../pages/totalPrice.php?sec=$interval&min=$interMin&hours=$interHours");
 } else {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
