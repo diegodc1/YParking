@@ -48,7 +48,7 @@ $interval = $checkOutDateTime->getTimestamp() - $checkInDateTime->getTimestamp()
 $interMin = $interval / 60;
 $interHours = $interMin / 60;
 
-if($vehicle->getModel() != 'Moto') {
+if($vehicle->getCategory() != 'Moto') {
   if($interval <= 900) {
     $value = $prices->getPrcCar15();
   } else if($interval > 900 && $interval <= 1800) {
@@ -64,7 +64,8 @@ if($vehicle->getModel() != 'Moto') {
   }  else if($interval > 21600) {
     $value = $prices->getPrcCarDay();   
   } 
-} else {
+
+} else if($vehicle->getCategory() === 'Moto'){
   if($interval <= 900) {
     $value = $prices->getPrcMtbike15();
   } else if($interval > 900 && $interval <= 1800) {
@@ -80,6 +81,57 @@ if($vehicle->getModel() != 'Moto') {
   }  else if($interval > 21600) {
     $value = $prices->getPrcMtbikeDay();   
   } 
+
+}
+
+// Verifica se o intervalo que o veículo ficou estacionado é maior que 24 horas (86400 segundos), se sim, subtrai 1 dia do intervalo e 
+// vai add 1 hora (3600 seg) até chegar no intervalo total.
+$hoursAdditional = 0;
+if($interval > 86400) {
+  $newInterval = 0;
+  $interval = $interval - 86400;
+
+  while($newInterval < $interval) {
+    $newInterval += 3600;
+  }
+
+  $hoursAdditional = $newInterval / 3600;
+}
+
+//pega o valor do preco adicional registrado no BD.
+if($vehicle->getCategory() != 'Moto') {
+  $priceAdditional = $prices->getPrcCarAdditional();
+} else {
+  $priceAdditional = $prices->getPrcMtbikeAdditional();
+}
+
+
+//Retira os caracteres especiais
+$value = trim(substr($value, 2, 8));
+$priceAdditional = substr($priceAdditional, 2, 8);
+
+
+//converte os valores para int
+$value = intval($value);
+$priceAdditional = intval($priceAdditional);
+
+
+//Faz a soma total do valor final.
+for($i = 0; $i < $hoursAdditional; $i++){
+  $value += $priceAdditional;
+}
+
+//formata o valor final
+$value = number_format($value, 2, ',', '.');
+
+
+echo '<br>'.$value;
+echo '<br>'. $interHours;
+echo '<br> horas add->'. $hoursAdditional;
+
+
+if($client->getType === 'Mensalista') {
+  $value = 0;
 }
 
 

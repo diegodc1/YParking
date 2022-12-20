@@ -8,6 +8,7 @@ class Price {
   private $prcCar3h;
   private $prcCar6h;
   private $prcCarDay;
+  private $prcMtCarAdditional;
   private $prcMtbike15;
   private $prcMtbike30;
   private $prcMtbike1h;
@@ -15,6 +16,7 @@ class Price {
   private $prcMtbike3h;
   private $prcMtbike6h;
   private $prcMtbikeDay;
+  private $prcMtbikeAdditional;
 
   public function getId() {
     return $this->id;
@@ -80,6 +82,14 @@ class Price {
     $this->prcCarDay = $prcCarDay;
   }
 
+  public function getPrcCarAdditional() {
+    return $this->prcMtCarAdditional;
+  }
+
+  public function setPrcCarAdditional($prcMtCarAdditional) {
+    $this->prcMtCarAdditional = $prcMtCarAdditional;
+  }
+
   public function getPrcMtbike15() {
     return $this->prcMtbike15;
   }
@@ -134,6 +144,14 @@ class Price {
 
   public function setPrcMtbikeDay($prcMtbikeDay) {
     $this->prcMtbikeDay = $prcMtbikeDay;
+  }
+
+  public function getPrcMtbikeAdditional() {
+    return $this->prcMtbikeAdditional;
+  }
+
+  public function setPrcMtbikeAdditional($additional) {
+    $this->prcMtbikeAdditional = $additional;
   }
 }
 

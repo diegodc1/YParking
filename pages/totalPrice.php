@@ -23,13 +23,17 @@ $interSec = filter_input(INPUT_GET, 'sec');
 $interMin = filter_input(INPUT_GET, 'min');
 $interHours = filter_input(INPUT_GET, 'hours');
 
+
+
 $interHours = intval($interHours);
 
+
 if($interHours > 0) {
-  $interHours = substr($interMin, 0, 2);
+  $interHours = substr($interHours, 0, 2);
 } else {
   $interHours = 0;
 }
+
 
 $interMin = intval($interMin);
 
@@ -37,8 +41,11 @@ if($interMin > 9) {
   $interMin = substr($interMin, 0, 2);
 } else {
   $interMin = substr($interMin, 0, 1);
-
 }
+
+$dateCkeckout = new DateTime($lastCheckOut->getDate());
+$dateCkeckin = new DateTime($lastCheckOut->getCkinDate());
+
 ?>
 
 <head>
@@ -65,8 +72,8 @@ if($interMin > 9) {
             <div class="info-col-1">
               <p>Modelo: <span class="text"> <?= $vehicle->getModel()?></span></p>
               <p>Categoria: <span class="text"> <?= $vehicle->getCategory()?></span></p>
-              <p>Data Check-in: <span class="text"> <?= $lastCheckOut->getCkinDate()?></span></p>
-              <p>Data Check-out: <span class="text">  <?= $lastCheckOut->getDate()?></span></p>
+              <p>Data Check-in: <span class="text"> <?= $dateCkeckin->format('d/m/Y')?></span></p>
+              <p>Data Check-out: <span class="text">  <?= $dateCkeckout->format('d/m/Y')?></span></p>
               <p>Tempo estacionado: <span class="text"> <?= $interHours?>h <?= $interMin?>m</span></p>
 
             </div>
@@ -88,8 +95,7 @@ if($interMin > 9) {
             </p>
          </div>
 
-         <a href="../pages/checkin.php" class="btn-return">Finalizar</a>
-        
+         <a href="../pages/checkin.php" class="btn-return">Finalizar</a>  
       </div>
   </main>
 </body>

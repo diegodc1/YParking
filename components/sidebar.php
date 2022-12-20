@@ -82,7 +82,7 @@ if($id) {
 
         <div class="line"></div>
 
-        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Perfil" class="">
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Estacionamento" class="">
           <a href="../pages/parking.php" class="sections">
             <i class="fa-solid fa-square-parking"></i>
             <span>Estacionamento</span>

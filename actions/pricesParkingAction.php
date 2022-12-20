@@ -17,6 +17,7 @@ $car2hPrice = filter_input(INPUT_POST, 'car2hPrice');
 $car3hPrice = filter_input(INPUT_POST, 'car3hPrice');
 $car6hPrice = filter_input(INPUT_POST, 'car6hPrice');
 $carDayPrice = filter_input(INPUT_POST, 'carDayPrice');
+$carAdditionalPrice = filter_input(INPUT_POST, 'carAdditionalPrice');
 $mtbike15Price = filter_input(INPUT_POST, 'mtbike15Price');
 $mtbike30Price = filter_input(INPUT_POST, 'mtbike30Price');
 $mtbike1hPrice = filter_input(INPUT_POST, 'mtbike1hPrice');
@@ -24,6 +25,8 @@ $mtbike2hPrice = filter_input(INPUT_POST, 'mtbike2hPrice');
 $mtbike3hPrice = filter_input(INPUT_POST, 'mtbike3hPrice');
 $mtbike6hPrice = filter_input(INPUT_POST, 'mtbike6hPrice');
 $mtbikeDayPrice = filter_input(INPUT_POST, 'mtbikeDayPrice');
+$mtbikeAdditionalPrice = filter_input(INPUT_POST, 'mtbikeAdditionalPrice');
+
 
 $updatePrices = new Price();
 
@@ -42,6 +45,8 @@ if($usuarioDao->findUserLogin($email, $password) != false) {
   $updatePrices->setPrcMtbike3h($mtbike3hPrice);
   $updatePrices->setPrcMtbike6h($mtbike6hPrice);
   $updatePrices->setPrcMtbikeDay($mtbikeDayPrice);
+  $updatePrices->setPrcCarAdditional($carAdditionalPrice);
+  $updatePrices->setPrcMtbikeAdditional($mtbikeAdditionalPrice);
 
   $priceDao->update($updatePrices);
 

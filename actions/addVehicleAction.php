@@ -12,12 +12,17 @@ $category = trim(filter_input(INPUT_POST, 'inputVehicleCategory'));
 $departureTime = trim(filter_input(INPUT_POST, 'inputHourOut'));
 $newPlate = preg_replace('/[-\@\.\;\" "]+/', '', $plate);
 $clientId = $idClient[0];
+$status = 'Ativo';
+
+
 
 if(!empty($_POST['selectedClients']) ) {
   $idClient = null;
   $idClient = $_POST['selectedClients'];
+  $clientId = $idClient[0];
 
-  echo count($idClient);
+
+  echo count($idClient) ;
 
   if(!$vehicleDao->findByPlate($newPlate)) {
     //Verifica se foi selecionado somente 1 cliente
@@ -30,6 +35,7 @@ if(!empty($_POST['selectedClients']) ) {
       $newVehicle->setCategory($category);
       $newVehicle->setDepartureTime($departureTime);
       $newVehicle->setClientId($clientId);
+      $newVehicle->setStatus($status);
 
       $vehicleDao->add($newVehicle);
       $_SESSION['message-type'] = 'success';
@@ -49,7 +55,7 @@ if(!empty($_POST['selectedClients']) ) {
     $_SESSION['insert_user_message'] = "Veículo	já cadastrado!";
     header("Location: ../pages/addVehicle.php");
   }
-} else {
+}  else {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
   $_SESSION['insert_user_message'] = "Por favor, selecione um cliente!";

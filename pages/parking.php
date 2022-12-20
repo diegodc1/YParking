@@ -194,6 +194,14 @@ $prices = $priceDao->findAll();
                   <input type="text" name="carDayPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarDay())?>" required>
                 </div>
               </div>
+
+              <div class="price-car">
+                <p>Hora adicional: </p>
+                <div class="input-price-box">
+                  <span>R$</span>
+                  <input type="text" name="carAdditionalPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarAdditional())?>" required>
+                </div>
+              </div>
             </div>
 
             <div class="motorcycle-prices">
@@ -252,6 +260,14 @@ $prices = $priceDao->findAll();
                 <div class="input-price-box">
                   <span>R$</span>
                   <input type="text" name="mtbikeDayPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbikeDay())?>">
+                </div>
+              </div>
+
+              <div class="motorcycle-price">
+                <p>Hora adicional: </p>
+                <div class="input-price-box">
+                  <span>R$</span>
+                  <input type="text" name="mtbikeAdditionalPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbikeAdditional())?>">
                 </div>
               </div>
             </div>

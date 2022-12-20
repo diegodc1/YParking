@@ -144,3 +144,7 @@ main {
   background-color: var(--green-light);
   filter: brightness(1.08);
 }
+
+.modal-dialog.list-vehicles {
+  background-color: var(--text-light) !important;
+}
