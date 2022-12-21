@@ -29,8 +29,7 @@ body {
 main {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 100vw;
-  /* height: 100vh; */
+  height: 100%;
   align-items: flex-start;
   padding: 6rem;
   padding-top: 4.3rem;
@@ -39,14 +38,20 @@ main {
 
 .box-left {
   width: 100%;
-  display: flex;
+  display: grid;
   flex-direction: column;
+  grid-template-rows: 0.5fr 1fr;
   height: 100%;
   gap: 1rem;
 }
 
+.checkin-box {
+  height: 100%;
+}
+
 .checkin-historic-box {
   height: 100%;
+  min-height: 100%;
 }
 
 .checkin-box,

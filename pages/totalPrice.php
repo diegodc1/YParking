@@ -66,7 +66,7 @@ $dateCkeckin = new DateTime($lastCheckOut->getCkinDate());
       <div class="box-content">
         <div class="box-header">
           <i class="fa-solid fa-circle-check"></i>
-          <h5>Checkout Realizado</h5>
+          <h5>Check-out Realizado</h5>
         </div>
         <div class="content-items">
             <div class="info-col-1">
@@ -91,10 +91,15 @@ $dateCkeckin = new DateTime($lastCheckOut->getCkinDate());
          <div class="price-box">
             <h3>Valor Total:</h3>
             <p class="price-value">
-               <?= $lastCheckOut->getTotalValue()?> 
+              <?php 
+                if($lastCheckOut->getTotalValue() === 'R$ 0,00'){ 
+                  echo 'Cliente é mensalista!';
+                } else { 
+                  echo $lastCheckOut->getTotalValue();
+                } 
+              ?> 
             </p>
          </div>
-
          <a href="../pages/checkin.php" class="btn-return">Finalizar</a>  
       </div>
   </main>

@@ -145,6 +145,7 @@ class CheckoutDaoDB implements CheckoutDao {
     $sql->execute();
   }
 
+
   //======= Daily Ckeckout Funcions =======// 
   public function addDaily(Checkout $u){
 

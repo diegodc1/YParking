@@ -17,18 +17,21 @@ Tem que fazer:
 -- Não Excluir, e sim desativar
 -- Colocar no banco de dados quem excluiu
 -- Mudar a "titulariedade" do veículo, ou seja, mudar o dono.
--- O sistema deve informar o valor final para cobrar
-    *Possibilidade do estacionamento mudar o valor das cobranças.
 --colocar/criar mais niveis de acesso ao sistema
 -- se o user tiver desativado não pode fazer login.
 -- esqueceu senha
 -- edição seções
 -- log-out
 -- arrumar bug modal não abre para reativar veicula, pagina lista de veiculos
--- verificar se o usuário é mensalista ou horista
+--google sharts* para grafico
 
 
 --Tem que ter na entrega:
+--explicar como é feito o cálculo das proximas saídas de veículos.
+
+
+//comando sql de proximo veículos a sair:
+SELECT ckout_client_id, avg(ckout_time) FROM checkout WHERE ckout_client_id = 84 AND ckout_status = 'Finalizado' AND ckout_date::date >= CURRENT_DATE - INTERVAL '4 days' GROUP BY ckout_client_id
 
 
 

@@ -98,6 +98,7 @@ if($interval > 86400) {
   $hoursAdditional = $newInterval / 3600;
 }
 
+
 //pega o valor do preco adicional registrado no BD.
 if($vehicle->getCategory() != 'Moto') {
   $priceAdditional = $prices->getPrcCarAdditional();
@@ -111,29 +112,31 @@ $value = trim(substr($value, 2, 8));
 $priceAdditional = substr($priceAdditional, 2, 8);
 
 
-//converte os valores para int
-$value = intval($value);
-$priceAdditional = intval($priceAdditional);
+//converte o valor para float
+$priceAdditional =floatval($priceAdditional);
 
 
 //Faz a soma total do valor final.
-for($i = 0; $i < $hoursAdditional; $i++){
-  $value += $priceAdditional;
+if($hoursAdditional > 0) {
+  for($i = 0; $i < $hoursAdditional; $i++){
+    $value = floatval($value);
+    $value += $priceAdditional;
+    $value = number_format($value, 2, ',', '.');
+  }
+} else {
+  $value = strval($value);  
 }
 
-//formata o valor final
-$value = number_format($value, 2, ',', '.');
 
 
-echo '<br>'.$value;
-echo '<br>'. $interHours;
-echo '<br> horas add->'. $hoursAdditional;
+// echo '<br>'.$value;
+// echo '<br>'. $interHours;
+// echo '<br> horas add->'. $hoursAdditional;
 
 
-if($client->getType === 'Mensalista') {
+if($client->getType() === 'Mensalista') {
   $value = 0;
 }
-
 
 if($vehicleId) {
   $newCheckout = new Checkout;

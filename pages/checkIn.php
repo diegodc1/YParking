@@ -94,7 +94,7 @@ $allCheckins = $checkinDao->findAll();
   <main>
   
     <div class="box-left">
-    <!------------------------- CHECK-IN ---------------------------------->
+      <!------------------------- CHECK-IN ---------------------------------->
       <div class="checkin-box">
         <div class="header-box">
           <h2>ENTRADA DE VEÍCULO</h2>
@@ -119,11 +119,11 @@ $allCheckins = $checkinDao->findAll();
           </thead>
           <tbody>
             <tr>
-              <td><?php if($vehicle){echo $vehicle->getModel();} else {echo '';};?></td>
-              <td><?php if($vehicle){echo $vehicle->getPlate();}else {echo '';};?></td>
-              <td><?php if($vehicle){echo $vehicle->getColor();} else {echo '';};?></td>
-              <td><?php if($vehicle){echo $vehicle->getCategory();} else {echo '';};?></td>
-              <td><?php if($vehicle){echo $client->getName();} else {echo '';};?></td>
+              <td><?php if($vehicle){echo $vehicle->getModel();} else {echo '  ';};?></td>
+              <td><?php if($vehicle){echo $vehicle->getPlate();}else {echo '  ';};?></td>
+              <td><?php if($vehicle){echo $vehicle->getColor();} else {echo '  ';};?></td>
+              <td><?php if($vehicle){echo $vehicle->getCategory();} else {echo '  ';};?></td>
+              <td><?php if($vehicle){echo $client->getName();} else {echo '  ';};?></td>
               <td>
                 <?php if($vehicle) { ?>
                   <a href="" data-bs-toggle="modal" data-bs-target="#checkinModal<?= $vehicle->getId()?>" class="checkin-button"><i class="fa-solid fa-circle-up"></i></a>
@@ -136,7 +136,7 @@ $allCheckins = $checkinDao->findAll();
         <?php require('../components/alertMessage.php')?>
       </div>
 
-    <!------------------------ CHECK-IN HISTORIC ---------------------------->
+      <!------------------------ CHECK-IN HISTORIC ---------------------------->
       <div class="checkin-historic-box">
         <div class="header box2">
           <h2>HISTÓRICO DE ENTRADAS DE HOJE</h2>
