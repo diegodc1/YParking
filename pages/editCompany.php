@@ -2,6 +2,8 @@
 session_start();
 require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
+require_once('../components/verifyLogin.php');
+
 
 $companyId = filter_input(INPUT_GET, 'id');
 

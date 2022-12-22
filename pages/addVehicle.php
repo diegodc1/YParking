@@ -2,6 +2,8 @@
 session_start();
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
+require_once('../components/verifyLogin.php');
+
 
 
 $clientDao = new ClientDaoDB($pdo);
@@ -62,10 +64,10 @@ $clients = $clientDao->findAllAtive();
               </select>
             </div>
 
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
               <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
               <input type="text" class="form-control" name="inputHourOut" autocomplete="off" maxlength="5" OnKeyPress="formatar('##:##', this)" require>
-            </div>
+            </div> -->
           </div>
         </div>
 

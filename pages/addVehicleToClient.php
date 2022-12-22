@@ -4,7 +4,10 @@
 <head>
   <?php require_once('../components/headConfig.php') ;
   $idClient = filter_input(INPUT_GET, 'lastId');
-  session_start();?>
+  session_start();
+  require_once('../components/verifyLogin.php');
+  ?>
+  
   <link rel="stylesheet" href="/styles/addVehicleToClient.css">
   <title>Cliente Cadastrado!</title>
 </head>

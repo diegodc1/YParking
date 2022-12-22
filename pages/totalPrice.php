@@ -4,6 +4,8 @@ require_once('../db/config.php');
 require_once('../dao/CheckoutDao.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/VehicleDao.php');
+require_once('../components/verifyLogin.php');
+
 
 
 $checkoutDao = new CheckoutDaoDB($pdo);

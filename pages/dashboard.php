@@ -4,19 +4,27 @@ require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/CheckinDao.php');
+require_once('../dao/ClientDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
+$clientDao = new ClientDaoDB($pdo);
 
 date_default_timezone_set('America/Sao_Paulo');
 $date = date("Y/m/d");
 
 $sections = $sectionDao->findAll();
 $checkinsToday = $checkinDao->findAllDaily($date);
+$nextOutsCkout = $clientDao->findAllTimeAvgCkinActive();
 
+// foreach($nextOutsCkout as $data) {
+//   echo $data['ckin_vehicle_id'] . '<br>';
+// }
 
+// print_r($clientDao->findAllTimeAvgCkinActive())
 ?>
 
 <!DOCTYPE html>
@@ -142,83 +150,23 @@ $checkinsToday = $checkinDao->findAllDaily($date);
                   <th class="col-4-table">Carro</th>
                   <th class="col-4-table">Placa</th>
                   <th class="col-4-table">Cliente</th>
-                  <th class="col-4-table">Saída</th>
+                  <th class="col-4-table">Hr. Saída</th>
                 </tr>
               </thead>
               
               <tbody>
-                <tr class="item-table">
-                  <td class="item1">Honda Civic - Preto</td>
-                  <td>BRA2E19</td>
-                  <td>Fernando Cunha</td>
-                  <td class="item4">18:10</td>
-                </tr>
-                
-                <tr class="item-table">
-                  <td class="item1">S10 - Branca</td>
-                  <td>BEE4R22 </td>
-                  <td>Janaina Silva</td>
-                  <td class="item4">18:12</td>
-                </tr>
-                
-                <tr class="item-table">
-                  <td class="item1">Sandero - Azul</td>
-                  <td>PLS0A00</td>
-                  <td>Pedro Santos</td>
-                  <td class="item4">18:19</td>
-                </tr>
-                
-                <tr class="item-table">
-                  <td class="item1">HB20 - Prata</td>
-                  <td>LVS4A50</td>
+                <?php 
                   
-                  <td>Lulu Santos</td>
-                  <td class="item4">18:24</td>
-                </tr>
-
-                <tr class="item-table">
-                  <td class="item1">Logan - Vermelho</td>
-                  <td>ATY0A90</td>
-                  <td>Filho do Bill</td>
-                  <td class="item4">18:26</td>
-                </tr>
-
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
-                <tr class="item-table">
-                  <td class="item1">Bmw M3 - Azul</td>
-                  <td>LOJ0R03</td>
-                  <td>Pedro Alvarez</td>
-                  <td class="item4">18:31</td>
-                </tr>
+                foreach($nextOutsCkout as $next): 
+                  $nextClient = $clientDao->findById($next['client_id']);
+                  $nextVehicle = $vehicleDao->findById($next['ckin_vehicle_id']); ?>
+                  <tr class="item-table">
+                    <td class="item1"><?= $nextVehicle->getModel()?></td>
+                    <td><?= $nextVehicle->getPlate()?></td>
+                    <td><?= $nextClient->getName()?></td>
+                    <td class="item4"><?= substr($next['client_departure_time'], 0, 5)?></td>
+                  </tr>
+                <?php endforeach ?>
               </tbody>
             </table>
           </section>

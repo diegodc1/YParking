@@ -2,6 +2,8 @@
 require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 
 $companyDao = new CompanyDaoDB($pdo);

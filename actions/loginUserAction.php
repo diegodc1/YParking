@@ -10,13 +10,21 @@ $password = filter_input(INPUT_POST, 'inputPassword');
 
 if($usuarioDao->findUserLogin($email, $password) != false) {
   $user = $usuarioDao->findByEmail($email);
-  $_SESSION['user_id'] = $user->getId();
-  $_SESSION['user_email'] = $user->getEmail();
-  $_SESSION['user_name'] = $user->getName();
-  $_SESSION['user_function'] = $user->getFunction();
-  $_SESSION['user_access'] = $user->getAccess();
- 
-  header("Location: ../pages/dashboard.php");
+  if($user->getStatus() === 'Ativo') {
+    $_SESSION['user_id'] = $user->getId();
+    $_SESSION['user_email'] = $user->getEmail();
+    $_SESSION['user_name'] = $user->getName();
+    $_SESSION['user_function'] = $user->getFunction();
+    $_SESSION['user_access'] = $user->getAccess();
+    $_SESSION['user_logado'] = true;
+  
+    header("Location: ../pages/dashboard.php");
+  } else {
+    $_SESSION['message-type'] = 'danger';
+    $_SESSION['icon-message'] = '#exclamation-triangle-fill';
+    $_SESSION['insert_user_message'] = "Usuário desativado! Entre em contato com o administrador!";
+    header("Location: ../index.php");
+  }
 } else {
   $_SESSION['message-type'] = 'danger';
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';

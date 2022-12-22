@@ -1,5 +1,8 @@
 <?php 
     session_start();
+    if(isset($_SESSION['user_logado'])  && $_SESSION['user_logado'] == true ){
+        header("Location: ../pages/dashboard.php");
+    } 
 ?>
 
 <!DOCTYPE html>

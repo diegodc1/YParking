@@ -67,6 +67,7 @@ main {
   background-color: var(--text-light);
   border-radius: 5px;
   align-items: center;
+  padding: 2rem 0rem;
   /* padding: 0rem 6rem; */
 }
 

@@ -158,6 +158,8 @@ if($vehicleId) {
   $updateCheckin->setStatus($status);
 
   $checkinDao->updateStatus($status, $ckinId);
+  $clientDao->setTimeAverage($clientId);
+
   $_SESSION['checkinId'] = $ckinId;
   // $_SESSION['showModalCkout'] = 'true';
   // $_SESSION['message-type'] = 'success';

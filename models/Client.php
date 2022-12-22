@@ -112,4 +112,5 @@ interface ClientDao {
   public function delete($id);
   public function disable($id);
   public function reactivate($id);
+  public function setTimeAverage($id);
 }

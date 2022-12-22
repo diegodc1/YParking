@@ -3,6 +3,8 @@ require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 $vechicleDao = new VehicleDaoDB($pdo);
 $vehicles = $vechicleDao->findAll();

@@ -7,6 +7,8 @@ require_once('../dao/CheckinDao.php');
 require_once('../dao/CheckoutDao.php');
 require_once('../dao/CheckoutDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
@@ -139,7 +141,7 @@ $allCheckins = $checkinDao->findAll();
       <!------------------------ CHECK-IN HISTORIC ---------------------------->
       <div class="checkin-historic-box">
         <div class="header box2">
-          <h2>HISTÓRICO DE ENTRADAS DE HOJE</h2>
+          <h2>HISTÓRICO DE ENTRADAS</h2>
           <?php if($_SESSION['user_access'] == 1) { ?>
               <a type="" class="delete-checkin-button" data-bs-toggle="modal" data-bs-target="#cancelModal"> Cancelar um check-in </a>
           <?php } else { ?>

@@ -165,6 +165,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('#listCheckoutVehicles').DataTable({
+    scrollY: '35rem',
     scrollCollapse: true,
     info: false,
     ordering: false,

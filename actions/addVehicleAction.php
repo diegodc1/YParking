@@ -9,7 +9,7 @@ $model = trim(filter_input(INPUT_POST, 'inputVehicleModel'));
 $plate = trim(filter_input(INPUT_POST, 'inputVehiclePlate'));
 $color = trim(filter_input(INPUT_POST, 'inputVehicleColor'));
 $category = trim(filter_input(INPUT_POST, 'inputVehicleCategory'));
-$departureTime = trim(filter_input(INPUT_POST, 'inputHourOut'));
+// $departureTime = trim(filter_input(INPUT_POST, 'inputHourOut'));
 $newPlate = preg_replace('/[-\@\.\;\" "]+/', '', $plate);
 $clientId = $idClient[0];
 $status = 'Ativo';
@@ -33,7 +33,7 @@ if(!empty($_POST['selectedClients']) ) {
       $newVehicle->setPlate($plate);
       $newVehicle->setColor($color);
       $newVehicle->setCategory($category);
-      $newVehicle->setDepartureTime($departureTime);
+      // $newVehicle->setDepartureTime($departureTime);
       $newVehicle->setClientId($clientId);
       $newVehicle->setStatus($status);
 

@@ -4,6 +4,7 @@ require_once('../dao/VehicleDao.php');
 require_once('../dao/CompanyDao.php');
 require_once('../dao/ClientDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
 
 $clientId = filter_input(INPUT_GET, 'id');
 

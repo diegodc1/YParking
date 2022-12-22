@@ -2,6 +2,8 @@
 session_start();
 require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
+require_once('../components/verifyLogin.php');
+
 
 $vehicleId = filter_input(INPUT_GET, 'id');
 

@@ -12,8 +12,8 @@
 <body>
   <?php 
   session_start();
+  require_once('../components/verifyLogin.php');
   require_once('../components/sidebar.php');
-   
   ?>
 
   <header class="addUser-header">

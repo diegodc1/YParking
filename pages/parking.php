@@ -3,6 +3,8 @@ require_once('../db/config.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/PriceDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 $sectionDao = new SectionDaoDB($pdo);
 $priceDao = new PriceDaoDB($pdo);

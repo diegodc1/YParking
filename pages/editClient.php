@@ -3,6 +3,8 @@ require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/VehicleDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 $clientId = filter_input(INPUT_GET, 'id');
 

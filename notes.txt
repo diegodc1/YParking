@@ -17,17 +17,18 @@ Tem que fazer:
 -- Não Excluir, e sim desativar
 -- Colocar no banco de dados quem excluiu
 -- Mudar a "titulariedade" do veículo, ou seja, mudar o dono.
---colocar/criar mais niveis de acesso ao sistema
--- se o user tiver desativado não pode fazer login.
+-- colocar/criar mais niveis de acesso ao sistema
+//-- se o user tiver desativado não pode fazer login.
 -- esqueceu senha
 -- edição seções
--- log-out
+//-- log-out
 -- arrumar bug modal não abre para reativar veicula, pagina lista de veiculos
---google sharts* para grafico
+-- google sharts* para grafico
+//-- add no sidebar atalho para checkin/checkout
+-- verificação se está logado ou não.
 
-
---Tem que ter na entrega:
---explicar como é feito o cálculo das proximas saídas de veículos.
+-- Tem que ter na entrega:
+-- explicar como é feito o cálculo das proximas saídas de veículos.
 
 
 //comando sql de proximo veículos a sair:

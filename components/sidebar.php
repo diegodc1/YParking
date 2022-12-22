@@ -52,6 +52,13 @@ if($id) {
           </a>
         </button>
 
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Check-in/Check-out" class="">
+          <a href="../pages/checkin.php" class="sections">
+            <i class="fa-solid fa-repeat"></i>
+            <span>Entrad./Saída</span>
+          </a>
+        </button>
+
         <button data-bs-toggle="tooltip" data-bs-placement="right" title="Clientes" class="">
           <a href="../pages/listClients.php" class="sections">
             <i class="fa-solid fa-users"></i>
@@ -108,7 +115,7 @@ if($id) {
         </div>
 
         <div class="log-out" id="log-out">
-          <a href="../index.php"><i class="fa-solid fa-right-from-bracket"></i></a>
+          <a href="../actions/logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
       </div>
     </aside>

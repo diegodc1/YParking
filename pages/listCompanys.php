@@ -3,6 +3,8 @@ require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
 require_once('../dao/ClientDao.php');
 session_start();
+require_once('../components/verifyLogin.php');
+
 
 $companyDao = new CompanyDaoDB($pdo);
 $companys = $companyDao->findAll(); 

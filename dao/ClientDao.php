@@ -1,5 +1,6 @@
 <?php
 require_once('../models/Client.php');
+require_once('../models/Checkin.php');
 
 
 class ClientDaoDB implements ClientDao {
@@ -173,4 +174,37 @@ class ClientDaoDB implements ClientDao {
     $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
+
+  public function setTimeAverage($id){
+    $sql = $this->pdo->prepare("SELECT ckout_client_id, avg(ckout_time) FROM checkout WHERE ckout_client_id = :id AND ckout_status = 'Finalizado' AND ckout_date::date >= CURRENT_DATE - INTERVAL '4 days' GROUP BY ckout_client_id");
+    $sql->bindValue(':id', $id);
+    $sql->execute(); 
+    $timeAverage = $sql->fetch(); 
+    $timeAverage =  substr($timeAverage['avg'], 0, 8);
+
+    $sql = $this->pdo->prepare("UPDATE clients SET client_departure_time = :timeAverage WHERE client_id = :clientId");
+    $sql->bindValue(':timeAverage', $timeAverage);
+    $sql->bindValue(':clientId', $id);
+    $sql->execute();
+  }
+
+  public function findAllTimeAvgCkinActive(){
+    $activeTimeAvg = [];
+
+    $sql = $this->pdo->query("SELECT client_id, client_departure_time, ckin_id, ckin_status, ckin_vehicle_id FROM clients 
+      INNER JOIN checkin ON clients.client_id = checkin.ckin_client_id AND clients.client_departure_time IS NOT NULL
+      WHERE checkin.ckin_status = 'Ativo' AND clients.client_departure_time::time >= current_time AND clients.client_departure_time::time < current_time + interval '1 hours' ORDER BY clients.client_departure_time");
+
+    if($sql->rowCount() > 0) {
+        $data = $sql->fetchAll();
+
+        foreach($data as $timeAvg) {
+          $activeTimeAvg[] = $timeAvg; 
+        }
+    }
+
+    return $activeTimeAvg;
+  }
+
+
 }
