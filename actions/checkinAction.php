@@ -5,11 +5,13 @@ require_once('../dao/CheckinDao.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/CheckinDao.php');
+require_once('../dao/MovementDao.php');
 
 $checkinDao = new CheckinDaoDB($pdo);
 $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
+$movementDao = new movementDaoDB($pdo);
 
 //Busca o veículo no BD
 $vehicleId = filter_input(INPUT_GET, 'vehicle');
@@ -31,6 +33,7 @@ $checkinsVehicle = $checkinDao->findAllDailyVehicleId($date, $vehicleId);
 $time = date('H:i:s');
 $date = date("d/m/Y");
 $status = "Ativo"; 
+$type = 'ckin';
 
 //Verifica se o cliente está com o cadastro ativo
 if($client->getStatus() === 'Ativo') {
@@ -38,6 +41,7 @@ if($client->getStatus() === 'Ativo') {
   //Verifica se o veículo está com o cadastro ativo
   if($vehicle->getStatus() === 'Ativo'){
     if($checkinsVehicle === false) {
+    //add checkin
     $newCheckIn = new Checkin;
     $newCheckIn->setVehicleId($vehicleId);
     $newCheckIn->setClientId($clientId);
@@ -48,6 +52,19 @@ if($client->getStatus() === 'Ativo') {
     $newCheckIn->setDate($date);
 
     $checkinDao->add($newCheckIn);
+
+    //add movement
+    $newMovement = new Movement;
+    $newMovement->setType($type);
+    $newMovement->setDate($date);
+    $newMovement->setTime($time);
+    $newMovement->setVehicleId($vehicleId);
+    $newMovement->setClientId($clientId);
+    $newMovement->setUserId($userId);
+    $newMovement->setStatus($status);
+
+    $movementDao->add($newMovement);
+
 
     $_SESSION['message-type'] = 'success';
     $_SESSION['icon-message'] = '#check-circle-fill';

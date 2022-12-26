@@ -4,14 +4,18 @@ require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/CheckinDao.php');
+require_once('../dao/CheckoutDao.php');
 require_once('../dao/ClientDao.php');
+require_once('../dao/MovementDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
 $vehicleDao = new VehicleDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
+$checkoutDao = new CheckoutDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
+$movementDao = new MovementDaoDB($pdo);
 
 date_default_timezone_set('America/Sao_Paulo');
 $date = date("Y/m/d");
@@ -19,12 +23,7 @@ $date = date("Y/m/d");
 $sections = $sectionDao->findAll();
 $checkinsToday = $checkinDao->findAllDaily($date);
 $nextOutsCkout = $clientDao->findAllTimeAvgCkinActive();
-
-// foreach($nextOutsCkout as $data) {
-//   echo $data['ckin_vehicle_id'] . '<br>';
-// }
-
-// print_r($clientDao->findAllTimeAvgCkinActive())
+$movements = $movementDao->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -96,6 +95,13 @@ $nextOutsCkout = $clientDao->findAllTimeAvgCkinActive();
                 <div class="buttons-section">
                   <i class="fa-solid fa-user-gear"></i>
                   <p>CADASTRAR USUÁRIO</p>
+                </div>
+              </a>
+
+              <a href="/pages/relatorios/relatorios.php">
+                <div class="buttons-section">
+                  <i class="fa-regular fa-file-lines"></i>
+                  <p>RELATÓRIOS</p>
                 </div>
               </a>
             
@@ -186,153 +192,43 @@ $nextOutsCkout = $clientDao->findAllTimeAvgCkinActive();
                 </thead>
                 
                 <tbody>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
-                  <tr class="item-table">
-                    <td class="item1">Entrada</td>
-                    <td>Renault Logan</td>
-                    <td>BRA2E19</td>
-                    <td>Fernando Cunha</td>
-                    <td class="item4">18:10</td>
-                  </tr>
+                  <?php 
+                    foreach($movements as $movement):
+                     
+                      switch($movement->getType()){
+                        case 'ckin':
+                          $typeMovement = 'Entrada';         
+                          $vehicleMov = $vehicleDao->findById($movement->getVehicleId());
+                          $clientMov = $clientDao->findById($vehicleMov->getClientId());
+                          break;
+                        case 'ckout':
+                          $typeMovement = 'Saída';
+                          $vehicleMov = $vehicleDao->findById($movement->getVehicleId());
+                          $clientMov = $clientDao->findById($vehicleMov->getClientId());
+                          break;
+                        case 'cnclCkin':
+                          $typeMovement = 'Canc. Entrad.';
+                          $checkinMov = $checkinDao->findById($movement->getCkinId());
+                          $vehicleMov = $vehicleDao->findById($checkinMov->getVehicleId());
+                          $clientMov = $clientDao->findById($checkinMov->getClientId());
+                          break;
+                        case 'cnclCkout':
+                          $typeMovement = 'Canc. Saída';
+                          $checkoutMov = $checkoutDao->findById($movement->getCkoutId());
+                          $vehicleMov = $vehicleDao->findById($checkoutMov->getVehicleId());
+                          $clientMov = $clientDao->findById($checkoutMov->getClientId());
+                          break;
+                      }
+
+                    ?>
+                      <tr class="item-table">
+                        <td class="item1"><?= $typeMovement ?></td>
+                        <td><?= $vehicleMov->getModel()?></td></td>
+                        <td><?= $vehicleMov->getPlate()?></td>
+                        <td><?= $clientMov->getName() ?></td>
+                        <td class="item4"><?= substr($movement->getTime(), 0, 5) ?></td>
+                      </tr>
+                    <?php endforeach?>
                 </tbody>
               </table>
           </section>

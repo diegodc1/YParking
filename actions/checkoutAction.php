@@ -7,6 +7,7 @@ require_once('../dao/ClientDao.php');
 require_once('../dao/CheckinDao.php');
 require_once('../dao/CheckoutDao.php');
 require_once('../dao/PriceDao.php');
+require_once('../dao/MovementDao.php');
 
 $checkinDao = new CheckinDaoDB($pdo);
 $vehicleDao = new VehicleDaoDB($pdo);
@@ -14,6 +15,7 @@ $clientDao = new ClientDaoDB($pdo);
 $checkinDao = new CheckinDaoDB($pdo);
 $checkoutDao = new CheckoutDaoDB($pdo);
 $priceDao = new PriceDaoDB($pdo);
+$movementDao = new movementDaoDB($pdo);
 
 $vehicleId = filter_input(INPUT_GET, 'vehicle');
 $vehicle = $vehicleDao->findById($vehicleId);
@@ -36,6 +38,8 @@ date_default_timezone_set('America/Sao_Paulo');
 $time = date('H:i:s');
 $date = date("d-m-Y");
 $status = "Finalizado"; 
+$statusMov = "Ativo"; 
+$type = 'ckout';
 
 $CkinDateTime = $ckinDate . ' ' . $ckinTime;
 $CkoutDateTime = $date . ' ' . $time;
@@ -98,7 +102,6 @@ if($interval > 86400) {
   $hoursAdditional = $newInterval / 3600;
 }
 
-
 //pega o valor do preco adicional registrado no BD.
 if($vehicle->getCategory() != 'Moto') {
   $priceAdditional = $prices->getPrcCarAdditional();
@@ -106,15 +109,12 @@ if($vehicle->getCategory() != 'Moto') {
   $priceAdditional = $prices->getPrcMtbikeAdditional();
 }
 
-
 //Retira os caracteres especiais
 $value = trim(substr($value, 2, 8));
 $priceAdditional = substr($priceAdditional, 2, 8);
 
-
 //converte o valor para float
 $priceAdditional =floatval($priceAdditional);
-
 
 //Faz a soma total do valor final.
 if($hoursAdditional > 0) {
@@ -127,18 +127,12 @@ if($hoursAdditional > 0) {
   $value = strval($value);  
 }
 
-
-
-// echo '<br>'.$value;
-// echo '<br>'. $interHours;
-// echo '<br> horas add->'. $hoursAdditional;
-
-
 if($client->getType() === 'Mensalista') {
   $value = 0;
 }
 
 if($vehicleId) {
+  //add checkout
   $newCheckout = new Checkout;
   $newCheckout->setVehicleId($vehicleId);
   $newCheckout->setClientId($clientId);
@@ -154,17 +148,28 @@ if($vehicleId) {
 
   $checkoutDao->add($newCheckout);
 
+  //add movement
+  $newMovement = new Movement;
+  $newMovement->setType($type);
+  $newMovement->setDate($date);
+  $newMovement->setTime($time);
+  $newMovement->setVehicleId($vehicleId);
+  $newMovement->setClientId($clientId);
+  $newMovement->setUserId($userId);
+  $newMovement->setStatus($statusMov);
+
+  $movementDao->add($newMovement);
+
+  //atualiza o status do checkin
   $updateCheckin = new Checkin;
   $updateCheckin->setStatus($status);
 
   $checkinDao->updateStatus($status, $ckinId);
+
+  //atualiza o horário previsto de saída do cliente
   $clientDao->setTimeAverage($clientId);
 
   $_SESSION['checkinId'] = $ckinId;
-  // $_SESSION['showModalCkout'] = 'true';
-  // $_SESSION['message-type'] = 'success';
-  // $_SESSION['icon-message'] = '#check-circle-fill';
-  // $_SESSION['insert_user_message'] = "Check-out do veículo realizado com sucesso!";
   header("Location: ../pages/totalPrice.php?sec=$interval&min=$interMin&hours=$interHours");
 } else {
   $_SESSION['message-type'] = 'danger';

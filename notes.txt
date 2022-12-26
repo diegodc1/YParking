@@ -12,27 +12,14 @@ Tem que fazer:
 --O usuario poder escolher o layout do dashboard.
 
 
-## Notas 29/11
--- Colocar data e horário nos movimentos
--- Não Excluir, e sim desativar
--- Colocar no banco de dados quem excluiu
--- Mudar a "titulariedade" do veículo, ou seja, mudar o dono.
--- colocar/criar mais niveis de acesso ao sistema
-//-- se o user tiver desativado não pode fazer login.
--- esqueceu senha
--- edição seções
-//-- log-out
--- arrumar bug modal não abre para reativar veicula, pagina lista de veiculos
--- google sharts* para grafico
-//-- add no sidebar atalho para checkin/checkout
--- verificação se está logado ou não.
+## Notas:
+
+
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.
+-- falar sobre verificação de login e acesso.
 
-
-//comando sql de proximo veículos a sair:
-SELECT ckout_client_id, avg(ckout_time) FROM checkout WHERE ckout_client_id = 84 AND ckout_status = 'Finalizado' AND ckout_date::date >= CURRENT_DATE - INTERVAL '4 days' GROUP BY ckout_client_id
 
 
 
