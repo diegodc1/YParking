@@ -13,7 +13,10 @@ Tem que fazer:
 
 
 ## Notas:
-
+// verificar na hora do ckeckout se o cliente tem plano de empresa ou não.
+// data e horario de cadastro dos clientes e veiculos
+// mostrar nos relatórios de checkin e chekout o valor total,
+// cadastro de novos cargos
 
 
 -- Tem que ter na entrega:

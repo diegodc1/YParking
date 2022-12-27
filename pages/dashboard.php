@@ -98,7 +98,7 @@ $movements = $movementDao->findAll();
                 </div>
               </a>
 
-              <a href="/pages/relatorios/relatorios.php">
+              <a href="/pages/relatorios.php">
                 <div class="buttons-section">
                   <i class="fa-regular fa-file-lines"></i>
                   <p>RELATÓRIOS</p>
