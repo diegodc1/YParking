@@ -10,6 +10,8 @@ $usuarioDao = new UsuarioDaoDB($pdo);
 $sections = $sectionDao->findAll();
 $users = $usuarioDao->findAll();
 
+
+
 session_start();
 
 ?>
@@ -64,9 +66,9 @@ session_start();
         </div>
 
         <!--============= Formulário Clientes ==============-->
-        <form action="" method="POST" id="form-clients" class="row g-3">
+        <form action="../pages/relatClient.php" method="POST" id="form-clients" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório clientes:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
           </div>
 
@@ -74,8 +76,8 @@ session_start();
             <label for="inputStatus" class="form-label">Status:</label>
             <select id="inputStatus" name="inputStatus" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="active">Ativo</option>
-              <option value="disabled">Desativado</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Desativado">Desativado</option>
             </select>
           </div>
 
@@ -83,8 +85,8 @@ session_start();
             <label for="inputType" class="form-label">Tipo:</label>
             <select id="inputType" name="inputType" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="monthly">Mensalista</option>
-              <option value="hourly">Horista</option>
+              <option value="Mensalista">Mensalista</option>
+              <option value="Horista">Horista</option>
             </select>
           </div>
 
@@ -92,16 +94,22 @@ session_start();
             <label for="inputBussinesPlan" class="form-label">Convênio de Empresa:</label>
             <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="yes">Sim</option>
-              <option value="no">Não</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
             </select>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
+            </div>
           </div>
         </form>
 
         <!--============= Formulário Veículos ==============-->
         <form action="" method="POST" id="form-vehicles" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório veículos:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
           </div>
 
@@ -126,12 +134,18 @@ session_start();
               <option value="caminhao">Caminhão</option>
             </select>
           </div>
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
+            </div>
+          </div>
         </form>
 
         <!--============= Formulário Checkins ==============-->
         <form action="" method="POST" id="form-checkins" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório checkins:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
           </div>
 
@@ -192,8 +206,8 @@ session_start();
             <div class="col-lg-2">
               <label for="inputValueInitial" class="form-label">Entre</label>
               <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputDailyValue" value="R$ 5,00" id="valor" readonly>
-                <input type="range" min="0" max="1999.00" value="5.00" step="1" style="width:100%" oninput="converter(this.value)">
+                <input type="text" class="form-control" name="inputDailyValue" value="R$ 0,00" id="valor" readonly>
+                <input type="range" min="0" max="1999.00" value="0.00" step="1" style="width:100%" oninput="converter(this.value)" data-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
               </div>
             </div>
 
@@ -201,8 +215,14 @@ session_start();
               <label for="inputValueFinal" class="form-label">Até </label>
               <div class="box-in-daily">
                 <input type="text" class="form-control" name="inputValueFinal" value="R$ 50,00" id="valor2" readonly>
-                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)">
+                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
               </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
             </div>
           </div>
         </form>
@@ -210,7 +230,7 @@ session_start();
         <!--============= Formulário Ckeckouts ==============-->
         <form action="" method="POST" id="form-checkouts" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório checkout:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
           </div>
 
@@ -272,8 +292,8 @@ session_start();
             <div class="col-lg-2">
               <label for="inputValueInitial" class="form-label">Entre</label>
               <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputDailyValue" value="R$ 5,00" id="valor" readonly>
-                <input type="range" min="0" max="1999.00" value="5.00" step="1" style="width:100%" oninput="converter(this.value)">
+                <input type="text" class="form-control" name="inputDailyValue" value="R$ 0,00" id="valor" readonly>
+                <input type="range" min="0" max="1999.00" value="0.00" step="1" style="width:100%" oninput="converter(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
               </div>
             </div>
 
@@ -281,24 +301,51 @@ session_start();
               <label for="inputValueFinal" class="form-label">Até </label>
               <div class="box-in-daily">
                 <input type="text" class="form-control" name="inputValueFinal" value="R$ 50,00" id="valor2" readonly>
-                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)">
+                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
               </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
             </div>
           </div>
         </form>
 
         <!--============= Formulário Empresas ==============-->
-        <form action="" method="POST" id="form-companys">
+        <form action="" method="POST" id="form-companys" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório companys:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="inputStatus" class="form-label">Status:</label>
+            <select id="inputStatus" name="inputStatus" class="form-select" required">
+              <option selected value="all">Todos</option>
+              <option value="active">Ativo</option>
+              <option value="disabled">Desativado</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label for="inputSlots" class="form-label">Vagas até:</label>
+            <input type="number" class="form-control" name="inputSlots" autocomplete="off" value="20" required>
+          </div>
+
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
+            </div>
           </div>
         </form>
 
         <!--============ Formulário Usuários ==============-->
-        <form action="" method="POST" id="form-users">
+        <form action="" method="POST" id="form-users" class="row g-3">
           <div class="col-md-3">
-            <label for="inputRelatName" class="form-label">Nome do relatório usuário:</label>
+            <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
           </div>
 
@@ -330,6 +377,12 @@ session_start();
               <option value="comum">Comum</option>
               <option value="admim">Admin</option>
             </select>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <input type="submit" value="Gerar Relatório" class="submit-button">
+            </div>
           </div>
         </form>
       </div>

@@ -126,3 +126,26 @@ main {
   color: var(--red-light);
   opacity: 0.9;
 }
+
+.reactivate {
+  color: var(--green-light);
+}
+
+.button-confirm-modal.act {
+  background-color: var(--green-light);
+}
+
+.button-confirm-modal.act:hover {
+  background-color: var(--green-light);
+
+  filter: brightness(1.08button-box);
+}
+
+.modal-body-2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body-2 span {
+  font-weight: 700;
+}

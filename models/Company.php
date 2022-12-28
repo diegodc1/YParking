@@ -6,6 +6,7 @@ class Company {
   private $email;
   private $phone;
   private $slots;
+  private $status;
 
   public function getId() {
     return $this->id;
@@ -46,6 +47,14 @@ class Company {
   public function setSlots($s){
     $this->slots = $s;
   }
+
+  public function getStatus() {
+    return $this->status;
+  }
+
+  public function setStatus($status){
+    $this->status = $status;
+  }
 }
 
 interface CompanyDao {
@@ -54,4 +63,6 @@ interface CompanyDao {
   public function findById($id);
   public function update(Company $u);
   public function delete($id);
+  public function disable($id);
+  public function reactivate($id);
 }

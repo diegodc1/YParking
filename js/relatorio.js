@@ -1,11 +1,13 @@
 function downloadPDF() {
-  const item = document.querySelector('.table-list')
+  const item = document.querySelector('.content-relat')
 
   var opt = {
     margin: 0,
-    filename: 'myfile.pdf',
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    filename: 'relatorio.pdf',
+    html2canvas: { scale: 1 },
+    css_media_type: 'screen',
+
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
   }
 
   html2pdf().set(opt).from(item).save()

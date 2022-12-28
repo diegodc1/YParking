@@ -10,11 +10,12 @@ class CompanyDaoDB implements CompanyDao {
   }
 
   public function add(Company $u){
-    $sql = $this->pdo->prepare("INSERT INTO companys (company_name, company_email, company_phone, company_slots) VALUES (:name, :email, :phone, :slots)");
+    $sql = $this->pdo->prepare("INSERT INTO companys (company_name, company_email, company_phone, company_slots, company_status) VALUES (:name, :email, :phone, :slots, :status)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':phone', $u->getPhone());
     $sql->bindValue(':slots', $u->getSlots());
+    $sql->bindValue(':status', $u->getStatus());
 
     $sql->execute();
 
@@ -36,6 +37,7 @@ class CompanyDaoDB implements CompanyDao {
         $u->setEmail($company['company_email']);
         $u->setPhone($company['company_phone']);
         $u->setSlots($company['company_slots']);
+        $u->setStatus($company['company_status']);
         $companys[] = $u;
       }
     }
@@ -56,6 +58,8 @@ class CompanyDaoDB implements CompanyDao {
       $u->setEmail($data['company_email']);
       $u->setPhone($data['company_phone']);
       $u->setSlots($data['company_slots']);
+      $u->setStatus($data['company_status']);
+
       return $u;
     } else {
       return false;
@@ -80,5 +84,19 @@ class CompanyDaoDB implements CompanyDao {
     $sql = $this->pdo->prepare("DELETE FROM companys WHERE company_id = :id");
     $sql->bindValue(':id',$id);
     $sql->execute();
+  }
+
+  public function disable($id){
+    $sql = $this->pdo->prepare("UPDATE companys SET company_status = :status WHERE company_id = :id");
+    $sql->bindValue(':status','Desativado');
+    $sql->bindValue(':id',$id);
+    $sql->execute();
+  }
+
+  public function reactivate($id){
+    $sql = $this->pdo->prepare("UPDATE companys SET company_status = :status WHERE company_id = :id");
+    $sql->bindValue(':id', $id);
+    $sql->bindValue(':status', 'Ativo');
+    $sql->execute();  
   }
 }
