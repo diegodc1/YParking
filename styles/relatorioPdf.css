@@ -108,7 +108,7 @@ main {
 
 .header-relat-title {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 0.2fr;
+  grid-template-columns: 0.2fr 1fr 0.2fr;
   justify-content: space-between;
   /* border: 1px solid green; */
   width: 100%;
@@ -118,6 +118,12 @@ main {
   font-size: 2rem;
   margin-bottom: 1.3rem;
   margin: 0;
+}
+
+.title-relat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .img-logo {
   width: 5rem;
@@ -130,6 +136,7 @@ main {
   justify-content: space-between;
   display: flex;
   align-items: center;
+  gap: 1rem;
   font-size: 0.7rem;
 }
 

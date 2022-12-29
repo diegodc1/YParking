@@ -1,16 +1,18 @@
 <?php
 session_start();
 require_once('../db/config.php');
-require_once('../dao/ClientDao.php');
-require_once('../dao/CompanyDao.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/UsuarioDao.php');
 
-$clientDao = new ClientDaoDB($pdo);
-$companyDao = new CompanyDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
+$usuarioDao = new UsuarioDaoDB($pdo);
+
 
 $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
-$type = filter_input(INPUT_POST, 'inputType');
-$bussinesPlan = filter_input(INPUT_POST, 'inputBussinesPlan');
+$function = filter_input(INPUT_POST, 'inputFunction');
+$levelAccess = filter_input(INPUT_POST, 'inputAccessLevel');
+
 
 date_default_timezone_set('America/Sao_Paulo');
 $time = date('H:i:s');
@@ -22,40 +24,58 @@ $funcUser = $_SESSION['user_function'];
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
  $status = 'ti';
-}
-
-if($type == 'all') {
- $type = 'ta';
-}
-
-if($bussinesPlan != 'all') {
-  $sql = $pdo->query("SELECT * FROM clients WHERE client_status LIKE '%$status%' AND client_type LIKE '%$type%' AND client_bussines_plan LIKE '%$bussinesPlan%'");
 } else {
-  $sql = $pdo->query("SELECT * FROM clients WHERE client_status LIKE '%$status%' AND client_type LIKE '%$type%' AND (client_bussines_plan LIKE '%Sim%' OR client_bussines_plan LIKE '%Não%')");
+  $status = '%'.$status.'%';
 }
 
-$clients = [];
+if($function === 'all') {
+  $function = '%';
+} else {
+  $function = '%'.$function.'%';
+}
+
+if($levelAccess === 'all') {
+  $levelAccess = '%';
+}
+
+// echo $function . '<br>';
+// echo $levelAccess . '<br>';
+
+// if($function != 'all' && $levelAccess != 'all') {
+//   $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '%$status%' AND user_function LIKE '%$function%' AND user_access LIKE '$levelAccess'");
+// } else {
+//   if($function === 'all') {
+//     $function = '%';
+//   }
+//   if($levelAccess === 'all') {
+//     $levelAccess = '%';
+//   }
+//   $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '$status'");
+
+// }
+
+$sql = $pdo->query("SELECT * FROM users WHERE user_function LIKE '$function' AND user_status LIKE '$status'");
+
+$users = [];
+
 
 if ($sql->rowCount() > 0) {
   $data = $sql->fetchAll();
 
-  foreach ($data as $client) {
-    $u = new Client;
-    $u->setId($client['client_id']);
-    $u->setName($client['client_name']);
-    $u->setEmail($client['client_email']);
-    $u->setPhone($client['client_phone']);
-    $u->setAddress($client['client_address']);
-    $u->setCep($client['client_cep']);
-    $u->setType($client['client_type']);
-    $u->setBussinesPlan($client['client_bussines_plan']);
-    $u->setDepartureTime($client['client_departure_time']);
-    $u->setCompanyId($client['client_company_id']);
-    $u->setStatus($client['client_status']);
+  foreach ($data as $user) {
+    $u = new Usuario;
+    $u->setId($user['user_id']);
+    $u->setName($user['user_name']);
+    $u->setEmail($user['user_email']);
+    $u->setFunction($user['user_function']);
+    $u->setAccess($user['user_access']);
+    $u->setStatus($user['user_status']);
 
-    $clients[] = $u;
+
+    $users[] = $u;
   }
 }
+
  
 function get_client_ip() {
     $ipaddress = '';
@@ -110,10 +130,10 @@ function get_client_ip() {
     <div class="main-content">
       <div class="button-box">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
-        <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button> 
+        <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>  
       </div>
 
-      <div class="content-relat" id="content-relat">
+      <div class="content-relat">
         <div class="header-relat">
           <div class="header-relat-title">
             <img src="../assets/imgs/logo.png" alt="Logo YParking" class="img-logo">
@@ -123,7 +143,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Clientes</span></p>
+              <p>Relatório de: <span>Usuários</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>
@@ -143,44 +163,32 @@ function get_client_ip() {
               <tr>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Tipo</th>
-                <th>Horário Saída</th>  
-                <th>Convênio</th>0
-                <th>Empresa</th>
-                <th>Status</th>
+                <th>Cargo</th>
+                <th>Nivel de Acesso</th>  
+                <th>Status</th>0
               </tr>
             </thead>
             <tbody>
               <?php 
-                foreach($clients as $client): 
-                  if($client->getCompanyId()) {
-                    $company = $companyDao->findById($client->getCompanyId()); 
-                    $companyName = $company->getName();
-                  } else {
-                    $companyName = '-';
-                  }
-
-                  if($client->getDepartureTime()) {
-                    $dpTime = $client->getDepartureTime();
-                  } else {
-                    $dpTime = '-';
-                  }
+               echo $status . '<br>';
+                  echo $function . '<br>';
+                  echo $levelAccess . '<br>';
+                foreach($users as $user): 
+                 
                 ?>
                   <tr>
-                    <td><?= $client->getName(); ?></td>
-                    <td><?= $client->getEmail(); ?></td>       
-
-                    <td><?= $client->getType(); ?></td>
-                    <td><?= $dpTime ?></td>
-                    <td><?= $client->getBussinesPlan(); ?></td>
-                    <td><?= $companyName ?></td>
-                    <td><?= $client->getStatus()?></td>
+                    <td><?= $user->getName(); ?></td>
+                    <td><?= $user->getEmail(); ?></td>       
+                    <td><?= $user->getFunction(); ?></td>
+                    <td><?= $user->getAccess(); ?></td>
+                    <td><?= $user->getStatus(); ?></td>
                   </tr>
                 <?php endforeach ?>
             </tbody>
           </table>
         </div>
       </div>
+
     </div>
   </main>
 

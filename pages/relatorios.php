@@ -107,7 +107,7 @@ session_start();
         </form>
 
         <!--============= Formulário Veículos ==============-->
-        <form action="" method="POST" id="form-vehicles" class="row g-3">
+        <form action="../pages/relatVehicles.php" method="POST" id="form-vehicles" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -117,21 +117,21 @@ session_start();
             <label for="inputStatus" class="form-label">Status:</label>
             <select id="inputStatus" name="inputStatus" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="active">Ativo</option>
-              <option value="disabled">Desativado</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Desativado">Desativado</option>
             </select>
           </div>
 
           <div class="col-md-2">
-            <label for="inputStatus" class="form-label">Categoria:</label>
-            <select id="inputStatus" name="inputStatus" class="form-select" required">
+            <label for="inputCategory" class="form-label">Categoria:</label>
+            <select id="inputCategory" name="inputCategory" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="sedan">Sedan</option>
-              <option value="suv">SUV</option>
-              <option value="hatch">Hatch</option>
-              <option value="caminhonete">Caminhote</option>
-              <option value="moto">Moto</option>
-              <option value="caminhao">Caminhão</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Hatch">Hatch</option>
+              <option value="Caminhonete">Caminhonete</option>
+              <option value="Moto">Moto</option>
+              <option value="Caminhao">Caminhão</option>
             </select>
           </div>
 
@@ -343,7 +343,7 @@ session_start();
         </form>
 
         <!--============ Formulário Usuários ==============-->
-        <form action="" method="POST" id="form-users" class="row g-3">
+        <form action="../pages/relatUsers.php" method="POST" id="form-users" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -353,8 +353,8 @@ session_start();
             <label for="inputStatus" class="form-label">Status:</label>
             <select id="inputStatus" name="inputStatus" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="active">Ativo</option>
-              <option value="disabled">Desativado</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Desativado">Desativado</option>
             </select>
           </div>
 
@@ -362,10 +362,10 @@ session_start();
             <label for="inputFunction" class="form-label">Cargo:</label>
             <select id="inputFunction" name="inputFunction" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="manobrista">Manobrista</option>
-              <option value="opEstac">Operador de Estacionamento</option>
-              <option value="caixa">Caixa</option>
-              <option value="gerente">Gerente</option>
+              <option value="Manobrista">Manobrista</option>
+              <option value="Operador de Estac.">Operador de Estacionamento</option>
+              <option value="Caixa">Caixa</option>
+              <option value="Gerente">Gerente</option>
             </select>
           </div>
 
@@ -374,8 +374,8 @@ session_start();
             <label for="inputAccessLevel" class="form-label">Nível de Acesso:</label>
             <select id="inputAccessLevel" name="inputAccessLevel" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="comum">Comum</option>
-              <option value="admim">Admin</option>
+              <option value="0">Comum</option>
+              <option value="1">Admin</option>
             </select>
           </div>
 
