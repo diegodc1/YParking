@@ -51,6 +51,9 @@ session_start();
         <a href="/pages/addClient.php" class="add-user-button">Cadastrar Cliente</a>  
       </div>
 
+        <?php require('../components/alertMessage.php')?>
+
+
       <div class="form-relat">
         <div class="col-md-2">
           <label for="inputTypeRelat" class="form-label">Relatório de:</label>
@@ -143,7 +146,7 @@ session_start();
         </form>
 
         <!--============= Formulário Checkins ==============-->
-        <form action="" method="POST" id="form-checkins" class="row g-3">
+        <form action="../pages/relatCheckins.php" method="POST" id="form-checkins" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -198,25 +201,6 @@ session_start();
             <div class="col-md-3">
               <label for="inputTimeFinal" class="form-label">Horário Final:</label>
               <input type="time" class="form-control" name="inputTimeFinal" autocomplete="off" required>
-            </div>
-          </div>
-
-    
-          <div class="row">
-            <div class="col-lg-2">
-              <label for="inputValueInitial" class="form-label">Entre</label>
-              <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputDailyValue" value="R$ 0,00" id="valor" readonly>
-                <input type="range" min="0" max="1999.00" value="0.00" step="1" style="width:100%" oninput="converter(this.value)" data-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
-              </div>
-            </div>
-
-            <div class="col-lg-2">
-              <label for="inputValueFinal" class="form-label">Até </label>
-              <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputValueFinal" value="R$ 50,00" id="valor2" readonly>
-                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
-              </div>
             </div>
           </div>
 
@@ -286,8 +270,6 @@ session_start();
             </div>
           </div>
 
-          
-
           <div class="row">
             <div class="col-lg-2">
               <label for="inputValueInitial" class="form-label">Entre</label>
@@ -314,7 +296,7 @@ session_start();
         </form>
 
         <!--============= Formulário Empresas ==============-->
-        <form action="" method="POST" id="form-companys" class="row g-3">
+        <form action="../pages/relatCompanys.php" method="POST" id="form-companys" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -330,14 +312,20 @@ session_start();
           </div>
 
           <div class="col-md-3">
-            <label for="inputSlots" class="form-label">Vagas até:</label>
-            <input type="number" class="form-control" name="inputSlots" autocomplete="off" value="20" required>
+            <label for="inputSlotsMin" class="form-label">Vagas de:</label>
+            <input type="number" class="form-control" name="inputSlotsMin" id="inputSlotsMin" autocomplete="off" value="0" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="inputSlotsMax" class="form-label">até:</label>
+            <input type="number" class="form-control" name="inputSlotsMax" id="inputSlotsMax" autocomplete="off" value="20" required>
+            <p class="alert-message-slots">O valor máximo deve ser maior que o mínimo!</p>
           </div>
 
 
           <div class="row mt-3">
             <div class="col-md-2">
-              <input type="submit" value="Gerar Relatório" class="submit-button">
+              <input type="submit" value="Gerar Relatório" class="submit-button" id="btnSubmitCmpy">
             </div>
           </div>
         </form>
@@ -438,6 +426,44 @@ session_start();
           break;  
       }
     }
+
+    //Verifica se o valor máximo de vagas do form de empresas é menor que o valor mínimo
+    document.querySelector("#inputSlotsMax").addEventListener('change', () => {
+      let min = document.querySelector("#inputSlotsMin").value;
+      let max = document.querySelector("#inputSlotsMax").value;
+      let btnSubmit = document.querySelector("#btnSubmitCmpy");
+      let alertMessage = document.querySelector(".alert-message-slots");
+
+      max = parseInt(max);
+      min = parseInt(min);
+
+      if(max < min) {
+        btnSubmit.setAttribute("disabled", "");
+        alertMessage.style.display = 'flex';
+      } else {
+        btnSubmit.removeAttribute("disabled");
+        alertMessage.style.display = 'none';
+      }
+    })
+
+    //Verifica se o valor máximo de vagas do form de empresas é menor que o valor mínimo
+    document.querySelector("#inputSlotsMin").addEventListener('change', () => {
+      let min = document.querySelector("#inputSlotsMin").value;
+      let max = document.querySelector("#inputSlotsMax").value;
+      let btnSubmit = document.querySelector("#btnSubmitCmpy");
+      let alertMessage = document.querySelector(".alert-message-slots");
+
+      max = parseInt(max);
+      min = parseInt(min);
+
+      if(max < min) {
+        btnSubmit.setAttribute("disabled", "");
+        alertMessage.style.display = 'flex';
+      } else {
+        btnSubmit.removeAttribute("disabled");
+        alertMessage.style.display = 'none';
+      }
+    })
 
     function converter(valor) {
       var numero = parseFloat(valor).toLocaleString('pt-BR', {

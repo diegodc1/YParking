@@ -1,17 +1,17 @@
 <?php
 session_start();
 require_once('../db/config.php');
-require_once('../dao/VehicleDao.php');
+require_once('../dao/CompanyDao.php');
 require_once('../dao/UsuarioDao.php');
 
-$vehicleDao = new VehicleDaoDB($pdo);
+$companyDao = new CompanyDaoDB($pdo);
 $usuarioDao = new UsuarioDaoDB($pdo);
 
 
 $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
-$function = filter_input(INPUT_POST, 'inputFunction');
-$levelAccess = filter_input(INPUT_POST, 'inputAccessLevel');
+$slotsMin = filter_input(INPUT_POST, 'inputSlotsMin');
+$slotsMax= filter_input(INPUT_POST, 'inputSlotsMax');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -28,34 +28,27 @@ if($status == 'all') {
   $status = '%'.$status.'%';
 }
 
-if($function == 'all') {
-  $function = '%';
-} else {
-  $function = '%'.$function.'%';
-}
+$sql = $pdo->query("SELECT * FROM companys WHERE company_status LIKE '$status' AND company_slots >= $slotsMin AND company_slots <= $slotsMax");
 
-if($levelAccess == 'all') {
-  $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '$status' AND user_function LIKE '$function'");
-} else {
-  $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '$status' AND user_function LIKE '$function' AND user_access = $levelAccess");
-}
 
-$users = [];
+$companys = [];
 
 if ($sql->rowCount() > 0) {
   $data = $sql->fetchAll();
 
-  foreach ($data as $user) {
-    $u = new Usuario;
-    $u->setId($user['user_id']);
-    $u->setName($user['user_name']);
-    $u->setEmail($user['user_email']);
-    $u->setFunction($user['user_function']);
-    $u->setAccess($user['user_access']);
-    $u->setStatus($user['user_status']);
+  foreach ($data as $company) {
+    $u = new Company;
+    $u->setId($company['company_id']);
+    $u->setName($company['company_name']);
+    $u->setEmail($company['company_email']);
+    $u->setSlots($company['company_slots']);
+    $u->setPhone($company['company_phone']);
+    $u->setStatus($company['company_status']);
+    $u->setStatus($company['company_status']);
+    $u->setStatus($company['company_status']);
 
 
-    $users[] = $u;
+    $companys[] = $u;
   }
 }
 
@@ -126,7 +119,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Usuários</span></p>
+              <p>Relatório de: <span>Empresas</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>
@@ -146,25 +139,20 @@ function get_client_ip() {
               <tr>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Cargo</th>
-                <th>Nivel de Acesso</th>  
+                <th>Telefone</th>
+                <th>Vagas Reser.</th>  
                 <th>Status</th>0
               </tr>
             </thead>
             <tbody>
               <?php              
-                foreach($users as $user): 
-                  if($user->getAccess() == 0){
-                    $userAccess = 'Comum';
-                  } else {
-                    $userAccess = 'Admin';
-                  } ?>
+                foreach($companys as $company): ?>
                   <tr>
-                    <td><?= $user->getName(); ?></td>
-                    <td><?= $user->getEmail(); ?></td>       
-                    <td><?= $user->getFunction(); ?></td>
-                    <td><?= $userAccess ?></td>
-                    <td><?= $user->getStatus(); ?></td>
+                    <td><?= $company->getName(); ?></td>
+                    <td><?= $company->getEmail(); ?></td>       
+                    <td><?= $company->getPhone(); ?></td>
+                    <td><?= $company->getSlots()?></td>
+                    <td><?= $company->getStatus(); ?></td>
                   </tr>
                 <?php endforeach ?>
             </tbody>

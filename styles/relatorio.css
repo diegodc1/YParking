@@ -109,3 +109,11 @@ label {
   color: var(--text-dark) !important;
   font-weight: 600;
 }
+
+.alert-message-slots {
+  color: var(--red-light);
+  font-weight: 600;
+  margin: 0;
+  font-size: 80%;
+  display: none;
+}

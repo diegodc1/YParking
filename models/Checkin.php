@@ -9,6 +9,8 @@ class Checkin {
   private $userId;
   private $status;
   private $date;
+  private $cancelReason;
+  private $cancelUser;
 
   public function getId() {
     return $this->id;
@@ -72,6 +74,22 @@ class Checkin {
 
   public function setDate($date) {
     $this->date = $date;
+  }
+
+  public function getCancelReason() {
+    return $this->cancelReason;
+  }
+
+  public function setCancelReason($cancelReason) {
+    $this->cancelReason = $cancelReason;
+  }
+
+  public function getCancelUser() {
+    return $this->cancelUser;
+  }
+
+  public function setCancelUser($cancelUser) {
+    $this->cancelUser = $cancelUser;
   }
 }
 

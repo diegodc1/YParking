@@ -1,17 +1,31 @@
 <?php
 session_start();
 require_once('../db/config.php');
-require_once('../dao/VehicleDao.php');
+require_once('../dao/CompanyDao.php');
 require_once('../dao/UsuarioDao.php');
+require_once('../dao/CheckinDao.php');
+require_once('../dao/ClientDao.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/SectionDao.php');
 
-$vehicleDao = new VehicleDaoDB($pdo);
+$companyDao = new CompanyDaoDB($pdo);
 $usuarioDao = new UsuarioDaoDB($pdo);
+$checkinDao = new CheckinDaoDB($pdo);
+$clientDao = new ClientDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
+$sectionDao = new SectionDaoDB($pdo);
 
 
 $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
-$function = filter_input(INPUT_POST, 'inputFunction');
-$levelAccess = filter_input(INPUT_POST, 'inputAccessLevel');
+$sectionId = filter_input(INPUT_POST, 'inputSection');
+$userId= filter_input(INPUT_POST, 'inputUser');
+$dateInicial= filter_input(INPUT_POST, 'inputDateInicial');
+$dateFinal = filter_input(INPUT_POST, 'inputDateFinal');
+$timeInitial = filter_input(INPUT_POST, 'inputTimeInicial');
+$timeFinal = filter_input(INPUT_POST, 'inputTimeFinal');
+$valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
+$valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -23,39 +37,38 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = '%ti%';
+ $status = 'o%';
 } else {
   $status = '%'.$status.'%';
 }
 
-if($function == 'all') {
-  $function = '%';
-} else {
-  $function = '%'.$function.'%';
-}
 
-if($levelAccess == 'all') {
-  $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '$status' AND user_function LIKE '$function'");
-} else {
-  $sql = $pdo->query("SELECT * FROM users WHERE user_status LIKE '$status' AND user_function LIKE '$function' AND user_access = $levelAccess");
-}
+// if($sectionId == 'all') {
+//   $sectionId = 
+// }
 
-$users = [];
+$sql = $pdo->query("SELECT * FROM checkin WHERE ckin_status LIKE '$status' AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_date ASC, ckin_time DESC");
+//problema no status.
+
+$checkins = [];
 
 if ($sql->rowCount() > 0) {
   $data = $sql->fetchAll();
 
-  foreach ($data as $user) {
-    $u = new Usuario;
-    $u->setId($user['user_id']);
-    $u->setName($user['user_name']);
-    $u->setEmail($user['user_email']);
-    $u->setFunction($user['user_function']);
-    $u->setAccess($user['user_access']);
-    $u->setStatus($user['user_status']);
+  foreach ($data as $checkin) {
+    $u = new Checkin;
+    $u->setId($checkin['ckin_id']);
+    $u->setVehicleId($checkin['ckin_vehicle_id']);
+    $u->setClientId($checkin['ckin_client_id']);
+    $u->setSectionId($checkin['ckin_section_id']);
+    $u->setTime($checkin['ckin_time']);
+    $u->setUserId($checkin['ckin_user_id']);
+    $u->setStatus($checkin['ckin_status']);
+    $u->setDate($checkin['ckin_date']);
+    $u->setCancelReason($checkin['ckin_cancel_reason']);
+    $u->setCancelUser($checkin['ckin_cancel_user']);
 
-
-    $users[] = $u;
+    $checkins[] = $u;
   }
 }
 
@@ -126,7 +139,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Usuários</span></p>
+              <p>Relatório de: <span>Checkins</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>
@@ -144,27 +157,41 @@ function get_client_ip() {
           <table id="listRelat" class="table" style="width:100%">
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Cargo</th>
-                <th>Nivel de Acesso</th>  
-                <th>Status</th>0
+                <th>Veiculo</th>
+                <th>Cliente</th>
+                <th>Seção</th>
+                <th>Horário</th>  
+                <th>Data</th>  
+                <th>Status</th>  
+                <th>Motivo Cancel.</th>  
+                <th>Cancel. por</th>  
               </tr>
             </thead>
             <tbody>
               <?php              
-                foreach($users as $user): 
-                  if($user->getAccess() == 0){
-                    $userAccess = 'Comum';
+
+                foreach($checkins as $checkin): 
+                  $vehicleCkin = $vehicleDao->findById($checkin->getVehicleId());
+                  $clientCkin = $clientDao->findById($checkin->getClientId());
+                  $sectionCkin = $sectionDao->findById($checkin->getSectionId());
+                  if($checkin->getCancelUser()) {
+                    $userCkin = $usuarioDao->findById($checkin->getCancelUser()); 
+                    $userNameCkin = $userCkin->getName();
                   } else {
-                    $userAccess = 'Admin';
-                  } ?>
+                    $userNameCkin = '-';
+                  }
+                 
+                ?>
                   <tr>
-                    <td><?= $user->getName(); ?></td>
-                    <td><?= $user->getEmail(); ?></td>       
-                    <td><?= $user->getFunction(); ?></td>
-                    <td><?= $userAccess ?></td>
-                    <td><?= $user->getStatus(); ?></td>
+                    <td><?= $vehicleCkin->getModel(); ?></td>
+                    <td><?= $clientCkin->getName(); ?></td>       
+                    <td><?= $sectionCkin->getName(); ?></td>
+                    <td><?= $checkin->getTime()?></td>
+                    <td><?= $checkin->getDate(); ?></td>
+                    <td><?= $checkin->getStatus(); ?></td>
+                    <td><?= $checkin->getCancelReason(); ?></td>
+                    <td><?= $userNameCkin ?></td>
+                   
                   </tr>
                 <?php endforeach ?>
             </tbody>
