@@ -23,12 +23,12 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = '%ti%';
+ $status = "company_status LIKE '%'";
 } else {
-  $status = '%'.$status.'%';
+ $status = "company_status LIKE '%$status%'";
 }
 
-$sql = $pdo->query("SELECT * FROM companys WHERE company_status LIKE '$status' AND company_slots >= $slotsMin AND company_slots <= $slotsMax");
+$sql = $pdo->query("SELECT * FROM companys WHERE $status AND company_slots >= $slotsMin AND company_slots <= $slotsMax");
 
 
 $companys = [];

@@ -21,14 +21,18 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = '%';
+ $status = "vehicle_status LIKE '%'";
+} else {
+ $status = "vehicle_status LIKE '%$status%'";
 }
 
-if($category != 'all') {
-  $sql = $pdo->query("SELECT * FROM vehicles WHERE vehicle_status LIKE '%$status%' AND vehicle_category LIKE '%$category%'");
+if($category == 'all') {
+  $category = "AND vehicle_category LIKE '%'";
 } else {
-  $sql = $pdo->query("SELECT * FROM vehicles WHERE vehicle_status LIKE '%$status%' AND vehicle_category LIKE '%'");
+  $category = "AND vehicle_category LIKE '%$category%'";
 }
+
+$sql = $pdo->query("SELECT * FROM vehicles WHERE $status $category ORDER BY vehicle_model");
 
 
 $vehicles = [];
@@ -152,10 +156,7 @@ function get_client_ip() {
             </thead>
             <tbody>
               <?php 
-              echo $category;
                 foreach($vehicles as $vehicle): 
-                  
-
                   $client = $clientDao->findById($vehicle->getClientId()); 
                   $clientName = $client->getName();
                 ?>

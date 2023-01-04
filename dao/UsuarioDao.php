@@ -164,4 +164,14 @@ class UsuarioDaoDB implements UsuarioDAO {
     $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
+
+  public function findTotalByFunction($function) {
+    $sql = $this->pdo->prepare("SELECT * FROM users WHERE user_function = :function");
+    $sql->bindValue(':function', $function);
+    $sql->execute();
+
+    $qtd = $sql->rowCount();
+
+    return $qtd;
+  }
 }

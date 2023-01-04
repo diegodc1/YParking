@@ -176,3 +176,7 @@ main {
   height: 3rem;
   width: 20%;
 }
+
+.total-value {
+  font-weight: 700;
+}

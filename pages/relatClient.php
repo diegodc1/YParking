@@ -21,18 +21,25 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = 'ti';
+ $status = "client_status LIKE '%'";
+} else {
+ $status = "client_status LIKE '%$status%'";
 }
 
 if($type == 'all') {
- $type = 'ta';
+ $type = " AND client_type LIKE '%'";
+} else {
+ $type = "AND client_type LIKE '%$type%'";
 }
 
-if($bussinesPlan != 'all') {
-  $sql = $pdo->query("SELECT * FROM clients WHERE client_status LIKE '%$status%' AND client_type LIKE '%$type%' AND client_bussines_plan LIKE '%$bussinesPlan%'");
+if($bussinesPlan == 'all') {
+  $bussinesPlan = "AND client_bussines_plan LIKE '%'";
 } else {
-  $sql = $pdo->query("SELECT * FROM clients WHERE client_status LIKE '%$status%' AND client_type LIKE '%$type%' AND (client_bussines_plan LIKE '%Sim%' OR client_bussines_plan LIKE '%Não%')");
+  $bussinesPlan = "AND client_bussines_plan LIKE '%$bussinesPlan%'";
 }
+
+
+$sql = $pdo->query("SELECT * FROM clients WHERE $status $type $bussinesPlan ORDER BY client_name");
 
 $clients = [];
 

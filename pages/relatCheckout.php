@@ -1,17 +1,33 @@
 <?php
 session_start();
 require_once('../db/config.php');
-require_once('../dao/VehicleDao.php');
+require_once('../dao/CompanyDao.php');
 require_once('../dao/UsuarioDao.php');
+require_once('../dao/CheckinDao.php');
+require_once('../dao/CheckoutDao.php');
+require_once('../dao/ClientDao.php');
+require_once('../dao/VehicleDao.php');
+require_once('../dao/SectionDao.php');
 
-$vehicleDao = new VehicleDaoDB($pdo);
+$companyDao = new CompanyDaoDB($pdo);
 $usuarioDao = new UsuarioDaoDB($pdo);
+$checkinDao = new CheckinDaoDB($pdo);
+$checkoutDao = new CheckoutDaoDB($pdo);
+$clientDao = new ClientDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
+$sectionDao = new SectionDaoDB($pdo);
 
 
 $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
-$function = filter_input(INPUT_POST, 'inputFunction');
-$levelAccess = filter_input(INPUT_POST, 'inputAccessLevel');
+$sectionId = filter_input(INPUT_POST, 'inputSection');
+$userId= filter_input(INPUT_POST, 'inputUser');
+$dateInicial= filter_input(INPUT_POST, 'inputDateInicial');
+$dateFinal = filter_input(INPUT_POST, 'inputDateFinal');
+$timeInitial = filter_input(INPUT_POST, 'inputTimeInicial');
+$timeFinal = filter_input(INPUT_POST, 'inputTimeFinal');
+$valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
+$valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -23,42 +39,49 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = "user_status LIKE '%'";
+ $status = "ckout_status LIKE '%o%'";
 } else {
- $status = "user_status LIKE '%$status%'";
+ $status = "ckout_status LIKE '%$status%'";
 }
 
-if($function == 'all') {
-  $function = "AND user_function LIKE '%'";
+if($sectionId == 'all') {
+  $section = "";
 } else {
-  $function = "AND user_function LIKE '%$function%'";
+  $section = "AND ckout_section_id = $sectionId";
 }
 
-if($levelAccess == 'all') {
-  $levelAccess = "";
+if($userId == 'all') {
+  $user = "";
 } else {
-  $levelAccess = "AND user_access = $levelAccess";
+  $user = "AND ckout_user_id = $userId";
 }
 
-$sql = $pdo->query("SELECT * FROM users WHERE $status $function $levelAccess");
+$valueInitial = number_format($valueInitial, 2, ',', '.');
+$valueFinal = number_format($valueFinal, 2, ',', '.');
 
+$sql = $pdo->query("SELECT * FROM checkout WHERE $status $section $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' ORDER BY ckout_date ASC, ckout_time DESC");
 
-$users = [];
+$checkouts = [];
 
 if ($sql->rowCount() > 0) {
   $data = $sql->fetchAll();
 
-  foreach ($data as $user) {
-    $u = new Usuario;
-    $u->setId($user['user_id']);
-    $u->setName($user['user_name']);
-    $u->setEmail($user['user_email']);
-    $u->setFunction($user['user_function']);
-    $u->setAccess($user['user_access']);
-    $u->setStatus($user['user_status']);
+  foreach ($data as $checkout) {
+    $u = new Checkout;
+    $u->setId($checkout['ckout_id']);
+    $u->setVehicleId($checkout['ckout_vehicle_id']);
+    $u->setClientId($checkout['ckout_client_id']);
+    $u->setSectionId($checkout['ckout_section_id']);
+    $u->setTime($checkout['ckout_time']);
+    $u->setDate($checkout['ckout_date']);
+    $u->setUserId($checkout['ckout_user_id']);
+    $u->setStatus($checkout['ckout_status']);
+    $u->setCancelReason($checkout['ckout_cancel_reason']);
+    $u->setCancelUser($checkout['ckout_cancel_user']);
+    $u->setTotalValue($checkout['ckout_total_value']);
+    $u->setCkinId($checkout['ckout_ckin_id']);
 
-
-    $users[] = $u;
+    $checkouts[] = $u;
   }
 }
 
@@ -101,37 +124,6 @@ function get_client_ip() {
   <link rel="stylesheet" href="../styles/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script src="https://www.gstatic.com/charts/loader.js"></script>
-  <script>
-    google.charts.load('current', {packages: ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-  </script>
-
-  <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          <?php
-            foreach($users as $user): ?>
-              ['<?= $user->getFunction() ?>',  <?php echo $usuarioDao->findTotalByFunction($user->getFunction()); ?>],
-            <?php endforeach
-          //repetindo funções
-          ?>
-        ]);
-
-        var options = {
-          title: 'My Daily Activities',
-          pieHole: 0.4,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-    </script>
-
 </head>
 
 
@@ -160,7 +152,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Usuários</span></p>
+              <p>Relatório de: <span>Checkouts</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>
@@ -178,34 +170,76 @@ function get_client_ip() {
           <table id="listRelat" class="table" style="width:100%">
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Cargo</th>
-                <th>Nivel de Acesso</th>  
-                <th>Status</th>0
+                <th>Veiculo</th>
+                <th>Placa</th>
+                <th>Cliente</th>
+                <th>Seção</th>
+                <th>Data</th>  
+                <th>Horário</th>  
+                <th>Data Checkin</th>  
+                <th>Horário Checkin</th>  
+                <th>Valor</th>  
+                <th>Usuário</th>  
+                <th>Status</th>  
+                <th>Motivo Cancel.</th>  
+                <th>Cancel. por</th>  
               </tr>
             </thead>
             <tbody>
               <?php              
-                foreach($users as $user): 
-                  $usuarioDao->findTotalByFunction($user->getFunction());
-                  if($user->getAccess() == 0){
-                    $userAccess = 'Comum';
+              $totalValueCkout = 0;
+                foreach($checkouts as $checkout): 
+                  $vehicleCkout = $vehicleDao->findById($checkout->getVehicleId());
+                  $clientCkout = $clientDao->findById($checkout->getClientId());
+                  $sectionCkout = $sectionDao->findById($checkout->getSectionId());
+                  $usuarioCkout = $usuarioDao->findById($checkout->getUserId());
+                  $checkinCkout = $checkinDao->findById($checkout->getCkinId());
+                  if($checkout->getCancelUser()) {
+                    $userCkout = $usuarioDao->findById($checkout->getCancelUser()); 
+                    $userNameCkout = $userCkout->getName();
                   } else {
-                    $userAccess = 'Admin';
-                  } ?>
-                  <tr>
-                    <td><?= $user->getName(); ?></td>
-                    <td><?= $user->getEmail(); ?></td>       
-                    <td><?= $user->getFunction(); ?></td>
-                    <td><?= $userAccess ?></td>
-                    <td><?= $user->getStatus(); ?></td>
-                  </tr>
-                <?php endforeach ?>
-            </tbody>
-          </table>
+                    $userNameCkout = '-';
+                  }
 
-          <div id="donutchart" style="width: 900px; height: 500px;"></div>
+                  $price = substr($checkout->getTotalValue(), 2, 10);
+                  $price =floatval($price);
+                  
+                  $totalValueCkout = floatval($totalValueCkout);
+                  $totalValueCkout += $price;
+
+                  $totalValueCkout = number_format($totalValueCkout, 2, ',', '.');
+                ?>
+                  <tr>
+                    <td><?= $vehicleCkout->getModel(); ?></td>
+                    <td><?= $vehicleCkout->getPlate(); ?></td>
+                    <td><?= $clientCkout->getName(); ?></td>       
+                    <td><?= $sectionCkout->getName(); ?></td>
+                    <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
+                    <td><?= $checkout->getTime()?></td>
+                    <td><?= date('d/m/Y', strtotime($checkinCkout->getDate())); ?></td>
+                    <td><?= $checkinCkout->getTime()?></td>
+                    <td><?= $checkout->getTotalValue()?></td>
+                    <td><?= $usuarioCkout->getName(); ?></td>
+                    <td><?= $checkout->getStatus(); ?></td>
+                    <td><?= $checkout->getCancelReason(); ?></td>
+                    <td><?= $userNameCkout ?></td>
+                  </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                  <tfoot> 
+                    <tr>
+                      <td class="total-value">Valor Total:</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="total-value">R$ <?= $totalValueCkout ?></td>
+                    </tr>
+                  </tfoot>    
+          </table>
         </div>
       </div>
 

@@ -156,9 +156,9 @@ session_start();
             <label for="inputStatus" class="form-label">Status:</label>
             <select id="inputStatus" name="inputStatus" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="active">Ativo</option>
-              <option value="disabled">Finalizado</option>
-              <option value="disabled">Cancelado</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Finalizado">Finalizado</option>
+              <option value="Cancelado">Cancelado</option>
             </select>
           </div>
 
@@ -212,7 +212,7 @@ session_start();
         </form>
 
         <!--============= Formulário Ckeckouts ==============-->
-        <form action="" method="POST" id="form-checkouts" class="row g-3">
+        <form action="../pages/relatCheckout.php" method="POST" id="form-checkouts" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -222,9 +222,8 @@ session_start();
             <label for="inputStatus" class="form-label">Status:</label>
             <select id="inputStatus" name="inputStatus" class="form-select" required">
               <option selected value="all">Todos</option>
-              <option value="active">Ativo</option>
-              <option value="disabled">Finalizado</option>
-              <option value="disabled">Cancelado</option>
+              <option value="Finalizado">Finalizado</option>
+              <option value="Cancelado">Cancelado</option>
             </select>
           </div>
 
@@ -274,16 +273,16 @@ session_start();
             <div class="col-lg-2">
               <label for="inputValueInitial" class="form-label">Entre</label>
               <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputDailyValue" value="R$ 0,00" id="valor" readonly>
-                <input type="range" min="0" max="1999.00" value="0.00" step="1" style="width:100%" oninput="converter(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
+                <input type="text" class="form-control"   value="R$ 0,00" id="valor" readonly>
+                <input type="range" min="0" max="1999.00" value="0.00" step="1" style="width:100%" oninput="converter(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão." name="inputValueInitial">
               </div>
             </div>
 
             <div class="col-lg-2">
               <label for="inputValueFinal" class="form-label">Até </label>
               <div class="box-in-daily">
-                <input type="text" class="form-control" name="inputValueFinal" value="R$ 50,00" id="valor2" readonly>
-                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão.">
+                <input type="text" class="form-control"  value="R$ 50,00" id="valor2" readonly>
+                <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão." name="inputValueFinal">
               </div>
             </div>
           </div>

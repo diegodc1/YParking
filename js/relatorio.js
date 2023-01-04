@@ -7,7 +7,12 @@ function downloadPDF() {
     html2canvas: { scale: 1 },
     css_media_type: 'screen',
 
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+    jsPDF: {
+      unit: 'in',
+      format: 'letter',
+      orientation: 'landscape',
+      format: [16, 10]
+    }
   }
 
   html2pdf().set(opt).from(item).save()

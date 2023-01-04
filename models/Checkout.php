@@ -12,6 +12,8 @@ class Checkout {
   private $timeCkin;
   private $dateCkin;
   private $idCkin;
+  private $cancelReason;
+  private $cancelUser;
   private $totalValue;
 
   public function getId() {
@@ -108,6 +110,22 @@ class Checkout {
 
   public function setTotalValue($value) {
     $this->totalValue = $value;
+  }
+
+  public function getCancelReason() {
+    return $this->cancelReason;
+  }
+
+  public function setCancelReason($cancelReason) {
+    $this->cancelReason = $cancelReason;
+  }
+
+  public function getCancelUser() {
+    return $this->cancelUser;
+  }
+
+  public function setCancelUser($cancelUser) {
+    $this->cancelUser = $cancelUser;
   }
 }
 

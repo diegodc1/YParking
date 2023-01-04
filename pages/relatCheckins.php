@@ -37,18 +37,25 @@ $funcUser = $_SESSION['user_function'];
 
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
- $status = 'o%';
+ $status = "ckin_status LIKE '%o%'";
 } else {
-  $status = '%'.$status.'%';
+ $status = "ckin_status LIKE '%$status%'";
+}
+
+if($sectionId == 'all') {
+  $section = "";
+} else {
+  $section = "AND ckin_section_id = $sectionId";
+}
+
+if($userId == 'all') {
+  $user = "";
+} else {
+  $user = "AND ckin_user_id = $userId";
 }
 
 
-// if($sectionId == 'all') {
-//   $sectionId = 
-// }
-
-$sql = $pdo->query("SELECT * FROM checkin WHERE ckin_status LIKE '$status' AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_date ASC, ckin_time DESC");
-//problema no status.
+$sql = $pdo->query("SELECT * FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_date ASC, ckin_time DESC");
 
 $checkins = [];
 
@@ -158,10 +165,12 @@ function get_client_ip() {
             <thead>
               <tr>
                 <th>Veiculo</th>
+                <th>Placa</th>
                 <th>Cliente</th>
                 <th>Seção</th>
-                <th>Horário</th>  
                 <th>Data</th>  
+                <th>Horário</th>  
+                <th>Usuário</th>  
                 <th>Status</th>  
                 <th>Motivo Cancel.</th>  
                 <th>Cancel. por</th>  
@@ -169,11 +178,11 @@ function get_client_ip() {
             </thead>
             <tbody>
               <?php              
-
                 foreach($checkins as $checkin): 
                   $vehicleCkin = $vehicleDao->findById($checkin->getVehicleId());
                   $clientCkin = $clientDao->findById($checkin->getClientId());
                   $sectionCkin = $sectionDao->findById($checkin->getSectionId());
+                  $usuarioCkin = $usuarioDao->findById($checkin->getUserId());
                   if($checkin->getCancelUser()) {
                     $userCkin = $usuarioDao->findById($checkin->getCancelUser()); 
                     $userNameCkin = $userCkin->getName();
@@ -184,10 +193,12 @@ function get_client_ip() {
                 ?>
                   <tr>
                     <td><?= $vehicleCkin->getModel(); ?></td>
+                    <td><?= $vehicleCkin->getPlate(); ?></td>
                     <td><?= $clientCkin->getName(); ?></td>       
                     <td><?= $sectionCkin->getName(); ?></td>
+                    <td><?= date('d/m/Y', strtotime($checkin->getDate())); ?></td>
                     <td><?= $checkin->getTime()?></td>
-                    <td><?= $checkin->getDate(); ?></td>
+                    <td><?= $usuarioCkin->getName(); ?></td>
                     <td><?= $checkin->getStatus(); ?></td>
                     <td><?= $checkin->getCancelReason(); ?></td>
                     <td><?= $userNameCkin ?></td>
