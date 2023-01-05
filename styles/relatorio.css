@@ -121,3 +121,27 @@ label {
 .div-line.two {
   margin-top: 2rem;
 }
+
+.graphBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.graphBox .form-label {
+  margin: 0 !important;
+  color: var(--text-dark) !important;
+  font-weight: 600;
+}
+
+.radius-box {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.radius-box label {
+  margin: 0 !important;
+}
+
+.radiu-2 {
+  margin-left: 0.5rem !important;
+}

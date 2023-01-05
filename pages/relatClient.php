@@ -63,6 +63,20 @@ if ($sql->rowCount() > 0) {
     $clients[] = $u;
   }
 }
+
+
+// Faz a busca de todos os cargos do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT client_type FROM clients WHERE $status $type $bussinesPlan");
+$distTypes = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumDistTypes($type, $pdo, $status, $bussinesPlan) {
+  $sql = $pdo->query("SELECT count(client_type) as qtd FROM clients WHERE client_status = 'Ativo' AND client_type = 'Mensalista' ");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
  
 function get_client_ip() {
     $ipaddress = '';
@@ -102,6 +116,8 @@ function get_client_ip() {
   <link rel="stylesheet" href="../styles/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
 </head>
 
 
@@ -159,6 +175,9 @@ function get_client_ip() {
             </thead>
             <tbody>
               <?php 
+              // print_r($distTypes);  
+              echo  $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan);
+              
                 foreach($clients as $client): 
                   if($client->getCompanyId()) {
                     $company = $companyDao->findById($client->getCompanyId()); 
@@ -186,6 +205,9 @@ function get_client_ip() {
                 <?php endforeach ?>
             </tbody>
           </table>
+
+            <div id="donutchart" style="width: 900px; height: 500px;"></div>
+
         </div>
       </div>
     </div>
@@ -199,6 +221,35 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
+
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChartTypes);
+
+    // Desenha o grafico na tela
+    function drawChartTypes() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Quantidade de funcionários por cargo'],
+        <?php
+          for($i = 0; $i < count($distTypes); $i++){
+            $text = $distTypes[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan); ?>
+            ['dada',  43],
+          <?php }
+        ?>
+      ]);
+      var options = {
+        title: 'Quantidade de funcionários por cargo',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+  </script>
   
  
 </body>

@@ -16,7 +16,7 @@ Tem que fazer:
 // verificar na hora do ckeckout se o cliente tem plano de empresa ou não.
 // data e horario de cadastro dos clientes e veiculos
 // cadastro de novos cargos
-
+// gerar grafico de financas, atraves de um button que vai ficar na tela do form
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.
