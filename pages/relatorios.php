@@ -93,7 +93,7 @@ session_start();
             </select>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label for="inputBussinesPlan" class="form-label">Convênio de Empresa:</label>
             <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" required">
               <option selected value="all">Todos</option>
@@ -101,6 +101,33 @@ session_start();
               <option value="Não">Não</option>
             </select>
           </div>
+
+          <div class="row mt-4">
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gráfico de tipo de cliente?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="generateGraphType" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="generateGraphType" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gráfico de convênio?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="genGraphBussinesPlan" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="genGraphBussinesPlan" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+          </div>
+          </div>
+
 
           <div class="row mt-3">
             <div class="col-md-2">
@@ -136,6 +163,20 @@ session_start();
               <option value="Moto">Moto</option>
               <option value="Caminhao">Caminhão</option>
             </select>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gráfico de categoria?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="genGraphCategory" value="Sim" required>
+                <label for="yes">Sim</label>
+
+                <input type="radio" id="no" name="genGraphCategory" class="radiu-2" value="Não" required>
+                <label for="no">Não</label>
+              </div>
+            </div>
           </div>
 
           <div class="row mt-3">
@@ -193,12 +234,12 @@ session_start();
               <input type="date" class="form-control" name="inputDateFinal" autocomplete="off" required>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
               <label for="inputTimeInicial" class="form-label">Horário Inicial:</label>
               <input type="time" class="form-control" name="inputTimeInicial" autocomplete="off" required>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
               <label for="inputTimeFinal" class="form-label">Horário Final:</label>
               <input type="time" class="form-control" name="inputTimeFinal" autocomplete="off" required>
             </div>

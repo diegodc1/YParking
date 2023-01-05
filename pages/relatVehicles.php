@@ -10,6 +10,7 @@ $clientDao = new clientDaoDB($pdo);
 $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
 $category = filter_input(INPUT_POST, 'inputCategory');
+$genGraphCategory = filter_input(INPUT_POST, 'genGraphCategory');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -57,6 +58,20 @@ if ($sql->rowCount() > 0) {
     $vehicles[] = $u;
   }
 }
+
+
+// Faz a busca de todos os tipos de clientes do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT vehicle_category FROM vehicles WHERE $status $category ");
+$distCategory = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Soma a partir dos filtros, quantos clientes há em cada cargo.
+function getSumDistCategory($category, $pdo, $status) {
+  $sql = $pdo->query("SELECT count(vehicle_category) as qtd FROM vehicles WHERE $status AND vehicle_category = '$category'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+} 
 
 
 // print_r($vehicles);
@@ -172,6 +187,17 @@ function get_client_ip() {
                 <?php endforeach ?>
             </tbody>
           </table>
+
+          <div class="line-div two"></div>
+          
+          <?php if(count($distCategory) > 0 && $genGraphCategory == 'Sim'): ?>
+            <h3 class="title-graph">Gráfico</h3>
+            <div class="graphs-box">
+                <div id="donutchart" style="width: 500px; height: 300px;"></div>
+            </div>
+          
+          <?php endif ?>
+
         </div>
       </div>
 
@@ -186,6 +212,40 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
+
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChartTypes);
+
+    // Desenha o grafico na tela
+    function drawChartTypes() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Quantidade de veículos por categoria'],
+        <?php
+        
+          for($i = 0; $i < count($distCategory); $i++){
+            $text = $distCategory[$i]; 
+            $text = implode(" ", $text);
+            
+            $qtd = getSumDistCategory($text, $pdo, $status); ?>
+            ['<?= $text ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]);
+      var options = {
+        title: 'Veículos por categoria',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
+  </script>
+  
   
  
 </body>

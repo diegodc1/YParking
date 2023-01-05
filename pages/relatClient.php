@@ -11,6 +11,8 @@ $relatName = filter_input(INPUT_POST, 'inputRelatName');
 $status = filter_input(INPUT_POST, 'inputStatus');
 $type = filter_input(INPUT_POST, 'inputType');
 $bussinesPlan = filter_input(INPUT_POST, 'inputBussinesPlan');
+$genGraphType = filter_input(INPUT_POST, 'generateGraphType');
+$genGraphBussinesPlan = filter_input(INPUT_POST, 'genGraphBussinesPlan');
 
 date_default_timezone_set('America/Sao_Paulo');
 $time = date('H:i:s');
@@ -65,14 +67,28 @@ if ($sql->rowCount() > 0) {
 }
 
 
-// Faz a busca de todos os cargos do estacionamento.
+// Faz a busca de todos os tipos de clientes do estacionamento.
 $sql = $pdo->query("SELECT DISTINCT client_type FROM clients WHERE $status $type $bussinesPlan");
 $distTypes = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
-// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+// Soma a partir dos filtros, quantos clientes há em cada cargo.
 function getSumDistTypes($type, $pdo, $status, $bussinesPlan) {
-  $sql = $pdo->query("SELECT count(client_type) as qtd FROM clients WHERE client_status = 'Ativo' AND client_type = 'Mensalista' ");
+  $sql = $pdo->query("SELECT count(client_type) as qtd FROM clients WHERE $status $bussinesPlan AND client_type = '$type'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+// Faz a busca de todos os cargos do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT client_bussines_plan FROM clients WHERE $status $type $bussinesPlan");
+$distBussinesPlan = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumDistBussinessPlan($bussinesPlan, $pdo, $status, $type) {
+  $sql = $pdo->query("SELECT count(client_bussines_plan) as qtd FROM clients WHERE $status $type AND client_bussines_plan  = '$bussinesPlan'");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
 
   return $data['qtd'];
@@ -176,7 +192,11 @@ function get_client_ip() {
             <tbody>
               <?php 
               // print_r($distTypes);  
-              echo  $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan);
+              // echo  $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan);
+              // print_r($distTypes);
+              $text = $distTypes[0]; 
+              $text = implode(" ", $text);
+              echo gettype($text);
               
                 foreach($clients as $client): 
                   if($client->getCompanyId()) {
@@ -206,8 +226,20 @@ function get_client_ip() {
             </tbody>
           </table>
 
-            <div id="donutchart" style="width: 900px; height: 500px;"></div>
+          <div class="line-div two"></div>
+           <?php 
+            if((count($distTypes) > 0  && $genGraphType == 'Sim') || (count($distBussinesPlan) > 0 && $genGraphBussinesPlan == 'Sim')): ?>
+              <h3 class="title-graph">Gráfico</h3>
+              <div class="graphs-box">
+                <?php if(count($distTypes) > 0  && $genGraphType == 'Sim'): ?>
+                  <div id="donutchart" style="width: 500px; height: 300px;"></div>
+                 <?php endif ?>
 
+                 <?php if(count($distBussinesPlan) > 0 && $genGraphBussinesPlan == 'Sim'): ?>
+                  <div id="bussinePlanGraph" style="width: 500px; height: 300px;"></div>           
+                 <?php endif ?>
+              </div>
+            <?php endif ?>
         </div>
       </div>
     </div>
@@ -227,26 +259,54 @@ function get_client_ip() {
 
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChartTypes);
+    google.charts.setOnLoadCallback(drawChartBussinesPlan);
 
     // Desenha o grafico na tela
     function drawChartTypes() {
       var data = google.visualization.arrayToDataTable([
         ['Task', 'Quantidade de funcionários por cargo'],
         <?php
+        
           for($i = 0; $i < count($distTypes); $i++){
             $text = $distTypes[$i]; 
             $text = implode(" ", $text);
-            $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan); ?>
-            ['dada',  43],
+            
+            $qtd = getSumDistTypes($text, $pdo, $status, $bussinesPlan); ?>
+            ['<?= $text ?>',  <?= $qtd ?>],
           <?php }
         ?>
       ]);
       var options = {
-        title: 'Quantidade de funcionários por cargo',
+        title: 'Clientes por tipo de cadastro',
         pieHole: 0.4,
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
+
+    function drawChartBussinesPlan() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Clientes Conveniados de Empresas'],
+        <?php
+        
+          for($i = 0; $i < count($distBussinesPlan); $i++){
+            $text = $distBussinesPlan[$i]; 
+            $text = implode(" ", $text);
+            
+            $qtd = getSumDistBussinessPlan($text, $pdo, $status, $type); ?>
+            ['<?= $text ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]);
+      var options = {
+        title: 'Clientes conveniados ou não',
+        pieHole: 0.4,
+        colors: ['#2ed47a', '#ECEF5B']
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('bussinePlanGraph'));
       chart.draw(data, options);
     }
   </script>

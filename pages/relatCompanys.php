@@ -52,6 +52,18 @@ if ($sql->rowCount() > 0) {
   }
 }
 
+
+
+
+
+// Soma a partir dos filtros, quantos clientes há em cada cargo.
+// function getSumDistCategory($category, $pdo, $status) {
+//   $sql = $pdo->query("SELECT count(vehicle_category) as qtd FROM vehicles WHERE $status AND vehicle_category = '$category'");
+//   $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+//   return $data['qtd'];
+// } 
+
  
 function get_client_ip() {
     $ipaddress = '';
@@ -157,6 +169,14 @@ function get_client_ip() {
                 <?php endforeach ?>
             </tbody>
           </table>
+
+        
+            <h3 class="title-graph">Gráfico</h3>
+            <!-- <div class="graphs-box"> -->
+                <div id="columnchart_values" style="width: 800px; height: 300px;"></div>
+            <!-- </div> -->
+          
+    
         </div>
       </div>
 
@@ -171,6 +191,43 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
+
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Desenha o grafico na tela
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+        <?php foreach($companys as $company): ?>
+          ['<?= $company->getName()?>', <?= $company->getSlots()?>, "#b87333"],
+        <?php endforeach ?>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",  
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Density of Precious Metals, in g/cm^3",
+        width: 800,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+
+  </script>
   
  
 </body>

@@ -185,6 +185,11 @@ main {
   margin-top: 1rem;
 }
 
+/******* Graph's *********/
+.graphs-box {
+  display: flex;
+}
+
 .title-graph {
   font-size: 1.5rem;
   color: black;

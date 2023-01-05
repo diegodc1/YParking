@@ -130,7 +130,7 @@ function get_client_ip() {
     <h1>RELATÓRIO</h1>
   </header>
 
-  <main>
+  <main>  
     <div class="main-content">
       <div class="button-box">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
