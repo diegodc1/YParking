@@ -174,4 +174,24 @@ class UsuarioDaoDB implements UsuarioDAO {
 
     return $qtd;
   }
+
+  // public function findDistinctData($column) {
+
+  //   $sql = $this->pdo->prepare("SELECT DISTINCT user_function FROM users");
+  //   $sql->bindValue(':column', '$column');
+  //   $sql->execute();
+
+
+  //     $data = $sql->fetchAll();
+  //     return $data;
+
+  //     // foreach($data as $distinct) {
+  //     //   $u = new Usuario;
+  //     //   $u->setFunction($distinct['user_function']);
+  //     //   $dataDistincts[] = $distinct;
+  //     // }
+
+
+  //   return $data;
+  // }
 }

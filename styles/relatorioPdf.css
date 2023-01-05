@@ -180,3 +180,14 @@ main {
 .total-value {
   font-weight: 700;
 }
+
+.line-div.two {
+  margin-top: 1rem;
+}
+
+.title-graph {
+  font-size: 1.5rem;
+  color: black;
+  font-weight: 600;
+  margin-top: 1rem;
+}

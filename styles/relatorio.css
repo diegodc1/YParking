@@ -117,3 +117,7 @@ label {
   font-size: 80%;
   display: none;
 }
+
+.div-line.two {
+  margin-top: 2rem;
+}

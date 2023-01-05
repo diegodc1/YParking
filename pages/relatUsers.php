@@ -24,23 +24,29 @@ $funcUser = $_SESSION['user_function'];
 //Verificação se o filtro é para todos os dados ou não.
 if($status == 'all') {
  $status = "user_status LIKE '%'";
+ $status2 = "user_status LIKE '%'";
 } else {
  $status = "user_status LIKE '%$status%'";
+ $status2 = "AND user_status LIKE '%$status%'";
 }
 
 if($function == 'all') {
   $function = "AND user_function LIKE '%'";
+  $function2 = "AND user_function LIKE '%'";
 } else {
   $function = "AND user_function LIKE '%$function%'";
+  $function2 = "AND user_function LIKE '%$function%'";
 }
 
 if($levelAccess == 'all') {
   $levelAccess = "";
+  $levelAccess2 = "";
 } else {
   $levelAccess = "AND user_access = $levelAccess";
+  $levelAccess2 = "AND user_access = $levelAccess";
 }
 
-$sql = $pdo->query("SELECT * FROM users WHERE $status $function $levelAccess");
+$sql = $pdo->query("SELECT * FROM users WHERE $status $function $levelAccess ORDER BY user_name");
 
 
 $users = [];
@@ -57,12 +63,25 @@ if ($sql->rowCount() > 0) {
     $u->setAccess($user['user_access']);
     $u->setStatus($user['user_status']);
 
-
     $users[] = $u;
   }
 }
 
- 
+
+$sql = $pdo->query("SELECT DISTINCT user_function FROM users WHERE $status $function $levelAccess");
+$disctFuncs = $sql->fetchAll(PDO::FETCH_ASSOC);
+$disct=[];
+
+
+function getSumDisct($function, $pdo, $status, $levelAccess) {
+  $function = $function;
+  $sql = $pdo->query("SELECT count(user_function) as qtd FROM users WHERE $status $levelAccess AND user_function = '$function' ");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+  print_r($data);
+}
+
 function get_client_ip() {
     $ipaddress = '';
     if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -81,7 +100,6 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
-
 ?>
 
 <head>
@@ -105,25 +123,25 @@ function get_client_ip() {
   <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script>
     google.charts.load('current', {packages: ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
   </script>
 
   <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
           <?php
-            foreach($users as $user): ?>
-              ['<?= $user->getFunction() ?>',  <?php echo $usuarioDao->findTotalByFunction($user->getFunction()); ?>],
-            <?php endforeach
-          //repetindo funções
+            for($i = 0; $i < count($disctFuncs); $i++){
+              $text = $disctFuncs[$i]; 
+              $text = implode(" ", $text);
+              $qtd = getSumDisct($text, $pdo, $status, $levelAccess); ?>
+              ['<?= $text ?>',  <?= $qtd ?>],
+            <?php }
           ?>
         ]);
-
         var options = {
-          title: 'My Daily Activities',
+          title: 'Porcentagem de cada Cargo',
           pieHole: 0.4,
         };
 
@@ -131,14 +149,12 @@ function get_client_ip() {
         chart.draw(data, options);
       }
     </script>
-
 </head>
 
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
    
-
   <header class="relat-header">
     <h1>RELATÓRIO</h1>
   </header>
@@ -186,7 +202,7 @@ function get_client_ip() {
               </tr>
             </thead>
             <tbody>
-              <?php              
+              <?php          
                 foreach($users as $user): 
                   $usuarioDao->findTotalByFunction($user->getFunction());
                   if($user->getAccess() == 0){
@@ -205,7 +221,12 @@ function get_client_ip() {
             </tbody>
           </table>
 
-          <div id="donutchart" style="width: 900px; height: 500px;"></div>
+          <div class="line-div two"></div>
+
+          <?php if(count($users) > 0): ?>
+            <h3 class="title-graph">Gráfico</h3>
+            <div id="donutchart" style="width: 900px; height: 500px;"></div>
+          <?php endif; ?>
         </div>
       </div>
 
