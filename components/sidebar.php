@@ -34,6 +34,14 @@ if($id) {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/imgs/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/imgs/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/imgs/favicon-16x16.png">
+  <link rel="manifest" href="../assets/imgs/site.webmanifest">
+  <link rel="mask-icon" href="../assets/imgs/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body class="sidebar-body">
@@ -84,6 +92,13 @@ if($id) {
           <a href="../pages/listCompanys.php" class="sections">
             <i class="fa-solid fa-building"></i>
             <span>Empresas</span>
+          </a>
+        </button>
+
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Relatórios" class="">
+          <a href="../pages/relatorios.php" class="sections">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Relatorios</span>
           </a>
         </button>
 

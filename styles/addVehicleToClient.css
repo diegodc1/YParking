@@ -226,3 +226,10 @@ label {
   width: 1.3rem;
   height: 1.3rem;
 }
+
+/********** MEDIA QUERY **********/
+@media (max-width: 1700px) {
+  main {
+    zoom: 0.8;
+  }
+}

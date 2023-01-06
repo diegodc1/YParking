@@ -21,7 +21,7 @@ $clients = $clientDao->findAllAtive();
 </head>
 
 
-<body class="addClient-body">
+<body class="addVehicle-body">
   <?php require_once('../components/sidebar.php') ?>
 
   <header>

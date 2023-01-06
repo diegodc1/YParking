@@ -38,6 +38,14 @@ $movements = $movementDao->findAll();
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/imgs/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/imgs/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/imgs/favicon-16x16.png">
+  <link rel="manifest" href="../assets/imgs/site.webmanifest">
+  <link rel="mask-icon" href="../assets/imgs/safari-pinned-tab.svg color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 
@@ -108,8 +116,6 @@ $movements = $movementDao->findAll();
             </section>
 
             <section class="sect2">
-            
-      
               <a href="../pages/listClients.php">
                 <div class="buttons-section">
                   <i class="fa-solid fa-users"></i>
@@ -123,8 +129,7 @@ $movements = $movementDao->findAll();
                   <p>VEÍCULOS CADASTRADOS</p>
                 </div>
               </a>
-      
-              
+                 
               <a href="/pages/listCompanys.php">
                 <div class="buttons-section">
                   <i class="fa-solid fa-building-user"></i>
@@ -139,10 +144,8 @@ $movements = $movementDao->findAll();
                 </div>
               </a>
 
-      
             </section>
           </section>
-          
         </div>
       
         <div class="box2">
@@ -162,7 +165,6 @@ $movements = $movementDao->findAll();
               
               <tbody>
                 <?php 
-                  
                 foreach($nextOutsCkout as $next): 
                   $nextClient = $clientDao->findById($next['client_id']);
                   $nextVehicle = $vehicleDao->findById($next['ckin_vehicle_id']); ?>
@@ -218,9 +220,7 @@ $movements = $movementDao->findAll();
                           $vehicleMov = $vehicleDao->findById($checkoutMov->getVehicleId());
                           $clientMov = $clientDao->findById($checkoutMov->getClientId());
                           break;
-                      }
-
-                    ?>
+                      } ?>
                       <tr class="item-table">
                         <td class="item1"><?= $typeMovement ?></td>
                         <td><?= $vehicleMov->getModel()?></td></td>
@@ -244,11 +244,9 @@ $movements = $movementDao->findAll();
                   foreach($sections as $section) { 
                     $sectionSlots = $section->getSlots();
                     $checkinDaily = $checkinDao->returnSlotsCkeckin($section->getId());
-                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%";
-                    ?>
+                    $fillPorcent = round(($checkinDaily * 100) / $sectionSlots) . "%"; ?>
 
                     <div class="box-occu 1">
-
                       <div class="box-occu-header" style="background-color: <?= $section->getColor(); ?>">
                         <span><?= $section->getName(); ?></span>
                       </div>
@@ -260,9 +258,7 @@ $movements = $movementDao->findAll();
                         </div>
                       </div>    
                     </div>                                 
-                  <?php } ?>
-
-
+                <?php } ?>
             </div>
           </section>
       </div>
@@ -273,6 +269,13 @@ $movements = $movementDao->findAll();
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <script src="../js/dataTable.js"></script>
+  <script>
+    $(document).ready(function() {
+      setTimeout(function() {
+        location.reload(true);
+      }, 60000);
+    });
+  </script>
 </body>
 
 </html>

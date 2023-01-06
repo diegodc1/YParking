@@ -245,7 +245,7 @@ session_start();
             </div>
           </div>
 
-          <div class="row">
+          <div class="row mt-4">
             <div class="col-md-3 graphBox">
               <p class="form-label">Gerar gráfico de seção:</p>
 
@@ -259,6 +259,18 @@ session_start();
             </div>
 
             <div class="col-md-3 graphBox">
+              <p class="form-label">Gerar gráfico de status?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="geGraphStatus" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="geGraphStatus" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+
+            <div class="col-md-4 graphBox">
               <p class="form-label">Gerar gráfico de Checkins por dia?</p>
 
               <div class="radius-box">

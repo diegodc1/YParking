@@ -28,6 +28,7 @@ $valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
 $valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
 $genGraphSection = filter_input(INPUT_POST, 'geGraphSection');
 $genGraphCkinPerDay = filter_input(INPUT_POST, 'geGraphCkinPerDay');
+$genGraphStatus = filter_input(INPUT_POST, 'geGraphStatus');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -52,8 +53,10 @@ if($sectionId == 'all') {
 
 if($userId == 'all') {
   $user = "";
+  $user2 = "";
 } else {
   $user = "AND ckin_user_id = $userId";
+  $user2 = "ckin_user_id = $userId";
 }
 
 
@@ -83,11 +86,11 @@ if ($sql->rowCount() > 0) {
 
 // ========== Dados para os gráficos =============
 
-// Faz a busca de todos os cargos do estacionamento.
+// Faz a busca de todos as seções do estacionamento.
 $sql = $pdo->query("SELECT DISTINCT ckin_section_id FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_section_id");
 $distSections = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+// Soma a quantidade de checkins realizados em cada seção
 function getSumDistSections($section, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
   $sql = $pdo->query("SELECT count(ckin_section_id) as qtd FROM checkin WHERE $status $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal'AND ckin_section_id = $section ");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
@@ -101,14 +104,28 @@ function getSumDistSections($section, $pdo, $status, $user, $dateInicial, $dateF
 $sql = $pdo->query("SELECT DISTINCT ckin_date FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_date");
 $distDates = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+// Soma a quantidade de checkins realizados em cada dia.
 function getSumCkinPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
   $sql = $pdo->query("SELECT count(ckin_date) as qtd FROM checkin WHERE $status $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckin_date = '$date'");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
 
   return $data['qtd'];
 }
- 
+
+
+// Faz a busca de todos os cargos do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT ckin_status FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal'");
+$distStatus = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumDistStatus($status, $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
+  $sql = $pdo->query("SELECT count(ckin_status) as qtd FROM checkin WHERE $user2 $section ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckin_status = '$status'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
 function get_client_ip() {
     $ipaddress = '';
     if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -209,22 +226,7 @@ function get_client_ip() {
               </tr>
             </thead>
             <tbody>
-              <?php              
-              // print_r($distDates);
-
-              // for($i = 0; $i < count($distDates); $i++){
-              //   $text = $distDates[$i]; 
-              //   $text = implode(" ", $text);
-              //   $qtd = getSumCkinPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
-              //   echo $text . '<- antes  | ' . $qtd . '<- quantidad     ||||| ';
-                
-              //   
-  
-              // <?php }
-
-
-
-
+              <?php         
                 foreach($checkins as $checkin): 
                   $vehicleCkin = $vehicleDao->findById($checkin->getVehicleId());
                   $clientCkin = $clientDao->findById($checkin->getClientId());
@@ -260,13 +262,24 @@ function get_client_ip() {
 
           <h3 class="title-graph">Gráficos</h3>
 
-          <?php if($genGraphSection == 'Sim'): ?>
-            <div class="graph1">
-              <h4>Checkins por seção</h4>
-              <div id="donutchart" style="width: 900px; height: 500px;"></div>
-            </div>
-          <?php endif ?>
+          <div class="graph1-box">
+              <?php if($genGraphSection == 'Sim'): ?>
+                <div class="graph-1">
+                  <h4>Checkins por seção</h4>
+                  <div id="donutchart" style="width: 500px; height: 300px;"></div>
+                </div>
+              <?php endif ?>
+               
+              <?php if($genGraphStatus == 'Sim'): ?>
+                <div class="graph-2">
+                  <h4>Checkins por status</h4>
+                  <div id="graphStatus" style="width: 500px; height: 300px;"></div>
+                </div>
+              <?php endif ?>
+          </div>
+
           <div class="line-div two"></div>
+          
           <?php if($genGraphCkinPerDay == 'Sim'): ?>
              <div class="graph2">
               <h4>Checkins por data</h4>
@@ -291,8 +304,33 @@ function get_client_ip() {
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChart);
     google.charts.setOnLoadCallback(drawCheckisPerDay);
+    google.charts.setOnLoadCallback(drawCheckinStatus);
 
 
+//======================= GRAFICO DE CHECKINS STATUS ==================================== 
+    function drawCheckinStatus() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Checkins por seção'],
+         <?php
+          for($i = 0; $i < count($distStatus); $i++){
+            $text = $distStatus[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumDistStatus($text, $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
+            ?>
+            ["<?=$text ?>",  <?= $qtd?>],
+          <?php } ?>
+      ]); 
+      var options = {
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('graphStatus'));
+      chart.draw(data, options);
+    }
+
+
+
+//======================= GRAFICO DE CHECKINS POR DIA ==================================== 
     function drawCheckisPerDay() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Checkins", { role: "style" } ],
@@ -305,11 +343,7 @@ function get_client_ip() {
             $text = substr($text, 0, 5);
             ?>
             ["<?=$text ?>",  <?= $qtd?>, "color: #DC3912"],
-          <?php }
-        ?>
-        
-
-      
+          <?php } ?>
       ]);
 
       var view = new google.visualization.DataView(data);
@@ -321,7 +355,6 @@ function get_client_ip() {
                        2]);
 
       var options = {
-        // title: "Checkins por dia",
         width: 900,
         height: 400,
         bar: {groupWidth: "95%"},
@@ -334,7 +367,7 @@ function get_client_ip() {
 
 
 
-
+//======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
     // Desenha o grafico na tela
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
@@ -359,14 +392,7 @@ function get_client_ip() {
       var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
       chart.draw(data, options);
     }
-
-
-
   </script>
   
- 
 </body>
-
-
-
 </html>

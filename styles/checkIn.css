@@ -524,3 +524,9 @@ main {
     align-items: center;
   }
 }
+
+@media (max-width: 1700px) {
+  main {
+    zoom: 0.8;
+  }
+}

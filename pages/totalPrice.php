@@ -54,6 +54,9 @@ $dateCkeckin = new DateTime($lastCheckOut->getCkinDate());
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="../styles/style.css">
   <link rel="stylesheet" href="../styles/totalPrice.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -105,4 +108,9 @@ $dateCkeckin = new DateTime($lastCheckOut->getCkinDate());
          <a href="../pages/checkin.php" class="btn-return">Finalizar</a>  
       </div>
   </main>
+
+    
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 </body>

@@ -1,6 +1,6 @@
 body {
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw;
+  height: 100vh; */
   display: flex;
   /* flex-direction: column; */
   /* gap: 8rem; */
@@ -47,7 +47,7 @@ main {
   height: 100vh;
   flex-direction: column;
   gap: 1.5rem;
-  /* margin-top: 1.5rem; */
+  margin-bottom: 1.5rem;
 }
 
 .button-box {
@@ -144,4 +144,11 @@ main {
   background-color: var(--green-light);
 
   filter: brightness(1.08button-box);
+}
+
+/********** MEDIA QUERY **********/
+@media (max-width: 1700px) {
+  main {
+    zoom: 0.95;
+  }
 }

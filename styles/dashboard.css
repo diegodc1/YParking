@@ -385,3 +385,9 @@ main {
     width: 70%;
   }
 }
+
+@media (max-width: 1700px) {
+  main {
+    zoom: 0.95;
+  }
+}
