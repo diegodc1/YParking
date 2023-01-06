@@ -9,13 +9,15 @@ class UsuarioDaoDB implements UsuarioDAO {
 
   // Add user no BD.
   public function add(Usuario $u) {
-    $sql = $this->pdo->prepare("INSERT INTO users (user_name, user_email, user_function, user_access, user_password, user_staus) VALUES (:name, :email, :function, :access, :password, :status)");
+    $sql = $this->pdo->prepare("INSERT INTO users (user_name, user_email, user_function, user_access, user_password, user_status, user_cad_date, user_cad_time) VALUES (:name, :email, :function, :access, :password, :status, :cadDate, :cadTime)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':function', $u->getFunction());
     $sql->bindValue(':access', $u->getAccess());
     $sql->bindValue(':password', $u->getPassword());
     $sql->bindValue(':status', $u->getStatus());
+    $sql->bindValue(':cadDate', $u->getCadDate());
+    $sql->bindValue(':cadTime', $u->getCadTime());
 
     $sql->execute();
     
@@ -39,6 +41,8 @@ class UsuarioDaoDB implements UsuarioDAO {
         $u->setAccess($user['user_access']);
         $u->setPassword($user['user_password']);
         $u->setStatus($user['user_status']);
+        $u->setCadDate($user['user_cad_date']);
+        $u->setCadTime($user['user_cad_time']);
 
         $users[] = $u;
       }
@@ -62,6 +66,8 @@ class UsuarioDaoDB implements UsuarioDAO {
       $u->setAccess($data['user_access']);
       $u->setPassword($data['user_password']);
       $u->setStatus($data['user_status']);
+      $u->setCadDate($data['user_cad_date']);
+      $u->setCadTime($data['user_cad_time']);
 
       return $u;
     } else {
@@ -85,6 +91,8 @@ class UsuarioDaoDB implements UsuarioDAO {
       $u->setAccess($data['user_access']);
       $u->setPassword($data['user_password']);
       $u->setStatus($data['user_status']);
+      $u->setCadDate($data['user_cad_date']);
+      $u->setCadTime($data['user_cad_time']);
 
       return $u;
     } else {
@@ -107,7 +115,8 @@ class UsuarioDaoDB implements UsuarioDAO {
         $u->setAccess($data['user_access']);
         $u->setPassword($data['user_password']);
         $u->setStatus($data['user_status']);
-
+        $u->setCadDate($data['user_cad_date']);
+        $u->setCadTime($data['user_cad_time']);
         return $u;
     } else {
       return false;
@@ -174,24 +183,4 @@ class UsuarioDaoDB implements UsuarioDAO {
 
     return $qtd;
   }
-
-  // public function findDistinctData($column) {
-
-  //   $sql = $this->pdo->prepare("SELECT DISTINCT user_function FROM users");
-  //   $sql->bindValue(':column', '$column');
-  //   $sql->execute();
-
-
-  //     $data = $sql->fetchAll();
-  //     return $data;
-
-  //     // foreach($data as $distinct) {
-  //     //   $u = new Usuario;
-  //     //   $u->setFunction($distinct['user_function']);
-  //     //   $dataDistincts[] = $distinct;
-  //     // }
-
-
-  //   return $data;
-  // }
 }

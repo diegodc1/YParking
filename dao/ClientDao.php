@@ -10,7 +10,7 @@ class ClientDaoDB implements ClientDao {
   }
 
   public function add(Client $u){
-    $sql = $this->pdo->prepare("INSERT INTO clients (client_name, client_email, client_cep, client_phone, client_address, client_type, client_bussines_plan, client_departure_time, client_company_id, client_status) VALUES (:name, :email, :cep, :phone, :address, :type, :bussines, :departureTime, :companyId, :status)");
+    $sql = $this->pdo->prepare("INSERT INTO clients (client_name, client_email, client_cep, client_phone, client_address, client_type, client_bussines_plan, client_departure_time, client_company_id, client_status, client_cad_date, client_cad_time) VALUES (:name, :email, :cep, :phone, :address, :type, :bussines, :departureTime, :companyId, :status, :cadDate, :cadTime)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':phone', $u->getPhone());
@@ -21,6 +21,8 @@ class ClientDaoDB implements ClientDao {
     $sql->bindValue(':departureTime', $u->getDepartureTime());
     $sql->bindValue(':companyId', $u->getCompanyId());
     $sql->bindValue(':status', $u->getStatus());
+    $sql->bindValue(':cadDate', $u->getCadDate());
+    $sql->bindValue(':cadTime', $u->getCadTime());
 
     $sql->execute();
 
@@ -48,6 +50,8 @@ class ClientDaoDB implements ClientDao {
         $u->setDepartureTime($client['client_departure_time']);
         $u->setCompanyId($client['client_company_id']);
         $u->setStatus($client['client_status']);
+        $u->setCadDate($client['client_cad_date']);
+        $u->setCadTime($client['client_cad_time']);
 
         $clients[] = $u;
       }
@@ -75,6 +79,8 @@ class ClientDaoDB implements ClientDao {
         $u->setDepartureTime($client['client_departure_time']);
         $u->setCompanyId($client['client_company_id']);
         $u->setStatus($client['client_status']);
+        $u->setCadDate($client['client_cad_date']);
+        $u->setCadTime($client['client_cad_time']);
 
         $clients[] = $u;
       }
@@ -131,6 +137,8 @@ class ClientDaoDB implements ClientDao {
       $u->setDepartureTime($data['client_departure_time']);
       $u->setCompanyId($data['client_company_id']);
       $u->setStatus($data['client_status']);
+      $u->setCadDate($data['client_cad_date']);
+      $u->setCadTime($data['client_cad_time']);
 
       return $u;
     } else {

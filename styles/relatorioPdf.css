@@ -196,3 +196,22 @@ main {
   font-weight: 600;
   margin-top: 1rem;
 }
+
+.graph1,
+.graph2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph1 h4,
+.graph2 h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: black;
+}
+
+.graph2 {
+  margin-top: 2rem;
+}

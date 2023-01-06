@@ -26,6 +26,8 @@ $timeInitial = filter_input(INPUT_POST, 'inputTimeInicial');
 $timeFinal = filter_input(INPUT_POST, 'inputTimeFinal');
 $valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
 $valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
+$genGraphSection = filter_input(INPUT_POST, 'geGraphSection');
+$genGraphCkinPerDay = filter_input(INPUT_POST, 'geGraphCkinPerDay');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -79,6 +81,33 @@ if ($sql->rowCount() > 0) {
   }
 }
 
+// ========== Dados para os gráficos =============
+
+// Faz a busca de todos os cargos do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT ckin_section_id FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_section_id");
+$distSections = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumDistSections($section, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
+  $sql = $pdo->query("SELECT count(ckin_section_id) as qtd FROM checkin WHERE $status $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal'AND ckin_section_id = $section ");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+
+// Faz a busca de todos os dias diferentes
+$sql = $pdo->query("SELECT DISTINCT ckin_date FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_date");
+$distDates = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumCkinPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
+  $sql = $pdo->query("SELECT count(ckin_date) as qtd FROM checkin WHERE $status $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckin_date = '$date'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
  
 function get_client_ip() {
     $ipaddress = '';
@@ -118,6 +147,9 @@ function get_client_ip() {
   <link rel="stylesheet" href="../styles/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
 </head>
 
 
@@ -178,6 +210,21 @@ function get_client_ip() {
             </thead>
             <tbody>
               <?php              
+              // print_r($distDates);
+
+              // for($i = 0; $i < count($distDates); $i++){
+              //   $text = $distDates[$i]; 
+              //   $text = implode(" ", $text);
+              //   $qtd = getSumCkinPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
+              //   echo $text . '<- antes  | ' . $qtd . '<- quantidad     ||||| ';
+                
+              //   
+  
+              // <?php }
+
+
+
+
                 foreach($checkins as $checkin): 
                   $vehicleCkin = $vehicleDao->findById($checkin->getVehicleId());
                   $clientCkin = $clientDao->findById($checkin->getClientId());
@@ -207,6 +254,25 @@ function get_client_ip() {
                 <?php endforeach ?>
             </tbody>
           </table>
+
+          <div class="line-div two"></div>
+
+
+          <h3 class="title-graph">Gráficos</h3>
+
+          <?php if($genGraphSection == 'Sim'): ?>
+            <div class="graph1">
+              <h4>Checkins por seção</h4>
+              <div id="donutchart" style="width: 900px; height: 500px;"></div>
+            </div>
+          <?php endif ?>
+          <div class="line-div two"></div>
+          <?php if($genGraphCkinPerDay == 'Sim'): ?>
+             <div class="graph2">
+              <h4>Checkins por data</h4>
+              <div id="columnchart_values" style="width: 1000px"></div>
+            </div>
+          <?php endif ?>
         </div>
       </div>
 
@@ -221,6 +287,82 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawCheckisPerDay);
+
+
+    function drawCheckisPerDay() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Checkins", { role: "style" } ],
+         <?php
+          for($i = 0; $i < count($distDates); $i++){
+            $text = $distDates[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumCkinPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
+            $text = date('d/m/Y', strtotime($text));
+            $text = substr($text, 0, 5);
+            ?>
+            ["<?=$text ?>",  <?= $qtd?>, "color: #DC3912"],
+          <?php }
+        ?>
+        
+
+      
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        // title: "Checkins por dia",
+        width: 900,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+    };
+
+
+
+
+
+    // Desenha o grafico na tela
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Checkins por seção'],
+        <?php
+          for($i = 0; $i < count($distSections); $i++){
+            $text = $distSections[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumDistSections($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
+            $sectionCkin = $sectionDao->findById($text);
+            $sectionName = $sectionCkin->getName();
+            ?>
+            ['<?= $sectionName ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]); 
+      var options = {
+        // title: 'Checkins por seção',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
+
+
+  </script>
   
  
 </body>

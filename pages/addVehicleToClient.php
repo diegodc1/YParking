@@ -67,11 +67,6 @@
               </select>
             </div>
 
-            <div class="col-md-2">
-              <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
-              <input type="text" class="form-control" name="inputHourOut">
-            </div>
-
           <div class="col-12 buttons-group">
             <button type="reset" class="btn btn-primary clear-button">Limpar</button>
             <button type="submit" class="btn btn-primary submit-button">Cadastrar </button>

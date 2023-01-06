@@ -13,6 +13,10 @@ $confirmPassword = trim(filter_input(INPUT_POST, 'inputConfirmPassword'));
 $access = trim(filter_input(INPUT_POST, 'inputAccess'));
 $status = 'Ativo';
 
+date_default_timezone_set('America/Sao_Paulo');
+$cadDate = date("d-m-Y");
+$cadTime = date('H:i:s');
+
 
 if($usuarioDao->findByEmail($email) === false) {
   if($password === $confirmPassword) {
@@ -23,6 +27,8 @@ if($usuarioDao->findByEmail($email) === false) {
     $newUser->setPassword($password);
     $newUser->setAccess($access);
     $newUser->setStatus($status);
+    $newUser->setCadDate($cadDate);
+    $newUser->setCadTime($cadTime);
 
     $usuarioDao->add($newUser);
 

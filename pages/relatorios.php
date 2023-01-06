@@ -245,6 +245,32 @@ session_start();
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gerar gráfico de seção:</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="geGraphSection" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="geGraphSection" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gerar gráfico de Checkins por dia?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="geGraphCkinPerDay" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="geGraphCkinPerDay" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+          </div>
+
           <div class="row mt-3">
             <div class="col-md-2">
               <input type="submit" value="Gerar Relatório" class="submit-button">

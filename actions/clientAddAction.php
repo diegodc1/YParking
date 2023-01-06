@@ -18,10 +18,13 @@ $typeUse = trim(filter_input(INPUT_POST, 'inputType'));
 $bussinesPlan = trim(filter_input(INPUT_POST, 'inputBussinesPlan'));
 $companyId = trim(filter_input(INPUT_POST, 'inputCompanyUse'));
 
-$departureTime = '11:40';
 $status = 'Ativo';
 $address = $road . ", " .  $number . " - " . $district . ", " . $city . " - " . $state;
 $newZip = preg_replace('/[-\@\.\;\" "]+/', '', $zip);
+
+date_default_timezone_set('America/Sao_Paulo');
+$cadDate = date("d-m-Y");
+$cadTime = date('H:i:s');
 
 $newClient = new Client();
 $newClient->setName($name);
@@ -31,8 +34,10 @@ $newClient->setCep($newZip);
 $newClient->setAddress($address);
 $newClient->setType($typeUse);
 $newClient->setBussinesPlan($bussinesPlan);
-$newClient->setDepartureTime($departureTime);
+// $newClient->setDepartureTime($departureTime);
 $newClient->setStatus($status);
+$newClient->setCadDate($cadDate);
+$newClient->setCadTime($cadTime);
 
 if($companyId) {
   $newClient->setCompanyId($companyId);

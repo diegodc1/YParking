@@ -9,15 +9,16 @@ class VehicleDaoDB implements VehicleDao {
   }  
   
   public function add(Vehicle $u){
-    $sql = $this->pdo->prepare("INSERT INTO vehicles (vehicle_model, vehicle_plate, vehicle_color, vehicle_category, vehicle_departure_time, vehicle_client_id, vehicle_brand, vehicle_status) VALUES (:model, :plate, :color, :category, :depTime, :clientId, :brand, :status)");
+    $sql = $this->pdo->prepare("INSERT INTO vehicles (vehicle_model, vehicle_plate, vehicle_color, vehicle_category, vehicle_client_id, vehicle_brand, vehicle_status, vehicle_cad_date, vehicle_cad_time) VALUES (:model, :plate, :color, :category, :clientId, :brand, :status, :cadDate, :cadTime)");
     $sql->bindValue(':model', $u->getModel());
     $sql->bindValue(':plate', $u->getPlate());
     $sql->bindValue(':color', $u->getColor());
     $sql->bindValue(':category', $u->getCategory());
     $sql->bindValue(':brand', $u->getBrand());
-    $sql->bindValue(':depTime', $u->getDepartureTime());
     $sql->bindValue(':clientId', $u->getClientId());
     $sql->bindValue(':status', $u->getStatus());
+    $sql->bindValue(':cadDate', $u->getCadDate());
+    $sql->bindValue(':cadTime', $u->getCadTime());
 
     $sql->execute();
 
@@ -40,9 +41,10 @@ class VehicleDaoDB implements VehicleDao {
         $u->setColor($vehicle['vehicle_color']);
         $u->setCategory($vehicle['vehicle_category']);
         $u->setBrand($vehicle['vehicle_brand']);
-        $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
         $u->setStatus($vehicle['vehicle_status']);
+        $u->setCadDate($vehicle['vehicle_cad_date']);
+        $u->setCadTime($vehicle['vehicle_cad_time']);
 
         $vehicles[] = $u;
       }
@@ -67,9 +69,10 @@ class VehicleDaoDB implements VehicleDao {
         $u->setColor($vehicle['vehicle_color']);
         $u->setCategory($vehicle['vehicle_category']);
         $u->setBrand($vehicle['vehicle_brand']);
-        $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
         $u->setStatus($vehicle['vehicle_status']);
+        $u->setCadDate($vehicle['vehicle_cad_date']);
+        $u->setCadTime($vehicle['vehicle_cad_time']);
       }
     }
 
@@ -90,9 +93,10 @@ class VehicleDaoDB implements VehicleDao {
       $u->setColor($data['vehicle_color']);
       $u->setCategory($data['vehicle_category']);
       $u->setBrand($data['vehicle_brand']);
-      $u->setDepartureTime($data['vehicle_departure_time']);
       $u->setClientId($data['vehicle_client_id']);
       $u->setStatus($data['vehicle_status']);
+      $u->setCadDate($data['vehicle_cad_date']);
+      $u->setCadTime($data['vehicle_cad_time']);
       return $u;
     } else {
       return false;
@@ -119,9 +123,10 @@ class VehicleDaoDB implements VehicleDao {
         $u->setColor($vehicle['vehicle_color']);
         $u->setCategory($vehicle['vehicle_category']);
         $u->setBrand($vehicle['vehicle_brand']);
-        $u->setDepartureTime($vehicle['vehicle_departure_time']);
         $u->setClientId($vehicle['vehicle_client_id']);
         $u->setStatus($vehicle['vehicle_status']);
+        $u->setCadDate($vehicle['vehicle_cad_date']);
+        $u->setCadTime($vehicle['vehicle_cad_time']);
         $vehicles[] = $u;
       } 
     } 
@@ -149,9 +154,10 @@ class VehicleDaoDB implements VehicleDao {
       $v->setColor($data['vehicle_color']);
       $v->setCategory($data['vehicle_category']);
       $v->setBrand($data['vehicle_brand']);
-      $v->setDepartureTime($data['vehicle_departure_time']);
       $v->setClientId($data['vehicle_client_id']);
       $v->setStatus($data['vehicle_status']);
+      $v->setCadDate($data['vehicle_cad_date']);
+      $v->setCadTime($data['vehicle_cad_time']);
     
       return $v;
     } else {
@@ -160,13 +166,12 @@ class VehicleDaoDB implements VehicleDao {
   }
 
   public function update(Vehicle $u){
-    $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_model = :model, vehicle_plate = :plate, vehicle_color = :color, vehicle_category = :category, vehicle_brand = :brand, vehicle_departure_time = :dpTime WHERE vehicle_id = :id");
+    $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_model = :model, vehicle_plate = :plate, vehicle_color = :color, vehicle_category = :category, vehicle_brand = :brand WHERE vehicle_id = :id");
     $sql->bindValue(':model', $u->getModel());
     $sql->bindValue(':plate', $u->getPlate());
     $sql->bindValue(':color', $u->getColor());
     $sql->bindValue(':category', $u->getCategory());
     $sql->bindValue(':brand', $u->getBrand());
-    $sql->bindValue(':dpTime', $u->getDepartureTime());
     $sql->bindValue(':id', $u->getId());
     $sql->execute();
 

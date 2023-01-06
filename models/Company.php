@@ -7,6 +7,8 @@ class Company {
   private $phone;
   private $slots;
   private $status;
+  private $cadDate;
+  private $cadTime;
 
   public function getId() {
     return $this->id;
@@ -54,6 +56,22 @@ class Company {
 
   public function setStatus($status){
     $this->status = $status;
+  }
+
+  public function getCadDate() {
+    return $this->cadDate;
+  }
+
+  public function setCadDate($cadDate){
+    $this->cadDate = $cadDate;
+  }
+
+  public function getCadTime() {
+    return $this->cadTime;
+  }
+
+  public function setCadTime($cadTime){
+    $this->cadTime = $cadTime;
   }
 }
 

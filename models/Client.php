@@ -11,6 +11,8 @@ class Client {
   private $departureTime;
   private $companyId;
   private $status;
+  private $cadDate;
+  private $cadTime;
 
   public function getId() {
     return $this->id;
@@ -98,6 +100,22 @@ class Client {
 
   public function setStatus($status) {
     $this->status = $status;
+  }
+  
+  public function getCadDate() {
+    return $this->cadDate;
+  }
+
+  public function setCadDate($cadDate) {
+    $this->cadDate = $cadDate;
+  }
+
+  public function getCadTime() {
+    return $this->cadTime;
+  }
+
+  public function setCadTime($cadTime) {
+    $this->cadTime = $cadTime;
   }
 }
 

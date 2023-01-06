@@ -50,7 +50,6 @@ if ($sql->rowCount() > 0) {
     $u->setColor($vehicle['vehicle_color']);
     $u->setCategory($vehicle['vehicle_category']);
     $u->setBrand($vehicle['vehicle_brand']);
-    $u->setDepartureTime($vehicle['vehicle_departure_time']);
     $u->setClientId($vehicle['vehicle_client_id']);
     $u->setStatus($vehicle['vehicle_status']);
 

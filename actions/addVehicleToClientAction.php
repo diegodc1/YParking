@@ -16,7 +16,13 @@ $model = filter_input(INPUT_POST, 'inputVehicleModel');
 $plate = filter_input(INPUT_POST, 'inputVehiclePlate');
 $color = filter_input(INPUT_POST, 'inputVehicleColor');
 $category = filter_input(INPUT_POST, 'inputVehicleCategory');
-// $departureTime = filter_input(INPUT_POST, 'inputHourOut');
+$status = 'Ativo';
+
+
+
+date_default_timezone_set('America/Sao_Paulo');
+$cadDate = date("d-m-Y");
+$cadTime = date('H:i:s');
 
 if($client->getStatus() != 'Desativado'){
   $newVehicle = new Vehicle();
@@ -25,8 +31,10 @@ if($client->getStatus() != 'Desativado'){
   $newVehicle->setPlate($plate);
   $newVehicle->setColor($color);
   $newVehicle->setCategory($category);
-  // $newVehicle->setDepartureTime($departureTime);
   $newVehicle->setClientId($idClient);
+  $newVehicle->setStatus($status);
+  $newVehicle->setCadDate($cadDate);
+  $newVehicle->setCadTime($cadTime);
 
   $vehicleDao->add($newVehicle);
 

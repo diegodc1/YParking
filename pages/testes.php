@@ -31,74 +31,54 @@ require_once('../dao/UsuarioDao.php');
   </script>
 
   <script type="text/javascript">
-      google.charts.setOnLoadCallback(drawChart);
-      google.charts.setOnLoadCallback(testet);
-      google.charts.setOnLoadCallback(aa);
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Checkins", { role: "style" } ],
+        ["21", 8, "#b87333"],
+        ["22", 10, "b87333"],
+        ["23", 19, "b87333"],
+        ["24", 21, "color: #b87333"],
+        ["24", 21, "color: #b87333"],
+        ["24", 21, "color: #b87333"],
+        ["24", 11, "color: #b87333"],
+        ["24", 7, "color: #b87333"],
+        ["24", 21, "color: #b87333"],
+        ["24", 6, "color: #b87333"],
+        ["24", 8, "color: #b87333"],
+        ["24", 9, "color: #b87333"],
+        ["24", 11, "color: #b87333"],
+        ["24", 23, "color: #b87333"],
+        ["24", 17, "color: #b87333"],
+        ["24", 13, "color: #b87333"],
+        ["24", 2, "color: #b87333"],
+        ["24", 14, "color: #b87333"],
+        ["24", 19, "color: #b87333"],
+        ["24", 21, "color: #b87333"],
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
+      
+      ]);
 
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-
-      function testet() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',    51],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-
-      function aa() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',    551],
-          ['Eat',      757],
-          ['Commute',  62],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('aa'));
-
-        chart.draw(data, options);
-      }
-
-
-
-
-    </script>
+      var options = {
+        title: "Density of Precious Metals, in g/cm^3",
+        width: 900,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
 </head>
 
 
@@ -117,17 +97,9 @@ require_once('../dao/UsuarioDao.php');
       </div>
 
       <div class="content-relat">
-        
-
-
-
-   <div id="curve_chart" style="width: 900px; height: 500px"></div>
-   <div id="piechart" style="width: 900px; height: 500px;"></div> 
-   <div id="aa" style="width: 900px; height: 500px;"></div> 
-
+          <div id="columnchart_values" style="width: 1000px; height: 300px;"></div>
         </div>
       </div>
-
     </div>
   </main>
 
@@ -139,10 +111,5 @@ require_once('../dao/UsuarioDao.php');
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
-  
- 
 </body>
-
-
-
 </html>

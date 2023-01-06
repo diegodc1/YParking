@@ -10,12 +10,14 @@ class CompanyDaoDB implements CompanyDao {
   }
 
   public function add(Company $u){
-    $sql = $this->pdo->prepare("INSERT INTO companys (company_name, company_email, company_phone, company_slots, company_status) VALUES (:name, :email, :phone, :slots, :status)");
+    $sql = $this->pdo->prepare("INSERT INTO companys (company_name, company_email, company_phone, company_slots, company_status, company_cad_date, company_cad_time) VALUES (:name, :email, :phone, :slots, :status, :cadDate, :cadTime)");
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
     $sql->bindValue(':phone', $u->getPhone());
     $sql->bindValue(':slots', $u->getSlots());
     $sql->bindValue(':status', $u->getStatus());
+    $sql->bindValue(':cadDate', $u->getCadDate());
+    $sql->bindValue(':cadTime', $u->getCadTime());
 
     $sql->execute();
 
@@ -38,6 +40,8 @@ class CompanyDaoDB implements CompanyDao {
         $u->setPhone($company['company_phone']);
         $u->setSlots($company['company_slots']);
         $u->setStatus($company['company_status']);
+        $u->setCadDate($company['company_cad_date']);
+        $u->setCadTime($company['company_cad_time']);
         $companys[] = $u;
       }
     }
@@ -59,6 +63,8 @@ class CompanyDaoDB implements CompanyDao {
       $u->setPhone($data['company_phone']);
       $u->setSlots($data['company_slots']);
       $u->setStatus($data['company_status']);
+      $u->setCadDate($data['company_cad_date']);
+      $u->setCadTime($data['company_cad_time']);
 
       return $u;
     } else {

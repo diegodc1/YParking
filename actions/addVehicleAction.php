@@ -14,15 +14,15 @@ $newPlate = preg_replace('/[-\@\.\;\" "]+/', '', $plate);
 $clientId = $idClient[0];
 $status = 'Ativo';
 
+date_default_timezone_set('America/Sao_Paulo');
+$cadDate = date("d-m-Y");
+$cadTime = date('H:i:s');
 
 
 if(!empty($_POST['selectedClients']) ) {
   $idClient = null;
   $idClient = $_POST['selectedClients'];
   $clientId = $idClient[0];
-
-
-  echo count($idClient) ;
 
   if(!$vehicleDao->findByPlate($newPlate)) {
     //Verifica se foi selecionado somente 1 cliente
@@ -33,9 +33,10 @@ if(!empty($_POST['selectedClients']) ) {
       $newVehicle->setPlate($plate);
       $newVehicle->setColor($color);
       $newVehicle->setCategory($category);
-      // $newVehicle->setDepartureTime($departureTime);
       $newVehicle->setClientId($clientId);
       $newVehicle->setStatus($status);
+      $newVehicle->setCadDate($cadDate);
+      $newVehicle->setCadTime($cadTime);
 
       $vehicleDao->add($newVehicle);
       $_SESSION['message-type'] = 'success';

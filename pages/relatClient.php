@@ -191,12 +191,6 @@ function get_client_ip() {
             </thead>
             <tbody>
               <?php 
-              // print_r($distTypes);  
-              // echo  $qtd = getSumDistTypes($type, $pdo, $status, $bussinesPlan);
-              // print_r($distTypes);
-              $text = $distTypes[0]; 
-              $text = implode(" ", $text);
-              echo gettype($text);
               
                 foreach($clients as $client): 
                   if($client->getCompanyId()) {
