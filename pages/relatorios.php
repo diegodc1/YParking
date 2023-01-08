@@ -247,7 +247,7 @@ session_start();
 
           <div class="row mt-4">
             <div class="col-md-3 graphBox">
-              <p class="form-label">Gerar gráfico de seção:</p>
+              <p class="form-label">Gerar gráfico de seção?</p>
 
               <div class="radius-box">
                 <input type="radio" id="yes" name="geGraphSection" value="Sim" required>
@@ -362,6 +362,32 @@ session_start();
               <div class="box-in-daily">
                 <input type="text" class="form-control"  value="R$ 50,00" id="valor2" readonly>
                 <input type="range" min="0" max="2000.00" value="50.00" step="1" style="width:100%" oninput="converter2(this.value)" ata-bs-toggle="tooltip" data-bs-placement="right" title="Utilize as teclas do teclado para maior precisão." name="inputValueFinal">
+              </div>
+            </div>
+
+            
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gerar gráfico de status?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="genGraphSection" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="genGraphSection" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+
+
+            <div class="col-md-3 graphBox">
+              <p class="form-label">Gerar gráfico de checkouts por dia?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="genGraphCkoutPerDay" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="genGraphCkoutPerDay" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
               </div>
             </div>
           </div>

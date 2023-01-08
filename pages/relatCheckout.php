@@ -28,6 +28,8 @@ $timeInitial = filter_input(INPUT_POST, 'inputTimeInicial');
 $timeFinal = filter_input(INPUT_POST, 'inputTimeFinal');
 $valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
 $valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
+$genGraphSection = filter_input(INPUT_POST, 'genGraphSection');
+$genGraphCkoutPerDay = filter_input(INPUT_POST, 'genGraphCkoutPerDay');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -85,6 +87,45 @@ if ($sql->rowCount() > 0) {
   }
 }
 
+// ========== Dados para os gráficos =============
+
+// Faz a busca de todos as seções do estacionamento.
+$sql = $pdo->query("SELECT DISTINCT ckout_section_id FROM checkout WHERE $status $section $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' ORDER BY ckout_section_id");
+$distSections = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Soma a quantidade de checkouts realizados em cada seção
+function getSumDistSections($section, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
+  $sql = $pdo->query("SELECT count(ckout_section_id) as qtd FROM checkout WHERE $status $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' AND ckout_section_id = $section");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+
+// Faz a busca de todos os dias diferentes
+$sql = $pdo->query("SELECT DISTINCT ckout_date FROM checkout WHERE $status $section $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' ORDER BY ckout_date");
+$distDates = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Soma a quantidade de checkouts realizados em cada dia.
+function getSumCkoutPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
+  $sql = $pdo->query("SELECT count(ckout_date) as qtd FROM checkout WHERE $status $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' AND ckout_date = '$date'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+// Soma a quantidade de checkouts realizados em cada dia.
+function getSumValueCkoutPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
+  $sql = $pdo->query("SELECT sum(ckout_total_value) as value FROM checkout WHERE $status $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' AND ckout_date = '$date'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['value'];
+}
+
+
+
  
 function get_client_ip() {
     $ipaddress = '';
@@ -124,8 +165,11 @@ function get_client_ip() {
   <link rel="stylesheet" href="../styles/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
 
+  
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
+</head>
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
@@ -186,8 +230,30 @@ function get_client_ip() {
               </tr>
             </thead>
             <tbody>
-              <?php              
+              <?php      
+              // print_r($distDates);
+                for($i = 0; $i < count($distDates); $i++){
+                  $text = $distDates[$i]; 
+                  $text = implode(" ", $text);
+                  $qtd = getSumValueCkoutPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
+                  $qtd = substr($qtd, 2, 7);
+                  // echo $qtd;
+
+                  $qtd = floatval($qtd);
+                  $qtd = number_format($qtd, 2, ',', '.');
+    
+
+                  // echo $qtd;
+                  // echo gettype($qtd);
+                  $text = date('d/m/Y', strtotime($text));
+                  $text = substr($text, 0, 5);
+                  
+                  // echo $text .'<- data '.' valor -> ' . $qtd?>;
+                <?php } 
+
+
               $totalValueCkout = 0;
+              echo $totalValueCkout;
                 foreach($checkouts as $checkout): 
                   $vehicleCkout = $vehicleDao->findById($checkout->getVehicleId());
                   $clientCkout = $clientDao->findById($checkout->getClientId());
@@ -201,11 +267,13 @@ function get_client_ip() {
                     $userNameCkout = '-';
                   }
 
-                  $price = substr($checkout->getTotalValue(), 2, 10);
+                  $price = substr($checkout->getTotalValue(), 2, 4);
                   $price =floatval($price);
-                  
+                  // $price = number_format($price, 2, ',', '.');
+                  $price =floatval($price);
+
                   $totalValueCkout = floatval($totalValueCkout);
-                  $totalValueCkout += $price;
+                  $totalValueCkout = $totalValueCkout + $price;
 
                   $totalValueCkout = number_format($totalValueCkout, 2, ',', '.');
                 ?>
@@ -240,6 +308,40 @@ function get_client_ip() {
                     </tr>
                   </tfoot>    
           </table>
+
+          <div class="line-div two"></div>
+
+
+          <h3 class="title-graph">Gráficos</h3>
+
+
+           <div class="graph1-box">
+              <?php if($genGraphSection == 'Sim'): ?>
+                <div class="graph-1">
+                  <h4>Checkouts por seção</h4>
+                  <div id="donutchart" style="width: 500px; height: 300px;"></div>
+                </div>
+              <?php endif ?>
+               
+            </div>
+
+            <div class="line-div two"></div>
+            
+            <?php if($genGraphCkoutPerDay == 'Sim'): ?>
+                <div class="graph2">
+                  <h4>Checkouts por data</h4>
+                  <div id="columnchart_values" style="width: 1000px"></div>
+                </div>
+            <?php endif ?>
+
+            <div class="line-div two"></div>
+
+            <?php if($genGraphCkoutPerDay == 'Sim'): ?>
+                <div class="graph2">
+                  <h4>Valor total por dia</h4>
+                  <div id="totalValuePerDay" style="width: 1000px"></div>
+                </div>
+            <?php endif ?>
         </div>
       </div>
 
@@ -254,10 +356,113 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
-  
- 
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawCheckoutPerDay);
+    google.charts.setOnLoadCallback(drawTotalValuePerDay);
+
+//======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
+    // Desenha o grafico na tela
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Checkouts por seção'],
+        <?php
+          for($i = 0; $i < count($distSections); $i++){
+            $text = $distSections[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumDistSections($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
+            $sectionCkin = $sectionDao->findById($text);
+            $sectionName = $sectionCkin->getName();
+            ?>
+            ['<?= $sectionName ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]); 
+      var options = {
+        // title: 'Checkins por seção',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
+
+
+//======================= GRAFICO DE CHECKOUT POR DIA ==================================== 
+    function drawCheckoutPerDay() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Checkins", { role: "style" } ],
+         <?php
+          for($i = 0; $i < count($distDates); $i++){
+            $text = $distDates[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumCkoutPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
+            $text = date('d/m/Y', strtotime($text));
+            $text = substr($text, 0, 5);
+            ?>
+            ["<?=$text ?>",  <?= $qtd?>, "color: #DC3912"],
+          <?php } ?>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        width: 900,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+    };
+
+
+    //======================= GRAFICO DE VALOR POR DIA ==================================== 
+    function drawTotalValuePerDay() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Valor Total", { role: "style" } ],
+         <?php
+          for($i = 0; $i < count($distDates); $i++){
+            $text = $distDates[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumValueCkoutPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
+            $qtd = substr($qtd, 2, 7);
+            $qtd = floatval($qtd);
+            // $qtd = number_format($qtd, 2, ',', '.');
+    
+            $text = date('d/m/Y', strtotime($text));
+            $text = substr($text, 0, 5);
+
+            ?>
+            ["<?=$text ?>", <?=$qtd ?>, "color: #DC3912"],
+          <?php } ?>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        width: 900,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("totalValuePerDay"));
+      chart.draw(view, options);
+    };
+  </script>
 </body>
-
-
-
 </html>

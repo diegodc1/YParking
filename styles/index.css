@@ -9,7 +9,7 @@
 
 /*********** Box 1 **********/
 .box1 {
-  background-color: var(--icon-light);
+  background-color: rgba(255, 255, 255, 0.799);
   height: 100vh;
   display: flex;
   align-items: center;
@@ -32,6 +32,7 @@
   border: 2px solid var(--blue-light);
   width: 30%;
   border-radius: 10px;
+  background-color: var(--blue-light);
 }
 
 .box1 img {

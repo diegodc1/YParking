@@ -17,6 +17,7 @@ Tem que fazer:
 // data e horario de cadastro dos clientes e veiculos
 // cadastro de novos cargos
 // gerar grafico de financas, atraves de um button que vai ficar na tela do form
+// mostrar no final do relatório o total de cada informação
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.

@@ -306,6 +306,32 @@ function get_client_ip() {
     google.charts.setOnLoadCallback(drawCheckisPerDay);
     google.charts.setOnLoadCallback(drawCheckinStatus);
 
+//======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
+    // Desenha o grafico na tela
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Checkins por seção'],
+        <?php
+          for($i = 0; $i < count($distSections); $i++){
+            $text = $distSections[$i]; 
+            $text = implode(" ", $text);
+            $qtd = getSumDistSections($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
+            $sectionCkin = $sectionDao->findById($text);
+            $sectionName = $sectionCkin->getName();
+            ?>
+            ['<?= $sectionName ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]); 
+      var options = {
+        // title: 'Checkins por seção',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
 
 //======================= GRAFICO DE CHECKINS STATUS ==================================== 
     function drawCheckinStatus() {
@@ -363,36 +389,6 @@ function get_client_ip() {
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
       chart.draw(view, options);
     };
-
-
-
-
-//======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
-    // Desenha o grafico na tela
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Task', 'Checkins por seção'],
-        <?php
-          for($i = 0; $i < count($distSections); $i++){
-            $text = $distSections[$i]; 
-            $text = implode(" ", $text);
-            $qtd = getSumDistSections($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal); 
-            $sectionCkin = $sectionDao->findById($text);
-            $sectionName = $sectionCkin->getName();
-            ?>
-            ['<?= $sectionName ?>',  <?= $qtd ?>],
-          <?php }
-        ?>
-      ]); 
-      var options = {
-        // title: 'Checkins por seção',
-        pieHole: 0.4,
-      };
-
-      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-      chart.draw(data, options);
-    }
   </script>
-  
 </body>
 </html>
