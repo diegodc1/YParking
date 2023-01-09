@@ -366,8 +366,8 @@ session_start();
             </div>
 
             
-            <div class="col-md-3 graphBox">
-              <p class="form-label">Gerar gráfico de status?</p>
+            <div class="col-md-2 graphBox mt-4">
+              <p class="form-label">Gráfico de status?</p>
 
               <div class="radius-box">
                 <input type="radio" id="yes" name="genGraphSection" value="Sim" required>
@@ -379,14 +379,26 @@ session_start();
             </div>
 
 
-            <div class="col-md-3 graphBox">
-              <p class="form-label">Gerar gráfico de checkouts por dia?</p>
+            <div class="col-md-3 graphBox mt-4">
+              <p class="form-label">Gráfico de checkouts por dia?</p>
 
               <div class="radius-box">
                 <input type="radio" id="yes" name="genGraphCkoutPerDay" value="Sim" required>
                 <label for="yes">Sim</label><br>
 
                 <input type="radio" id="no" name="genGraphCkoutPerDay" class="radiu-2" value="Não" required>
+                <label for="no">Não</label><br>
+              </div>
+            </div>
+
+            <div class="col-md-3 graphBox mt-4">
+              <p class="form-label">Gráfico de valor total por dia?</p>
+
+              <div class="radius-box">
+                <input type="radio" id="yes" name="genGraphTotalValuePerDay" value="Sim" required>
+                <label for="yes">Sim</label><br>
+
+                <input type="radio" id="no" name="genGraphTotalValuePerDay" class="radiu-2" value="Não" required>
                 <label for="no">Não</label><br>
               </div>
             </div>

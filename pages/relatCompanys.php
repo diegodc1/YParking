@@ -30,6 +30,14 @@ if($status == 'all') {
 
 $sql = $pdo->query("SELECT * FROM companys WHERE $status AND company_slots >= $slotsMin AND company_slots <= $slotsMax");
 
+// Quantidade de cada status
+function getSumDistStatus($status) {
+  $sql = $pdo->query("SELECT count(ckout_status) as qtd FROM checkout WHERE $status AND company_slots >= $slotsMin AND company_slots <= $slotsMax AND ckout_status = '$status'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
 
 $companys = [];
 
@@ -95,7 +103,8 @@ function get_client_ip() {
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
-   
+  <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
+
 
   <header class="relat-header">
     <h1>RELATÓRIO</h1>
@@ -103,7 +112,7 @@ function get_client_ip() {
 
   <main>
     <div class="main-content">
-      <div class="button-box">
+      <div class="button-box" id="top">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>  
       </div>
@@ -156,6 +165,31 @@ function get_client_ip() {
                 <?php endforeach ?>
             </tbody>
           </table>
+
+          <div class="line-div-black"></div>
+
+
+          <table class="mt-4 mb-4">
+            <tbody>
+              <tr>
+                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?php echo ' ' . count($companys)?></td>
+    
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Empresas Ativas:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalActiveVehicles ?></td>
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Empresas Desativadas:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalDisableVehicles ?></td>  
+              </tr>
+ 
+            </tbody>
+          </table>
+
+          <div class="line-div-black"></div>
         </div>
       </div>
 
@@ -170,6 +204,8 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+  <script src="../js/scripts.js"></script>
+
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 

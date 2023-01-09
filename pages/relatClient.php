@@ -93,7 +93,16 @@ function getSumDistBussinessPlan($bussinesPlan, $pdo, $status, $type) {
 
   return $data['qtd'];
 }
+
+
+//========= Dados para as informações totais ================
+$totalHourClients = getSumDistTypes('Horista', $pdo, $status, $bussinesPlan);
+$totalMonthlyClients = getSumDistTypes('Mensalista', $pdo, $status, $bussinesPlan);
+$totalYesBussinesPlan = getSumDistBussinessPlan('Sim', $pdo, $status, $type);
+$totalNoBussinesPlan = getSumDistBussinessPlan('Não', $pdo, $status, $type);
  
+
+
 function get_client_ip() {
     $ipaddress = '';
     if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -139,6 +148,8 @@ function get_client_ip() {
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
+    <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
+
    
 
   <header class="relat-header">
@@ -147,7 +158,7 @@ function get_client_ip() {
 
   <main>
     <div class="main-content">
-      <div class="button-box">
+      <div class="button-box" id="top">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button> 
       </div>
@@ -220,7 +231,46 @@ function get_client_ip() {
             </tbody>
           </table>
 
-          <div class="line-div two"></div>
+          
+          <div class="line-div-black"></div>
+
+
+          <table class="mt-4 mb-4">
+            <tbody>
+              <tr>
+                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?php echo ' ' . count($clients)?></td>
+    
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Total Clientes Horistas:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalHourClients ?></td>
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Total Clientes Mensalistas:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalMonthlyClients ?></td>
+              </tr>
+
+              <tr>
+                <td class="title-infos-relat">Total Clientes Conveniados:  </td>
+                <td></td>
+                <td><?= $totalYesBussinesPlan ?></td>
+                <td></td>
+                <td class="title-infos-relat">Total Clientes Não Conveniados: </td>
+                <td></td>
+                <td><?= $totalNoBussinesPlan ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+ 
+            </tbody>
+          </table>
+
+          <div class="line-div-black"></div>
+
            <?php 
             if((count($distTypes) > 0  && $genGraphType == 'Sim') || (count($distBussinesPlan) > 0 && $genGraphBussinesPlan == 'Sim')): ?>
               <h3 class="title-graph">Gráfico</h3>
@@ -248,7 +298,9 @@ function get_client_ip() {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="../js/scripts.js"></script>
   <script> google.charts.load('current', {packages: ['corechart']}); </script>
+
 
 
   <script type="text/javascript">

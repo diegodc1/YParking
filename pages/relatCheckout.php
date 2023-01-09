@@ -30,6 +30,7 @@ $valueInitial = filter_input(INPUT_POST, 'inputValueInitial');
 $valueFinal = filter_input(INPUT_POST, 'inputValueFinal');
 $genGraphSection = filter_input(INPUT_POST, 'genGraphSection');
 $genGraphCkoutPerDay = filter_input(INPUT_POST, 'genGraphCkoutPerDay');
+$genGraphTotalValuePerDay = filter_input(INPUT_POST, 'genGraphTotalValuePerDay');
 
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -116,7 +117,7 @@ function getSumCkoutPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal
 }
 
 
-// Soma a quantidade de checkouts realizados em cada dia.
+// Soma o valor total realizados em cada dia.
 function getSumValueCkoutPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
   $sql = $pdo->query("SELECT sum(ckout_total_value) as value FROM checkout WHERE $status $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' AND ckout_date = '$date'");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
@@ -124,9 +125,29 @@ function getSumValueCkoutPerDay($date, $pdo, $status, $user, $dateInicial, $date
   return $data['value'];
 }
 
+// Soma o valor total realizados em cada dia.
+function getSumTotalValue($pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
+  $sql = $pdo->query("SELECT sum(ckout_total_value) as total FROM checkout WHERE $status $user AND ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['total'];
+}
 
 
- 
+
+// Quantidade de cada status
+function getSumDistStatus($status, $section, $pdo, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal) {
+  $sql = $pdo->query("SELECT count(ckout_status) as qtd FROM checkout WHERE $user $section ckout_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckout_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckout_total_value BETWEEN '$valueInitial' AND '$valueFinal' AND ckout_status = '$status'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+//========= Dados para as informações totais ================
+$totalFinishCkout = getSumDistStatus('Finalizado', $section, $pdo, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal);
+$totalCancelCkout = getSumDistStatus('Cancelado', $section, $pdo, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal);
+
+
 function get_client_ip() {
     $ipaddress = '';
     if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -173,18 +194,21 @@ function get_client_ip() {
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
+    <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
    
 
-  <header class="relat-header">
+  <header class="relat-header" id="header">
     <h1>RELATÓRIO</h1>
   </header>
 
   <main>
     <div class="main-content">
-      <div class="button-box">
+      <div class="button-box" id="top">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>  
       </div>
+
+    
 
       <div class="content-relat">
         <div class="header-relat">
@@ -230,30 +254,9 @@ function get_client_ip() {
               </tr>
             </thead>
             <tbody>
-              <?php      
-              // print_r($distDates);
-                for($i = 0; $i < count($distDates); $i++){
-                  $text = $distDates[$i]; 
-                  $text = implode(" ", $text);
-                  $qtd = getSumValueCkoutPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
-                  $qtd = substr($qtd, 2, 7);
-                  // echo $qtd;
-
-                  $qtd = floatval($qtd);
-                  $qtd = number_format($qtd, 2, ',', '.');
-    
-
-                  // echo $qtd;
-                  // echo gettype($qtd);
-                  $text = date('d/m/Y', strtotime($text));
-                  $text = substr($text, 0, 5);
-                  
-                  // echo $text .'<- data '.' valor -> ' . $qtd?>;
-                <?php } 
-
-
-              $totalValueCkout = 0;
-              echo $totalValueCkout;
+              <?php       
+                $totalValueCkout = getSumTotalValue($pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal);
+ 
                 foreach($checkouts as $checkout): 
                   $vehicleCkout = $vehicleDao->findById($checkout->getVehicleId());
                   $clientCkout = $clientDao->findById($checkout->getClientId());
@@ -266,16 +269,6 @@ function get_client_ip() {
                   } else {
                     $userNameCkout = '-';
                   }
-
-                  $price = substr($checkout->getTotalValue(), 2, 4);
-                  $price =floatval($price);
-                  // $price = number_format($price, 2, ',', '.');
-                  $price =floatval($price);
-
-                  $totalValueCkout = floatval($totalValueCkout);
-                  $totalValueCkout = $totalValueCkout + $price;
-
-                  $totalValueCkout = number_format($totalValueCkout, 2, ',', '.');
                 ?>
                   <tr>
                     <td><?= $vehicleCkout->getModel(); ?></td>
@@ -293,30 +286,52 @@ function get_client_ip() {
                     <td><?= $userNameCkout ?></td>
                   </tr>
                     <?php endforeach ?>
-                  </tbody>
-                  <tfoot> 
-                    <tr>
-                      <td class="total-value">Valor Total:</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="total-value">R$ <?= $totalValueCkout ?></td>
-                    </tr>
-                  </tfoot>    
+                  </tbody> 
           </table>
 
-          <div class="line-div two"></div>
+          <div class="line-div-black"></div>
 
+
+          <table class="mt-4 mb-4">
+            <tbody>
+              <tr>
+                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?php echo ' ' . count($checkouts)?></td>
+    
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Total Checkouts Finalizados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalFinishCkout?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="title-infos-relat">Total Checkouts Cancelados:  </td>
+                <td></td>
+                <td><?= $totalCancelCkout ?></td>
+                <td></td>
+                <td class="title-infos-relat">Valor Total: </td>
+                <td></td>
+                <td><?= $totalValueCkout ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+ 
+            </tbody>
+          </table>
+
+          <div class="line-div-black"></div>
 
           <h3 class="title-graph">Gráficos</h3>
 
-
            <div class="graph1-box">
-              <?php if($genGraphSection == 'Sim'): ?>
+              <?php if($genGraphSection == 'Sim' && count($distSections) > 0): ?>
                 <div class="graph-1">
                   <h4>Checkouts por seção</h4>
                   <div id="donutchart" style="width: 500px; height: 300px;"></div>
@@ -327,7 +342,7 @@ function get_client_ip() {
 
             <div class="line-div two"></div>
             
-            <?php if($genGraphCkoutPerDay == 'Sim'): ?>
+            <?php if($genGraphCkoutPerDay == 'Sim' && count($distDates) > 0): ?>
                 <div class="graph2">
                   <h4>Checkouts por data</h4>
                   <div id="columnchart_values" style="width: 1000px"></div>
@@ -336,9 +351,10 @@ function get_client_ip() {
 
             <div class="line-div two"></div>
 
-            <?php if($genGraphCkoutPerDay == 'Sim'): ?>
+            <?php if($genGraphTotalValuePerDay == 'Sim' && count($distDates) > 0): ?>
                 <div class="graph2">
                   <h4>Valor total por dia</h4>
+                  <p class="subtitle-graph">(Valores em Reais [$] )</p>
                   <div id="totalValuePerDay" style="width: 1000px"></div>
                 </div>
             <?php endif ?>
@@ -356,6 +372,7 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+  <script src="../js/scripts.js"></script>
 
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChart);
@@ -402,7 +419,7 @@ function get_client_ip() {
             $text = date('d/m/Y', strtotime($text));
             $text = substr($text, 0, 5);
             ?>
-            ["<?=$text ?>",  <?= $qtd?>, "color: #DC3912"],
+            ["<?=$text ?>",  <?=  $qtd?>, "color: #DC3912"],
           <?php } ?>
       ]);
 
@@ -428,21 +445,23 @@ function get_client_ip() {
     //======================= GRAFICO DE VALOR POR DIA ==================================== 
     function drawTotalValuePerDay() {
       var data = google.visualization.arrayToDataTable([
-        ["Element", "Valor Total", { role: "style" } ],
+        ["Element", "Valor Total: R$", { role: "style" }, { role: 'annotationText' }],
          <?php
           for($i = 0; $i < count($distDates); $i++){
             $text = $distDates[$i]; 
             $text = implode(" ", $text);
             $qtd = getSumValueCkoutPerDay($text, $pdo, $status, $user, $dateInicial, $dateFinal, $timeInitial, $timeFinal, $valueInitial, $valueFinal); 
             $qtd = substr($qtd, 2, 7);
+            $qtd=str_replace(",",".",$qtd);
+            $qtd= number_format($qtd, 2);
             $qtd = floatval($qtd);
-            // $qtd = number_format($qtd, 2, ',', '.');
-    
+      
             $text = date('d/m/Y', strtotime($text));
             $text = substr($text, 0, 5);
+            $qtdReal = 'R$' . $qtd;
 
             ?>
-            ["<?=$text ?>", <?=$qtd ?>, "color: #DC3912"],
+            ["<?=$text ?>", <?= $qtd ?>, "color: #DC3912", "aff"],
           <?php } ?>
       ]);
 

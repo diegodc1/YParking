@@ -113,11 +113,10 @@ function getSumCkinPerDay($date, $pdo, $status, $user, $dateInicial, $dateFinal,
 }
 
 
-// Faz a busca de todos os cargos do estacionamento.
+// Faz a busca de todos status
 $sql = $pdo->query("SELECT DISTINCT ckin_status FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal'");
 $distStatus = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-// Soma a partir dos filtros, quantos funcionários há em cada cargo.
 function getSumDistStatus($status, $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal) {
   $sql = $pdo->query("SELECT count(ckin_status) as qtd FROM checkin WHERE $user2 $section ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' AND ckin_status = '$status'");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
@@ -125,6 +124,12 @@ function getSumDistStatus($status, $section, $pdo, $user2, $dateInicial, $dateFi
   return $data['qtd'];
 }
 
+
+
+//========= Dados para as informações totais ================
+$totalActiveCkin = getSumDistStatus('Ativo', $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal);
+$totalFinishCkin = getSumDistStatus('Finalizado', $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal);
+$totalCancelCkin = getSumDistStatus('Cancelado', $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal);
 
 function get_client_ip() {
     $ipaddress = '';
@@ -172,6 +177,8 @@ function get_client_ip() {
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
+    <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
+
    
 
   <header class="relat-header">
@@ -180,7 +187,7 @@ function get_client_ip() {
 
   <main>
     <div class="main-content">
-      <div class="button-box">
+      <div class="button-box" id="top">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>  
       </div>
@@ -226,7 +233,7 @@ function get_client_ip() {
               </tr>
             </thead>
             <tbody>
-              <?php         
+              <?php     
                 foreach($checkins as $checkin): 
                   $vehicleCkin = $vehicleDao->findById($checkin->getVehicleId());
                   $clientCkin = $clientDao->findById($checkin->getClientId());
@@ -257,20 +264,56 @@ function get_client_ip() {
             </tbody>
           </table>
 
-          <div class="line-div two"></div>
+          <div class="line-div-black"></div>
 
+
+          <table class="mt-4 mb-4">
+            <tbody>
+              <tr>
+                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?php echo ' ' . count($checkins)?></td>
+    
+                <td class="div-table-infos">================</td>
+                <td class="title-infos-relat">Total Checkins Ativos:</td>
+                <td class="div-table-infos">=</td>
+                <td><?= $totalActiveCkin ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="title-infos-relat">Total Checkins Finalizados:  </td>
+                <td></td>
+                <td><?= $totalFinishCkin?></td>
+                <td></td>
+                <td class="title-infos-relat">Total Checkins Cancelados:  </td>
+                <td></td>
+                <td><?= $totalCancelCkin ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+ 
+            </tbody>
+          </table>
+
+          <div class="line-div-black"></div>
 
           <h3 class="title-graph">Gráficos</h3>
 
           <div class="graph1-box">
-              <?php if($genGraphSection == 'Sim'): ?>
+              <?php if($genGraphSection == 'Sim' && count($distSections) > 0): ?>
                 <div class="graph-1">
                   <h4>Checkins por seção</h4>
                   <div id="donutchart" style="width: 500px; height: 300px;"></div>
                 </div>
               <?php endif ?>
                
-              <?php if($genGraphStatus == 'Sim'): ?>
+              <?php if($genGraphStatus == 'Sim' && count($distStatus) > 0): ?>
                 <div class="graph-2">
                   <h4>Checkins por status</h4>
                   <div id="graphStatus" style="width: 500px; height: 300px;"></div>
@@ -280,7 +323,7 @@ function get_client_ip() {
 
           <div class="line-div two"></div>
           
-          <?php if($genGraphCkinPerDay == 'Sim'): ?>
+          <?php if($genGraphCkinPerDay == 'Sim' && count($distDates) > 0): ?>
              <div class="graph2">
               <h4>Checkins por data</h4>
               <div id="columnchart_values" style="width: 1000px"></div>
@@ -300,13 +343,15 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+  <script src="../js/scripts.js"></script>
+
 
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChart);
     google.charts.setOnLoadCallback(drawCheckisPerDay);
     google.charts.setOnLoadCallback(drawCheckinStatus);
 
-//======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
+    //======================= GRAFICO DE CHECKINS POR SEÇÃO ==================================== 
     // Desenha o grafico na tela
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
@@ -333,7 +378,7 @@ function get_client_ip() {
     }
 
 
-//======================= GRAFICO DE CHECKINS STATUS ==================================== 
+    //======================= GRAFICO DE CHECKINS STATUS ==================================== 
     function drawCheckinStatus() {
       var data = google.visualization.arrayToDataTable([
         ['Task', 'Checkins por seção'],
@@ -356,7 +401,7 @@ function get_client_ip() {
 
 
 
-//======================= GRAFICO DE CHECKINS POR DIA ==================================== 
+    //======================= GRAFICO DE CHECKINS POR DIA ==================================== 
     function drawCheckisPerDay() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Checkins", { role: "style" } ],

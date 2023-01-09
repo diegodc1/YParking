@@ -386,8 +386,8 @@ main {
   }
 }
 
-@media (max-width: 1700px) {
+/* @media (max-width: 1200px) {
   main {
     zoom: 0.95;
   }
-}
+} */

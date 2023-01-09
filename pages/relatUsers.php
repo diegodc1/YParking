@@ -82,6 +82,20 @@ function getSumDisct($function, $pdo, $status, $levelAccess) {
 }
 
 
+// Soma a partir dos filtros, quantos funcionários há em cada cargo.
+function getSumAccess($access, $function, $pdo, $status, $levelAccess) {
+  $sql = $pdo->query("SELECT count(user_access) as qtd FROM users WHERE $status $function $levelAccess AND user_access = $access");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+//========= Dados para as informações totais ================
+$totalAdmUsers = getSumAccess('1', $function, $pdo, $status, $levelAccess);
+$totalComumUsers = getSumAccess('0', $function, $pdo, $status, $levelAccess);
+
+
 function get_client_ip() {
     $ipaddress = '';
     if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -125,6 +139,7 @@ function get_client_ip() {
 
 <body>
   <?php require_once("../components/sidebar.php") ;?>
+  <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
    
   <header class="relat-header">
     <h1>RELATÓRIO</h1>
@@ -132,7 +147,7 @@ function get_client_ip() {
 
   <main>  
     <div class="main-content">
-      <div class="button-box">
+      <div class="button-box" id="top">
         <a href="/pages/relatorios.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
         <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>  
       </div>
@@ -192,7 +207,44 @@ function get_client_ip() {
             </tbody>
           </table>
 
-          <div class="line-div two"></div>
+          <div class="line-div-black"></div>
+
+
+          <table class="mt-4 mb-4">
+            <tbody>
+              <tr>
+                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                <td class="div-table-infos">=</td>
+                <td><?php echo ' ' . count($users)?></td>
+    
+                <td class="div-table-infos">================</td>
+                <td></td></td>
+                <td class="div-table-infos">=</td>
+                <td></td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="title-infos-relat">Total Usuários Comum:  </td>
+                <td></td>
+                <td><?= $totalComumUsers ?></td>
+                <td></td>
+                <td class="title-infos-relat">Total Usuários Adm: </td>
+                <td></td>
+                <td><?= $totalAdmUsers ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+ 
+            </tbody>
+          </table>
+
+          <div class="line-div-black"></div>
 
           <?php if(count($users) > 0 && $generGrahpFunc == 'Sim'): ?>
             <h3 class="title-graph">Gráfico</h3>
@@ -212,6 +264,8 @@ function get_client_ip() {
   <script src="../js/dataTable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/relatorio.js"></script>
+  <script src="../js/scripts.js"></script>
+
 
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChart);
