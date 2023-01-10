@@ -173,7 +173,6 @@ main {
   display: flex;
   height: 0.1rem;
   background-color: black;
-  /* border: 0.1rem solid black; */
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -201,6 +200,10 @@ main {
 
 .line-div.two {
   margin-top: 1rem;
+}
+
+.phone-td {
+  font-variant: small-caps;
 }
 
 /******* Graph's *********/

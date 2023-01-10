@@ -20,11 +20,12 @@ Tem que fazer:
 // ver checkin de um determinado cliente
 // mostrar no final do relatório o total de cada informação
 //gerar relatórios personalizados ou prontos
+// editar seções
+// add valor mensal
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.
 -- falar sobre verificação de login e acesso.
-
-
-
-
+//prototipos
+--desafio
+--planejamento

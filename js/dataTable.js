@@ -101,11 +101,11 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('#checkinCancel').DataTable({
-    scrollY: '20rem',
-    search: {
-      search: ''
-    },
-    stateSave: true,
+    scrollY: '18rem',
+    // search: {
+    //   search: ''
+    // },
+    // stateSave: false,
 
     scrollCollapse: true,
     paging: false,

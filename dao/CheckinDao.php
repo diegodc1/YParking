@@ -236,8 +236,9 @@ class CheckinDaoDB implements CheckinDao {
   public function findAllCheckinActive(){
     $checkinsActive = [];
 
-    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_status = :status ORDER BY ckin_date DESC, ckin_time DESC");
+    $sql = $this->pdo->prepare("SELECT * FROM checkin WHERE ckin_status = :status OR ckin_status = :prepare ORDER BY ckin_date DESC, ckin_time DESC");
     $sql->bindValue(':status', 'Ativo');
+    $sql->bindValue(':prepare', 'Aguardando Saída');
     $sql->execute();
 
     if($sql->rowCount() > 0) {

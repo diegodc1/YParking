@@ -62,6 +62,7 @@ class SectionDaoDB implements SectionDao {
   public function update(Section $u){
     $sql = $this->pdo->prepare("UPDATE parking_sections SET prk_sect_name = :name, prk_sect_slots = :slots, prk_sect_color = :color WHERE prk_sect_id = :id");
 
+    $sql->bindValue(':id', $u->getId());
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':slots', $u->getSlots());
     $sql->bindValue(':color', $u->getColor());

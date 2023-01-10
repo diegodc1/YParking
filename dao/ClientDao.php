@@ -201,7 +201,7 @@ class ClientDaoDB implements ClientDao {
 
     $sql = $this->pdo->query("SELECT client_id, client_departure_time, ckin_id, ckin_status, ckin_vehicle_id FROM clients 
       INNER JOIN checkin ON clients.client_id = checkin.ckin_client_id AND clients.client_departure_time IS NOT NULL
-      WHERE checkin.ckin_status = 'Ativo' AND clients.client_departure_time::time >= current_time AND clients.client_departure_time::time < current_time + interval '1 hours' ORDER BY clients.client_departure_time");
+      WHERE (checkin.ckin_status = 'Ativo' OR checkin.ckin_status = 'Aguardando Saída') AND clients.client_departure_time::time >= current_time AND clients.client_departure_time::time < current_time + interval '1 hours' ORDER BY clients.client_departure_time");
 
     if($sql->rowCount() > 0) {
         $data = $sql->fetchAll();

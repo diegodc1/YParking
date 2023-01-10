@@ -195,7 +195,7 @@ function get_client_ip() {
                 <th>Email</th>
                 <th>Tipo</th>
                 <th>Horário Saída</th>  
-                <th>Convênio</th>0
+                <th>Convênio</th>
                 <th>Empresa</th>
                 <th>Status</th>
               </tr>

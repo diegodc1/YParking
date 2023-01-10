@@ -215,6 +215,52 @@ main {
   width: 100%;
 }
 
+.action-buttons {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.action-buttons button {
+  border: none;
+}
+
+.disable-icon i {
+  color: var(--gray-light) !important;
+  font-size: 1.2rem;
+}
+
+.action-buttons i {
+  border: none;
+  margin-top: 0.4rem !important;
+}
+
+.td-prepare i {
+  font-size: 1.2rem;
+  color: var(--blue-light) !important;
+  margin-top: 0.4rem !important;
+}
+
+.checkout-img {
+  width: 1.5rem !important;
+  height: 1.5em !important;
+}
+
+.p-modal-prepare {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--dark-blue-text);
+}
+
+.modal-content.prepare {
+  width: 50rem !important;
+}
+
+#modal-prepare {
+  width: 100rem !important;
+}
+
 /* Occupation Box */
 .occupation {
   background-color: var(--text-light);
@@ -357,6 +403,53 @@ main {
   background-color: var(--green-light);
   width: 67%;
   height: 100%;
+}
+
+.modal-content.prepare {
+  width: 70vw !important;
+}
+
+.modal-body-2.prepare {
+  font-size: 1rem;
+  color: var(--dark-blue-text) !important;
+}
+.modal-body-2.prepare p {
+  font-weight: 700;
+}
+
+.modal-body-2.prepare a {
+  font-weight: 400;
+}
+
+.info-vehicle-checkout.prepare {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.info-col-1.prepare,
+.info-col-2.prepare {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.icon-prepare-modal {
+  color: var(--blue-light) !important;
+}
+
+.btn-confirm-prepare {
+  background-color: var(--green-light) !important;
+  border: none;
+  /* width: 20%;
+  height: 100% !important; */
+  margin: 0;
+  color: var(--text-light) !important;
+}
+
+.prepare-img {
+  width: 3.5rem !important;
+  height: 3.5rem !important;
 }
 
 @media (max-width: 900px) {

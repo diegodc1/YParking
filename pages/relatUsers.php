@@ -184,7 +184,7 @@ function get_client_ip() {
                 <th>Email</th>
                 <th>Cargo</th>
                 <th>Nivel de Acesso</th>  
-                <th>Status</th>0
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>

@@ -208,8 +208,8 @@ $allCheckins = $checkinDao->findAll();
               <th>Cor</th>
               <th>Cliente</th>
               <th>Seção</th>
-              <th>Data Entr.</th>
-              <th>Check-out</th>
+              <th class="td-prepare">Data Entr.</th>
+              <th class="td-prepare">Ações</th></th>
             </tr>
           </thead>
           <tbody>
@@ -226,10 +226,25 @@ $allCheckins = $checkinDao->findAll();
                 <td><?= $vehicleCk->getModel()?></td>
                 <td><?= $vehicleCk->getPlate()?></td>
                 <td><?= $vehicleCk->getColor()?></td>
-                <td><?= $clientCk->getName()?></td>
-                <td><?= $sectionck->getName()?></td>
-                <td><?= date('d/m/Y', strtotime($dateCkin))?></td>
-                <td class="td-checkout"><a href="" data-bs-toggle="modal" data-bs-target="#checkoutModal<?= $vehicleCk->getId()?>" class="checkout-button"><img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img"></a></td>
+                <td class="td-cliente"><?= $clientCk->getName()?></td>
+                <?php if($active->getStatus() == 'Aguardando Saída') { ?>
+                    <td class="td-section">Saída</td>
+                  <?php } else { ?>
+                    <td class="td-section"><?= $sectionck->getName()?></td>
+                <?php } ?>
+                <td class="td-date"><?= date('d/m/Y', strtotime($dateCkin))?></td>
+
+                <td class="action-buttons">
+                  <?php if($active->getStatus() == 'Aguardando Saída'){ ?>
+                      <button data-bs-toggle="tooltip" data-bs-placement="right" title="Preparar Saída" disabled class="disable-icon"><i class="fa-regular fa-hourglass-half "></i></button>
+                  <?php } else { ?>
+                      <button data-bs-toggle="tooltip" data-bs-placement="right" title="Preparar Saída"><a href="" data-bs-toggle="modal" data-bs-target="#prepareOutModal<?= $vehicleCk->getId()?>" class="checkout-button td-prepare"><i class="fa-regular fa-hourglass-half"></i></a></button>
+                  <?php } ?>
+                  <button data-bs-toggle="tooltip" data-bs-placement="right" title="Check-out"><a href="" data-bs-toggle="modal" data-bs-target="#checkoutModal<?= $vehicleCk->getId()?>" class="checkout-button"><img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img"></a></button>       
+                </td>
+
+               
+                
               </tr>
 
                <!------------------------- Ckeck-out modal-------------------------->
@@ -264,7 +279,47 @@ $allCheckins = $checkinDao->findAll();
 
                     <div class="modal-footer ckout">
                       <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                      <a href="../actions/checkoutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>" class="btn btn-secondary btn-confirm-checkout" >Confirmar</a>
+                      <a href="../actions/checkoutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>&page=checkin" class="btn btn-secondary btn-confirm-checkout" >Confirmar</a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+               <!------------------------- Prepare Out-------------------------->
+              <div class="modal fade" id="prepareOutModal<?= $vehicleCk->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog ">
+                  <div class="modal-content checkout">
+
+                    <div class="modal-header checkout">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="modal-body-1">
+                        <i class="fa-regular fa-hourglass-half"></i>
+                        <h5 class="modal-title" id="exampleModalLabel">Preparar para Saída?</h5>
+                        <p>O veículo deve ser posicionado na seção de Saída!</p>
+                      </div>
+
+                      <div class="modal-body-2">
+                        <section class="info-vehicle-checkout">
+                            <div class="info-col-1">
+                              <p>Modelo: <a><?= $vehicleCk->getModel()?></a></p>
+                              <p>Categoria: <a><?= $vehicleCk->getCategory()?></a></p>
+                              <p>Cor: <a><?= $vehicleCk->getColor()?></a></p>
+                            </div>
+                            <div class="info-col-2">
+                              <p>Placa: <a><?= $vehicleCk->getPlate()?></a></p>                              
+                              <p>Cliente: <a><?= $clientCk->getName()?></a></p>
+                            </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer ckout">
+                      <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                      <a href="../actions/prepareOutAction.php?vehicle=<?=$vehicleCk->getId() ?>&section=<?= $active->getSectionId();?>&ckin=<?= $active->getId()?>&page=checkin" class="btn btn-secondary btn-confirm-checkout" >Confirmar</a>
                     </div>
 
                   </div>
@@ -299,13 +354,12 @@ $allCheckins = $checkinDao->findAll();
               <table id="checkinCancel" class="table" style="width:100%">
                 <thead>
                   <tr>
-                    <th>Modelo</th>
-                    <th>Placa</th>
-                    <th>Cor</th>
-                    <th>Cliente</th>
-                    <th>Horár. Entrada</th>
-                    <th></th>
-        
+                    <th class="col-4-table">Modelo</th>
+                    <th class="col-4-table">Placa</th>
+                    <th class="col-4-table">Cor</th>
+                    <th class="col-4-table">Cliente</th>
+                    <th class="col-4-table">Horár. Entrada</th>
+                    <th class="col-4-table">Ação</th>
                   </tr>
                 </thead>
                 <tbody>

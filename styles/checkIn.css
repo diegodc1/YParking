@@ -287,6 +287,54 @@ main {
   font-size: 0.8rem; */
 }
 
+.prepare-img {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+.td-prepare i {
+  font-size: 1.2rem;
+  color: var(--blue-light) !important;
+}
+.td-ckout {
+  font-size: 0.7rem;
+}
+
+.td-cliente {
+  font-size: 0.8rem;
+}
+
+.td-section {
+  font-size: 0.9rem;
+}
+
+.td-date {
+  font-size: 0.8rem;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.action-buttons button {
+  border: none;
+}
+
+.disable-icon i {
+  color: var(--gray-light) !important;
+  font-size: 1.2rem;
+}
+
+.tooltip-inner {
+  background-color: var(--blue-light);
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--blue-light);
+}
 /******************** MODAL *********************/
 .modal-dialog {
   display: flex !important;
@@ -312,8 +360,12 @@ main {
   justify-content: center;
 }
 
+.table-list {
+  height: 100%;
+}
+
 .modal-content.cancelCheckin {
-  height: 60vh;
+  height: 65vh;
   width: 45vw !important;
 }
 
@@ -342,7 +394,8 @@ main {
   font-size: 0.9rem;
 }
 
-.modal-body-1 {
+.modal-body-1,
+.modal-body {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -438,8 +491,8 @@ main {
 }
 
 .checkout-img {
-  width: 14%;
-  height: 24%;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
 }
 
 .div-line {

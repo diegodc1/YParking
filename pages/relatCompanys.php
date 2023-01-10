@@ -30,15 +30,6 @@ if($status == 'all') {
 
 $sql = $pdo->query("SELECT * FROM companys WHERE $status AND company_slots >= $slotsMin AND company_slots <= $slotsMax");
 
-// Quantidade de cada status
-function getSumDistStatus($status) {
-  $sql = $pdo->query("SELECT count(ckout_status) as qtd FROM checkout WHERE $status AND company_slots >= $slotsMin AND company_slots <= $slotsMax AND ckout_status = '$status'");
-  $data = $sql->fetch(PDO::FETCH_ASSOC);
-
-  return $data['qtd'];
-}
-
-
 $companys = [];
 
 if ($sql->rowCount() > 0) {
@@ -78,6 +69,19 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
+
+// Quantidade de cada status
+function getSumDistStatus($status, $slotsMin, $slotsMax, $pdo) {
+  $sql = $pdo->query("SELECT count(company_status) as qtd FROM companys WHERE company_slots >= $slotsMin AND company_slots <= $slotsMax AND company_status = '$status'");
+  $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+  return $data['qtd'];
+}
+
+
+//==== Dados para info 
+$totalActiveCompanys = getSumDistStatus('Ativo', $slotsMin, $slotsMax, $pdo);
+$totalDisableCompanys = getSumDistStatus('Desativado', $slotsMin, $slotsMax, $pdo);
 
 ?>
 
@@ -149,7 +153,7 @@ function get_client_ip() {
                 <th>Email</th>
                 <th>Telefone</th>
                 <th>Vagas Reser.</th>  
-                <th>Status</th>0
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -158,7 +162,7 @@ function get_client_ip() {
                   <tr>
                     <td><?= $company->getName(); ?></td>
                     <td><?= $company->getEmail(); ?></td>       
-                    <td><?= $company->getPhone(); ?></td>
+                    <td class="phone-td"><?= $company->getPhone(); ?></td>
                     <td><?= $company->getSlots()?></td>
                     <td><?= $company->getStatus(); ?></td>
                   </tr>
@@ -179,11 +183,11 @@ function get_client_ip() {
                 <td class="div-table-infos">================</td>
                 <td class="title-infos-relat">Empresas Ativas:  </td>
                 <td class="div-table-infos">=</td>
-                <td><?= $totalActiveVehicles ?></td>
+                <td><?= $totalActiveCompanys ?></td>
                 <td class="div-table-infos">================</td>
                 <td class="title-infos-relat">Empresas Desativadas:  </td>
                 <td class="div-table-infos">=</td>
-                <td><?= $totalDisableVehicles ?></td>  
+                <td><?= $totalDisableCompanys ?></td>  
               </tr>
  
             </tbody>

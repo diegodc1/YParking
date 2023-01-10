@@ -1,12 +1,7 @@
 body {
   display: flex;
-  /* padding: 0rem 4rem 0rem 4rem; */
-  /* flex-direction: column; */
-  /* gap: 8rem; */
   align-items: center;
   justify-content: center;
-  /* justify-content: center; */
-  /* background-color: var(--bg-gray) !important; */
   background-image: linear-gradient(
     to left bottom,
     #c7c6c6,
@@ -159,6 +154,10 @@ main {
   opacity: 0.9;
 }
 
+.pencil.modal-edt {
+  color: var(--green-light);
+  opacity: 0.9;
+}
 .trash {
   color: var(--red-light);
   opacity: 0.9;
@@ -319,4 +318,39 @@ select:focus {
 
 .modal-body-2.priceModal input:focus {
   border: 1px solid #86b7fe;
+}
+
+.modal-body-2.edit {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modal-body-2.edit label {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.modal-body-2.edit form {
+  /* display: flex !important; */
+  flex-direction: column;
+  width: 100%;
+}
+
+.box-input-edit {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.confirm-checkin-button {
+  background-color: var(--green-light) !important;
+  border: none;
+  /* width: 20%;
+  height: 100% !important; */
+  margin: 0;
+  color: var(--text-light) !important;
+  text-decoration: none;
+  color: #2ed47a;
 }

@@ -97,11 +97,67 @@ $prices = $priceDao->findAll();
                     <td><div class="color-box" style="background-color: <?= $section->getColor(); ?>; color: <?= $section->getColor(); ?>">.</div></td>       
                     <td>
                       <div class="action-buttons">
-                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editVehicle.php?id=<?= $section->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $section->getId()?>"><i class="fa-solid fa-trash-can trash"></i></a></button>
+                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="" data-bs-toggle="modal" data-bs-target="#updateSection<?= $section->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
+                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cancelar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $section->getId()?>"><i class="fa-solid fa-ban trash"></i></a></button>
                       </div>
                     </td>
                   </tr>
+                  
+
+              <!-- Update modal-->
+               <div class="modal fade modal-update-section" id="updateSection<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content update-section-content">
+                        
+                        <div class="modal-header">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="modal-body-1">
+                            <i class="fa-solid fa-pencil pencil modal-edt"></i>
+                            <h5 class="modal-title" id="exampleModalLabel">Editar Seção</h5>
+                          </div>     
+                          <div class="modal-body-2 edit">
+                            <form action="../actions/updateSectionAction.php?id=<?= $section->getId(); ?>" method="POST">
+                              <div class="row mt-3 w-100">
+                                <div class="col-md-15 box-input-edit">
+                                  <label for="inputSectionName" class="form-label">Nome:</label>
+                                  <input type="text" class="form-control" name="inputSectionName" autocomplete="off" value="<?= $section->getName()?>"required>
+                                </div>
+                              </div>
+                              
+
+                              <div class="row mt-3 w-100">
+                                <div class="col-15 box-input-edit">
+                                  <label for="inputEmail" class="form-label">Quantidade de Vagas:</label>
+                                  <input type="number" class="form-control" id="inputSlotsSection" autocomplete="off" name="inputSlotsSection" placeholder="" value="<?= $section->getSlots()?>" required>
+                                </div>
+                              </div>
+                              
+                              <div class="row mt-3 w-100">
+                                <div class="col-md-15 box-input-edit">
+                                  <label for="inputSectionColor" class="form-label">Cor da seção:</label>
+                                  <select name="inputSectionColor" id="inputSectionColor" class="form-select">
+                                    <option value="<?= $section->getColor()?>" class="select-op1">Atual</option>
+                                    <option value="#2ED47A" class="select-op1">Verde</option>
+                                    <option value="#885AF8" class="select-op2">Roxo</option>
+                                    <option value="#F7685B" class="select-op3">Vermelho</option>
+                                    <option value="#FFB946" class="select-op4">Amarelo</option>
+                                    <option value="#109CF1" class="select-op5">Azul</option>
+                                  </select>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                          <input type="submit" class="btn  confirm-checkin-button" value="Confirmar"> 
+                        </div>
+                        </form>
+                      </div>
+                  </div>
+                </div>
+
               <!-- Confirm delete modal-->
               <div class="modal fade" id="confirmDelModal<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -113,10 +169,10 @@ $prices = $priceDao->findAll();
                     <div class="modal-body">
                       <div class="modal-body-1">
                         <i class="fa-solid fa-circle-exclamation"></i>
-                        <h5 class="modal-title" id="exampleModalLabel">Excluir este veículo?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Desativar Seção</h5>
                       </div>
                       <div class="modal-body-2">
-                        <p class="p-modal-warning"><span>Atenção!</span> Não será possível reverter essa ação!</p>
+                        <p class="p-modal-warning">Você realmente deseja desativar esta seção?</p>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -125,6 +181,7 @@ $prices = $priceDao->findAll();
                     </div>
                   </div>
               </div>
+
               <?php } ?>
             </tbody>
           </table>
@@ -307,8 +364,6 @@ $prices = $priceDao->findAll();
           </div>
         </form>
     </div>
-
-   
   </main>
 
   
@@ -323,3 +378,4 @@ $prices = $priceDao->findAll();
 </body>
 
 </html>
+
