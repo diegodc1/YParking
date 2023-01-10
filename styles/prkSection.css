@@ -18,7 +18,7 @@ body {
   align-items: flex-start;
   padding-top: 5rem;
   justify-content: center;
-  height: 100vh;
+  /* height: 100vh; */
   padding-left: 4rem;
 }
 

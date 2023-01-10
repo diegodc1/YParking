@@ -495,6 +495,11 @@ main {
   height: 1.5rem !important;
 }
 
+.checkout-img.modal-ck {
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+}
+
 .div-line {
   width: 100%;
   border: 1px dotted var(--gray-light);

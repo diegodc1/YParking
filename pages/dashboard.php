@@ -144,6 +144,13 @@ $movements = $movementDao->findAll();
                 </div>
               </a>
 
+              <a href="/pages/parking.php">
+                <div class="buttons-section">
+                  <i class="fa-solid fa-square-parking"></i>
+                  <p>ESTACIONAMENTO</p>
+                </div>
+              </a>
+
             </section>
           </section>
         </div>

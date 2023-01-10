@@ -258,7 +258,7 @@ $allCheckins = $checkinDao->findAll();
 
                     <div class="modal-body">
                       <div class="modal-body-1">
-                        <img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img">
+                        <img src="../assets/imgs/icon-checkout.png" alt="" class="checkout-img modal-ck">
                         <h5 class="modal-title" id="exampleModalLabel">Realizar check-out deste veículo?</h5>
                       </div>
 

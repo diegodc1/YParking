@@ -46,15 +46,177 @@ session_start();
 
   <main>
     <div class="main-content">
-      <div class="button-box">
-        <a href="dashboard.php" class="btn back-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
-        <a href="/pages/addClient.php" class="add-user-button">Cadastrar Cliente</a>  
-      </div>
 
         <?php require('../components/alertMessage.php')?>
 
 
       <div class="form-relat">
+        <h5>Relatórios Rápidos:</h5>
+
+        <div class="relats-buttons-box">
+
+          <!------- Relatório Rápido Cliente ------->
+          <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Clientes</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Mensalistas</span>
+                  <i class="fa-regular fa-calendar-days"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Horistas</span>
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Convênios de Empresa</span>
+                  <i class="fa-solid fa-business-time"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Financeiro - Mensalitas</span>
+                  <i class="fa-solid fa-coins"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!------- Relatório Rápido Veículos ------->
+          <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Veículos</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Por Categoria</span>
+                  <i class="fa-solid fa-car-side"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Ativos e Desativados</span>
+                  <i class="fa-solid fa-toggle-off"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!------- Relatório Rapido Cliente ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Usuários</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Nível de Acesso</span>
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Cargo</span>
+                  <i class="fa-solid fa-users-gear"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Status</span>
+                  <i class="fa-solid fa-circle-info"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!------- Relatório Rápido Empresas ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Empresas</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Vagas Reservadas</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!------- Relatório Rápido Check-ins ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Check-ins</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Todos do Mês</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Por dia (deste mês)</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Cancelados</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+           <!------- Relatório Rápido Check-outs ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Check-outs</h6>
+            <div class="client-relat-box">
+              <a href="">
+                <div class="relat-btn">
+                  <span>Todos do Mês</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Por dia (deste mês)</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+
+              <a href="">
+                <div class="relat-btn">
+                  <span>Valor por dia (deste mês)</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+
+               <a href="">
+                <div class="relat-btn">
+                  <span>Cancelados</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        
+        </div>
+
+        <div class="line-div two"></div>
+
+        <h5 class="mt-3">Relatórios Personalizável:</h5>
         <div class="col-md-2">
           <label for="inputTypeRelat" class="form-label">Relatório de:</label>
           <select id="inputTypeRelat" name="inputTypeRelat" class="form-select" required onclick="showInput()">
@@ -446,7 +608,7 @@ session_start();
           </div>
         </form>
 
-        <!--============ Formulário Usuários ==============-->
+        <!--============= Formulário Usuários ==============-->
         <form action="../pages/relatUsers.php" method="POST" id="form-users" class="row g-3">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>

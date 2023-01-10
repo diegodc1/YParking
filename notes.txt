@@ -13,14 +13,13 @@ Tem que fazer:
 
 
 ## Notas:
-// verificar na hora do ckeckout se o cliente tem plano de empresa ou não.
-// data e horario de cadastro dos clientes e veiculos
 // cadastro de novos cargos
 // gerar grafico de financas, atraves de um button que vai ficar na tela do form
 // ver checkin de um determinado cliente
 // mostrar no final do relatório o total de cada informação
 //gerar relatórios personalizados ou prontos
-// editar seções
+// mostrar na tela de empresas, os funcionários cadastrados nelas
+
 // add valor mensal
 
 -- Tem que ter na entrega:

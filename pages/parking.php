@@ -255,12 +255,29 @@ $prices = $priceDao->findAll();
               </div>
 
               <div class="price-car">
+                <p>Mensal: </p>
+                <div class="input-price-box">
+                  <span>R$</span>
+                  <input type="text" name="carMonthPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarMonth())?>" required>
+                </div>
+              </div>
+
+              <div class="price-car">
                 <p>Hora adicional: </p>
                 <div class="input-price-box">
                   <span>R$</span>
                   <input type="text" name="carAdditionalPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcCarAdditional())?>" required>
                 </div>
               </div>
+
+              <div class="price-car">
+                <p>Empresa - Valor por vaga: </p>
+                <div class="input-price-box">
+                  <span>R$</span>
+                  <input type="text" name="companySlotPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getCompanySlotPrice())?>" required>
+                </div>
+              </div>
+              
             </div>
 
             <div class="motorcycle-prices">
@@ -323,11 +340,22 @@ $prices = $priceDao->findAll();
               </div>
 
               <div class="motorcycle-price">
+                <p>Mensal: </p>
+                <div class="input-price-box">
+                  <span>R$</span>
+                  <input type="text" name="mtbikeMonthPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbikeMonth())?>">
+                </div>
+              </div>
+
+              <div class="motorcycle-price">
                 <p>Hora adicional: </p>
                 <div class="input-price-box">
                   <span>R$</span>
                   <input type="text" name="mtbikeAdditionalPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbikeAdditional())?>">
                 </div>
+              </div>
+
+              <div class="motorcycle-price">
               </div>
             </div>
           </div>

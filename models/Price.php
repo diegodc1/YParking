@@ -9,6 +9,7 @@ class Price {
   private $prcCar6h;
   private $prcCarDay;
   private $prcMtCarAdditional;
+  private $prcCarMonth;
   private $prcMtbike15;
   private $prcMtbike30;
   private $prcMtbike1h;
@@ -17,6 +18,8 @@ class Price {
   private $prcMtbike6h;
   private $prcMtbikeDay;
   private $prcMtbikeAdditional;
+  private $prcMtbikeMonth;
+  private $companySlotPrice;
 
   public function getId() {
     return $this->id;
@@ -90,6 +93,14 @@ class Price {
     $this->prcMtCarAdditional = $prcMtCarAdditional;
   }
 
+  public function getPrcCarMonth() {
+    return $this->prcCarMonth;
+  }
+
+  public function setPrcCarMonth($prcCarMonth) {
+    $this->prcCarMonth = $prcCarMonth;
+  }
+
   public function getPrcMtbike15() {
     return $this->prcMtbike15;
   }
@@ -152,6 +163,22 @@ class Price {
 
   public function setPrcMtbikeAdditional($additional) {
     $this->prcMtbikeAdditional = $additional;
+  }
+
+  public function getPrcMtbikeMonth() {
+    return $this->prcMtbikeMonth;
+  }
+
+  public function setPrcMtbikeMonth($prcMtbikeMonth) {
+    $this->prcMtbikeMonth = $prcMtbikeMonth;
+  }
+
+  public function getCompanySlotPrice() {
+    return $this->companySlotPrice;
+  }
+
+  public function setCompanySlotPrice($companySlotPrice) {
+    $this->companySlotPrice = $companySlotPrice;
   }
 }
 
