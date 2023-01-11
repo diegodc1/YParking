@@ -49,7 +49,7 @@ main {
 
 .main-box1 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.5fr;
   gap: 2rem;
 }
 
@@ -406,7 +406,7 @@ main {
 }
 
 .modal-content.prepare {
-  width: 70vw !important;
+  width: 90vw !important;
 }
 
 .modal-body-2.prepare {
@@ -415,16 +415,29 @@ main {
 }
 .modal-body-2.prepare p {
   font-weight: 700;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
 }
 
 .modal-body-2.prepare a {
   font-weight: 400;
 }
 
+.modal-body.prepare {
+  width: 40vw;
+}
+
+.modal-body.chekout-modal {
+  width: 40vw;
+}
+
 .info-vehicle-checkout.prepare {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .info-col-1.prepare,
@@ -450,6 +463,88 @@ main {
 .prepare-img {
   width: 3.5rem !important;
   height: 3.5rem !important;
+}
+
+/******** BCX 3 **********/
+.box3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  gap: 1rem;
+  align-items: center;
+  /* padding: 0rem 6rem; */
+}
+
+.checkins-info-box,
+.checkouts-info-box,
+.total-occupation-info-box {
+  background-color: var(--text-light);
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.checkins-info-box h6,
+.checkouts-info-box h6,
+.total-occupation-info-box h6 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.principal {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.more-info-checkins {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.more-info-checkins p {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-left: 55%;
+  font-size: 1.1rem;
+}
+
+.first-p-info {
+  margin: 0;
+}
+
+.second-p-info {
+  padding-left: 10%;
+  font-weight: 600;
+  color: green;
+}
+
+.total-occupation-info-box {
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1rem;
+}
+
+.info-occup-p {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 900px) {

@@ -107,6 +107,7 @@ interface CheckinDao {
   public function findAllDaily($date);
   public function findAllCheckinActive();
   public function findAllDailyVehicleId($date, $vehicleId);
+  public function findStatusDaily($status, $date);
   public function returnSlotsCkeckin($vehicleId);
   public function returnSlotsByDate($date, $sectionId);
 }

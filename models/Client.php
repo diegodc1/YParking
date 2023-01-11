@@ -126,6 +126,7 @@ interface ClientDao {
   public function findByIdReturnName($id);
   public function findById($id);
   public function findByClientIdQtd($companyId);
+  public function findByType($type);
   public function update(Client $u);
   public function delete($id);
   public function disable($id);

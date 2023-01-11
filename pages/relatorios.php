@@ -59,14 +59,14 @@ session_start();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Clientes</h6>
             <div class="client-relat-box">
-              <a href="">
+              <a href="../pages/fastRelatClients.php?type=monthly">
                 <div class="relat-btn">
                   <span>Mensalistas</span>
                   <i class="fa-regular fa-calendar-days"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatClients.php?type=hour">
                 <div class="relat-btn">
                   <span>Horistas</span>
                   <i class="fa-regular fa-clock"></i>

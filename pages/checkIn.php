@@ -38,7 +38,7 @@ $date = date("Y/m/d");
 
 
 $sections = $sectionDao->findAll();
-$checkinsToday = $checkinDao->findAllDaily($date);
+$checkinsToday = $checkinDao->findAllCheckinActive();
 $checkinsActive = $checkinDao->findAllCheckinActive();
 $lastCheckouts = $checkoutDao->findAll();
 $allCheckins = $checkinDao->findAll();

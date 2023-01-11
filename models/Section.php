@@ -45,4 +45,5 @@ interface SectionDao {
   public function findById($id);
   public function update(Section $u);
   public function delete($id);
+  public function totalSlots();
 }

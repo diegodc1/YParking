@@ -260,4 +260,37 @@ class CheckinDaoDB implements CheckinDao {
     }
     return $checkinsActive;
   } 
+
+  public function findStatusDaily($status, $date) {
+    $checkinsActiveToday = [];
+
+    if($status == 'Finalizado' || $status == 'Cancelado') {
+      $statusSql = "ckin_status = '$status'";
+    } elseif ($status == 'Ativo') {
+      $statusSql = "(ckin_status = 'Ativo' OR ckin_status = 'Aguardando Saída')";
+    }
+    
+
+    $sql = $this->pdo->query("SELECT * FROM checkin WHERE $statusSql AND ckin_date = '$date' ORDER BY ckin_date DESC, ckin_time DESC");
+
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']);
+        $u->setDate($checkin['ckin_date']);
+
+        $checkinsActiveToday[] = $u;
+      }
+    }
+    return $checkinsActiveToday;
+  }
 }

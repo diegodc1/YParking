@@ -270,13 +270,7 @@ $prices = $priceDao->findAll();
                 </div>
               </div>
 
-              <div class="price-car">
-                <p>Empresa - Valor por vaga: </p>
-                <div class="input-price-box">
-                  <span>R$</span>
-                  <input type="text" name="companySlotPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getCompanySlotPrice())?>" required>
-                </div>
-              </div>
+             
               
             </div>
 
@@ -354,11 +348,16 @@ $prices = $priceDao->findAll();
                   <input type="text" name="mtbikeAdditionalPrice" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getPrcMtbikeAdditional())?>">
                 </div>
               </div>
-
-              <div class="motorcycle-price">
-              </div>
             </div>
           </div>
+
+           <div class="price-car full">
+              <p>Empresa - Valor por vaga: </p>
+              <div class="input-price-box full">
+                <span>R$</span>
+                <input type="text" name="companySlotPrice" class="input-company-price" value="<?= preg_replace('/[R\$\" "]+/', '', $prices->getCompanySlotPrice())?>" required>
+              </div>
+            </div>
 
           <div class="buttons-price">
             <a type="submit" class="btn-price" data-bs-toggle="modal" data-bs-target="#confirmUpdPrices">Atualizar</a>

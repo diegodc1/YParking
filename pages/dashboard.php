@@ -20,9 +20,31 @@ $movementDao = new MovementDaoDB($pdo);
 date_default_timezone_set('America/Sao_Paulo');
 $date = date("Y/m/d");
 
+
+
+// Checkins
+$ckinToday = $checkinDao->findAllDaily($date);
+$ckinAllActive = $checkinDao->findAllCheckinActive();
+$ckinActiveToday = $checkinDao->findStatusDaily('Ativo', $date);
+$ckinFinishToday = $checkinDao->findStatusDaily('Finalizado', $date);
+$ckinCancelToday = $checkinDao->findStatusDaily('Cancelado', $date);
+
+//Checkouts
+$ckoutToday = $checkoutDao->findAllDaily($date);
+$ckoutTotalValueToday = $checkoutDao->returnTotalValueDate($date);
+$ckoutTypeMonthToday = $checkoutDao->findMonthlyToday($date);
+$ckoutHourToday =count($ckoutToday) - $ckoutTypeMonthToday;
+
+//  Sections
 $sections = $sectionDao->findAll();
-$checkinsToday = $checkinDao->findAllDaily($date);
+$totalSlots = $sectionDao->totalSlots();
+$totalFreeSlots = $totalSlots - count($ckinAllActive);
+$totalOccupationPercentage = round((count($ckinAllActive) * 100) / $totalSlots) . "%";
+
+// Next outs
 $nextOutsCkout = $clientDao->findAllTimeAvgCkinActive();
+
+// Movements
 $movements = $movementDao->findAll();
 ?>
 
@@ -203,7 +225,7 @@ $movements = $movementDao->findAll();
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body chekout-modal">
                       <div class="modal-body-1">
                         <img src="../assets/imgs/icon-checkout.png" alt="" class="prepare-img">
                         <h5 class="modal-title" id="exampleModalLabel">Realizar check-out deste veículo?</h5>
@@ -234,15 +256,15 @@ $movements = $movementDao->findAll();
               </div>
 
                <!------------------------- Prepare Out-------------------------->
-              <div class="modal fade" id="prepareOutModal<?= $nextVehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade prepare" id="prepareOutModal<?= $nextVehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                  <div class="modal-content prepare" id="modal-prepare" style="width: 90vw">
+                  <div class="modal-content prepare" id="modal-prepare">
 
                     <div class="modal-header checkout">
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body prepare">
                       <div class="modal-body-1">
                         <i class="fa-regular fa-hourglass-half icon-prepare-modal"></i>
                         <h5 class="modal-title" id="exampleModalLabel">Preparar para Saída?</h5>
@@ -252,13 +274,13 @@ $movements = $movementDao->findAll();
                       <div class="modal-body-2 prepare">
                         <section class="info-vehicle-checkout prepare">
                             <div class="info-col-1 prepare">
-                              <p>Modelo: <a><?= $nextVehicle->getModel()?></a></p>
-                              <p>Categoria: <a><?= $nextVehicle->getCategory()?></a></p>
-                              <p>Cor: <a><?= $nextVehicle->getColor()?></a></p>
+                              <p>Modelo:  <a><?= $nextVehicle->getModel()?></a></p>
+                              <p>Categoria:  <a><?= $nextVehicle->getCategory()?></a></p>
+                              <p>Cor:  <a><?= $nextVehicle->getColor()?></a></p>
                             </div>
                             <div class="info-col-2 prepare">
-                              <p>Placa: <a><?= $nextVehicle->getPlate()?></a></p>                              
-                              <p>Cliente: <a><?= $nextClient->getName()?></a></p>
+                              <p>Placa:  <a><?= $nextVehicle->getPlate()?></a></p>                              
+                              <p>Cliente:  <a><?= $nextClient->getName()?></a></p>
                             </div>
                         </section>
                       </div>
@@ -330,6 +352,48 @@ $movements = $movementDao->findAll();
                 </tbody>
               </table>
           </section>
+        </div>
+
+        <div class="box3">
+          <div class="checkins-info-box">
+            <h6>Checkins Hoje</h6>
+            <p class="principal"><?=  count($ckinToday) ?></p>
+            <div class="more-info-checkins">
+              <p><i class="fa-solid fa-toggle-on"></i>Ativos: <span><?=  count($ckinActiveToday) ?></span></p>
+              <p><i class="fa-solid fa-flag-checkered"></i>Finalizados: <span><?=  count($ckinFinishToday) ?></span></p>
+              <p><i class="fa-solid fa-ban"></i>Cancelados: <span><?=  count($ckinCancelToday) ?></span></p>
+            </div>
+          </div>
+
+          <div class="checkouts-info-box">
+            <h6>Checkouts Hoje</h6>
+            <p  class="principal"><?= count($ckoutToday)?></p>
+            <div class="more-info-checkins">
+              <p class="first-p-info"><i class="fa-solid fa-coins"></i>Valor Total:</p>
+              <p class="second-p-info"><?= $ckoutTotalValueToday ?></p>
+              <p><i class="fa-regular fa-clock"></i>Horistas: <span><?= $ckoutHourToday ?></span></p>
+              <p><i class="fa-regular fa-calendar-days"></i>Mensalistas: <span><?= $ckoutTypeMonthToday ?></span></p>
+            </div>
+          </div>
+
+          <div class="total-occupation-info-box">
+            <div class="box-occu 1">
+              <div class="box-occu-header" style="background-color: green">
+                <span>Ocupação Total</span>
+              </div>
+
+              <div class="line-info">
+                <p>Ocupação: <span style="color: green"><?= $totalOccupationPercentage ?></span></p>
+                <div class="line-occupation">
+                  <div class="fill-line" style="background-color: green; width:<?= $totalOccupationPercentage ?>" ></div>
+                </div>
+              </div>   
+              
+         
+            </div>  
+            <p class="info-occup-p"><i class="fa-solid fa-car-tunnel"></i>Vagas Disponíveis: <span><?= $totalFreeSlots?></span></p>
+          </div>
+
         </div>
       </div>
 

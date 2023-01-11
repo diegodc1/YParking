@@ -172,6 +172,24 @@ class CheckoutDaoDB implements CheckoutDao {
     return $sql->rowCount();
   }
 
+  public function returnTotalValueDate($date){
+    $sql = $this->pdo->prepare("SELECT sum(ckout_total_value) as value FROM checkout WHERE ckout_date = :date");
+    $sql->bindValue(':date', $date);
+    $sql->execute();
+    $data = $sql->fetch();
+
+    return $data['value'];
+  }
+
+  public function findMonthlyToday($date){
+    $sql = $this->pdo->prepare("SELECT count(ckout_total_value) as qtd FROM checkout WHERE ckout_total_value = 'R$ 0,00' AND ckout_date = :date");
+    $sql->bindValue(':date', $date);
+    $sql->execute();
+    $data = $sql->fetch();
+
+    return $data['qtd'];
+  }
+
    public function findAllDaily($date) {
     $checkoutsDaily = [];
 
@@ -191,10 +209,12 @@ class CheckoutDaoDB implements CheckoutDao {
         $u->setUserId($checkout['ckout_user_id']);
         $u->setStatus($checkout['ckout_status']);
         $u->setDate($checkout['ckout_date']);
-        $u->setCkinTime($data['ckout_ckin_time']);
-        $u->setCkinDate($data['ckout_ckin_date']);
-        $u->setCkinId($data['ckout_ckin_id']);
-        $u->setTotalValue($data['ckout_total_value']);
+        $u->setCkinTime($checkout['ckout_ckin_time']);
+        $u->setCkinDate($checkout['ckout_ckin_date']);
+        $u->setCkinId($checkout['ckout_ckin_id']);
+        $u->setTotalValue($checkout['ckout_total_value']);
+        $u->setCancelReason($checkout['ckout_cancel_reason']);
+        $u->setCancelUser($checkout['ckout_cancel_user']);
 
 
         $checkoutsDaily[] = $u;

@@ -72,6 +72,13 @@ class SectionDaoDB implements SectionDao {
     return true;
   }
 
+  public function totalSlots() {
+    $sql = $this->pdo->query("SELECT sum(prk_sect_slots) as qtd FROM parking_sections");
+    $data = $sql->fetch();
+
+    return $data['qtd'];
+  }
+
   public function delete($id){
     $sql = $this->pdo->prepare("DELETE FROM parking_sections WHERE prk_sect_id = :id");
     $sql->bindValue(':id', $id);

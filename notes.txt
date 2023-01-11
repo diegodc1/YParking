@@ -19,7 +19,7 @@ Tem que fazer:
 // mostrar no final do relatório o total de cada informação
 //gerar relatórios personalizados ou prontos
 // mostrar na tela de empresas, os funcionários cadastrados nelas
-
+// colocar no dashboard informações de checkout e checkin
 // add valor mensal
 
 -- Tem que ter na entrega:

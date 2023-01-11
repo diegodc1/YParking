@@ -354,3 +354,20 @@ select:focus {
   text-decoration: none;
   color: #2ed47a;
 }
+
+.price-car.full {
+  margin: 0 !important;
+  width: 90%;
+  margin-top: 1rem !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-company-price {
+  width: 35% !important;
+}
+
+.input-price-box.full {
+  display: flex;
+  justify-content: end;
+}

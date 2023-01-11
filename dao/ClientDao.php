@@ -146,6 +146,62 @@ class ClientDaoDB implements ClientDao {
     }
   }
 
+  public function findByType($type) {
+   $clients = [];
+
+    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_type = '$type'");
+    if ($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach ($data as $client) {
+        $u = new Client;
+        $u->setId($client['client_id']);
+        $u->setName($client['client_name']);
+        $u->setEmail($client['client_email']);
+        $u->setPhone($client['client_phone']);
+        $u->setAddress($client['client_address']);
+        $u->setCep($client['client_cep']);
+        $u->setType($client['client_type']);
+        $u->setBussinesPlan($client['client_bussines_plan']);
+        $u->setDepartureTime($client['client_departure_time']);
+        $u->setCompanyId($client['client_company_id']);
+        $u->setStatus($client['client_status']);
+        $u->setCadDate($client['client_cad_date']);
+        $u->setCadTime($client['client_cad_time']);
+
+        $clients[] = $u;
+      }
+    }
+    return $clients;
+  }
+
+  public function findByBussinessPlan() {
+    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_bussiness_plan = 'Sim'");
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetch();
+
+      $u = new Client;
+      $u->setId($data['client_id']);
+      $u->setName($data['client_name']);
+      $u->setEmail($data['client_email']);
+      $u->setPhone($data['client_phone']);
+      $u->setAddress($data['client_address']);
+      $u->setCep($data['client_cep']);
+      $u->setType($data['client_type']);
+      $u->setBussinesPlan($data['client_bussines_plan']);
+      $u->setDepartureTime($data['client_departure_time']);
+      $u->setCompanyId($data['client_company_id']);
+      $u->setStatus($data['client_status']);
+      $u->setCadDate($data['client_cad_date']);
+      $u->setCadTime($data['client_cad_time']);
+
+      return $u;
+    } else {
+      return false;
+    }
+  }
+
   public function update(Client $u){
     $sql = $this->pdo->prepare("UPDATE clients SET client_name = :name, client_email = :email, client_address = :address, client_type = :type, client_bussines_plan = :bussinessPlan, client_phone = :phone, client_cep = :cep WHERE client_id = :id");
 
@@ -201,7 +257,7 @@ class ClientDaoDB implements ClientDao {
 
     $sql = $this->pdo->query("SELECT client_id, client_departure_time, ckin_id, ckin_status, ckin_vehicle_id FROM clients 
       INNER JOIN checkin ON clients.client_id = checkin.ckin_client_id AND clients.client_departure_time IS NOT NULL
-      WHERE (checkin.ckin_status = 'Ativo' OR checkin.ckin_status = 'Aguardando Saída') AND clients.client_departure_time::time >= current_time AND clients.client_departure_time::time < current_time + interval '1 hours' ORDER BY clients.client_departure_time");
+      WHERE (checkin.ckin_status = 'Ativo' OR checkin.ckin_status = 'Aguardando Saída') AND clients.client_departure_time::time >= current_time AND clients.client_departure_time::time < current_time + interval '3 hours' ORDER BY clients.client_departure_time");
 
     if($sql->rowCount() > 0) {
         $data = $sql->fetchAll();
