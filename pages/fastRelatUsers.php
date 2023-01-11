@@ -1,7 +1,6 @@
 <?php
 require_once('../db/config.php');
-require_once('../dao/ClientDao.php');
-require_once('../dao/CompanyDao.php');
+require_once('../dao/UsuarioDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
@@ -14,30 +13,18 @@ $funcUser = $_SESSION['user_function'];
 
 $relat = $_GET['typeRelat'];
 
-$companyDao = new CompanyDaoDB($pdo);
-$clientDao = new ClientDaoDB($pdo);
-$clients = $clientDao->findAll();
+$usuarioDao = new UsuarioDaoDB($pdo);
+$users = $usuarioDao->findAll();
 
-$clientsMonthly = $clientDao->findByType('Mensalista');
-$clientsHour = $clientDao->findByType('Horista');
-$clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
-$clientsNoBussinesPlan = $clientDao->findByBussinesPlan('Não');
+$resultsRelat = $users;
 
-$resultsRelat = [];
-
-if($relat == 'monthly') {
-  $titleRelat = 'Clientes Mensalistas';
-  $resultsRelat = $clientsMonthly;
-} else if($relat == 'hour') {
-  $titleRelat = 'Clientes Horistas';
-  $resultsRelat = $clientsHour;
-} else if($relat == 'bussinesPlan') {
-  $titleRelat = 'Clientes Conveniados de Empresas';
-  $resultsRelat = $clientsBussinesPlan;
-} else if($relat == 'noBussinesPlan') {
-  $titleRelat = 'Clientes Não Conveniados';
-  $resultsRelat = $clientsNoBussinesPlan;
-}
+if($relat == 'levelAccess') {
+  $titleRelat = 'Usuários - Nível de Acesso';
+} else if($relat == 'function') {
+  $titleRelat = 'Usuários - Cargo';
+} else if($relat == 'status') {
+  $titleRelat = 'Usuários - Status';
+} 
 
 
 
@@ -123,66 +110,89 @@ function get_client_ip() {
 
         <div class="main-relat">
           <?php 
-          if($relat == 'monthly' || $relat == 'hour') { 
+          if($relat == 'levelAccess') { 
             ?>
             <table id="listRelat" class="table" style="width:100%">
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Tipo</th>  
+                  <th>Nivel de Acesso</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <?php              
-                  foreach($resultsRelat as $client): ?>
+                  foreach($resultsRelat as $user):
+                    if($user->getAccess() ==  0) {
+                      $access = 'Comum';
+                    } else if($user->getAccess() ==  1){
+                      $access = 'Admin';
+                    }
+                  ?>
                     <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getType()?></td>
-                      <td><?= $client->getStatus(); ?></td>
+                      <td><?= $user->getName(); ?></td>
+                      <td><?= $user->getEmail(); ?></td>       
+                      <td><?= $access ?></td>
+                      <td><?= $user->getStatus(); ?></td>
                     </tr>
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } else if($relat == 'bussinesPlan' || $relat == 'noBussinesPlan') { ?>
+          <?php } else if($relat == 'function') { ?>
             <table id="listRelat" class="table" style="width:100%">
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Convênio</th>  
-                  <th>Empresa</th>  
+                  <th>Cargo</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <?php              
-                  foreach($resultsRelat as $client): 
-    
-                  
+                  foreach($resultsRelat as $user): 
                   ?>
                     <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getBussinesPlan()?></td>
-                      <?php if($relat == 'bussinesPlan') { 
-                        $companyName = $companyDao->findById($client->getCompanyId())?>
-                        <td><?= $companyName->getName()?></td>  
-                      <?php } else { ?>
-                        <td>-</td>  
-                      <?php } ?>
-                      <td><?= $client->getStatus(); ?></td>
+                      <td><?= $user->getName(); ?></td>
+                      <td><?= $user->getEmail(); ?></td>       
+                      <td><?= $user->getFunction()?></td>
+                      <td><?= $user->getStatus(); ?></td>
                     </tr>
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } ?>
+          <?php } else if($relat == 'status') { ?>
+            <table id="listRelat" class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Cargo</th>
+                  <th>Nível de Acesso</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php              
+                  foreach($resultsRelat as $user):
+                     if($user->getAccess() ==  0) {
+                      $access = 'Comum';
+                    } else if($user->getAccess() ==  1){
+                      $access = 'Admin';
+                    } 
+                  ?>
+                    <tr>
+                      <td><?= $user->getName(); ?></td>
+                      <td><?= $user->getEmail(); ?></td>       
+                      <td><?= $user->getFunction()?></td>
+                      <td><?= $access ?></td>
+                      <td><?= $user->getStatus(); ?></td>
+                    </tr>
+                  <?php endforeach ?>
+              </tbody>
+            </table>
+          <?php } ?> 
 
           <div class="line-div-black"></div>
 

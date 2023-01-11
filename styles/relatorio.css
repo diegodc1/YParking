@@ -39,7 +39,7 @@ main {
 }
 
 .main-content {
-  width: 90%;
+  width: 85%;
   /* height: 100vh; */
   display: flex;
   /* justify-content: center; */
@@ -91,8 +91,6 @@ main {
 .relats-buttons-box {
   display: flex;
   justify-content: space-between;
-  gap: 2em;
-  /* border: 1px solid green; */
 }
 
 .box-relat-rapid {
@@ -125,7 +123,7 @@ main {
   border-radius: 5px;
   height: 2.5rem;
   padding: 0.3rem;
-  width: 10rem;
+  width: 13rem;
   height: 3.4rem;
 }
 

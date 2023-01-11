@@ -165,6 +165,22 @@ class VehicleDaoDB implements VehicleDao {
     }
   }
 
+  public function distinctCategorys() {
+    $categorys = [];
+    $sql = $this->pdo->query("SELECT DISTINCT vehicle_category FROM vehicles");
+    $categorys = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+
+    return $categorys;
+  }
+
+  public function vehiclesByCategorys($category) {
+      $sql = $this->pdo->query("SELECT count(vehicle_category) as qtd FROM vehicles WHERE vehicle_category = '$category'");
+      $data = $sql->fetch(PDO::FETCH_ASSOC);
+
+      return $data['qtd'];
+  }
+
   public function update(Vehicle $u){
     $sql = $this->pdo->prepare("UPDATE vehicles SET vehicle_model = :model, vehicle_plate = :plate, vehicle_color = :color, vehicle_category = :category, vehicle_brand = :brand WHERE vehicle_id = :id");
     $sql->bindValue(':model', $u->getModel());

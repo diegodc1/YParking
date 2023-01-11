@@ -3,6 +3,9 @@ require_once('../db/config.php');
 require_once('../dao/VehicleDao.php');
 require_once('../dao/CompanyDao.php');
 require_once('../dao/ClientDao.php');
+require_once('../dao/CheckinDao.php');
+require_once('../dao/CheckoutDao.php');
+require_once('../dao/SectionDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
@@ -12,10 +15,14 @@ $vechicleDao = new VehicleDaoDB($pdo);
 $vehicles = $vechicleDao->findByClientId($clientId);
 $clientDao = new ClientDaoDB($pdo);
 $companyDao = new CompanyDaoDB($pdo);
+$checkinDao = new CheckinDaoDB($pdo);
+$checkoutDao = new CheckoutDaoDB($pdo);
+$sectionDao = new SectionDaoDB($pdo);
 
 if($clientId){
   $client = $clientDao->findById($clientId);
-}
+  $clientCkouts = $checkoutDao->findByClientId($clientId);
+} 
 
 if($client === false) {
   header("Location: listClients.php");
@@ -28,7 +35,7 @@ if($client === false) {
 <head>
   <?php require_once('../components/headConfig.php');?>
   <link rel="stylesheet" href="/styles/viewClient.css">
-  <title>Cadastrar Cliente </title>
+  <title><?= $client->getName() ?></title>
 
     <!-- Data Table style -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -41,7 +48,7 @@ if($client === false) {
 <body class="addClient-body">
   <?php require_once('../components/sidebar.php') ?>
   <header>
-    <h1>CADASTRO DE CLIENTE</h1>
+    <h1>INFORMAÇÕES DE <?= strtoupper($client->getName())?></h1>
   </header>
 
   <main>
@@ -103,7 +110,6 @@ if($client === false) {
                   <th>Marca</th>
                   <th>Cor</th>
                   <th>Categoria</th>
-                  <th>Horário de Saída</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,14 +121,57 @@ if($client === false) {
                       <td><?= $vehicle->getBrand(); ?></td>
                       <td><?= $vehicle->getColor(); ?></td>
                       <td><?= $vehicle->getCategory(); ?></td>
-                      <td><?= $vehicle->getDepartureTime(); ?></td>
                     </tr>
                 <?php } ?>
               </tbody>
             </table>
-          </div>
+        </div>
+
+        <div class="table-list second">
+          <h2>HISTÓRICO DE ENTRADA E SÁIDA</h2>
+          <div class="line"></div>
+            <table id="listMovClient" class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Data Checkin</th>
+                  <th>Hor. Checkin</th>
+                  <th>Data Checkout</th>
+                  <th>Hor. Checkout</th>
+                  <th>Seção</th>
+                  <th>Veículo</th>
+                  <th>Placa</th>
+                  <th>Valor Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php 
+                  foreach($clientCkouts as $ckout) { 
+                      $clientCkin = $checkinDao->findById($ckout->getCkinId());
+                      $clientVehicle = $vechicleDao->findById($ckout->getVehicleId());
+                      $clientSection = $sectionDao->findById($ckout->getSectionId());
+
+                      if($ckout->getTotalValue() == 'R$ 0,00') {
+                        $totalValue = 'Mensalista';
+                      } else {
+                        $totalValue = $ckout->getTotalValue();
+                      }
+                    ?>
+                    <tr>
+                      <td><?=date('d/m/Y', strtotime($clientCkin->getDate())); ?></td>
+                      <td><?= $clientCkin->getTime(); ?></td>       
+                      <td><?= date('d/m/Y', strtotime($ckout->getDate()));  ?></td>
+                      <td><?= $ckout->getTime(); ?></td>
+                      <td><?= $clientSection->getName(); ?></td>
+                      <td><?= $clientVehicle->getModel(); ?></td>
+                      <td><?= $clientVehicle->getPlate(); ?></td>
+                      <td><?= $totalValue ?></td>
+                    </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+        </div>
           
-          <a href="listClients.php" class="btn clear-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
+        <a href="listClients.php" class="btn clear-button"><i class="fa-solid fa-arrow-left"></i>Voltar</a>
 
       </form>
     </section>

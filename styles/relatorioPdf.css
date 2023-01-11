@@ -296,6 +296,26 @@ main {
   transform: translateY(0);
 }
 
+.graph-fast-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.td-slots,
+.th-slots {
+  text-align: center !important;
+}
+
+.day-title {
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
 /********** MEDIA QUERY **********/
 @media (max-width: 1700px) {
   main {

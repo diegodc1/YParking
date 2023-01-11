@@ -133,15 +133,19 @@ interface CheckoutDao {
   public function add(Checkout $u);
   public function findAll();
   public function findById($id);
+  public function findByClientId($id);
   public function findLastCheckout();
   public function update(Checkout $u);
   public function cancel($id, $reason, $userId, $ckinId);
 
   public function addDaily(Checkout $u);
   public function findAllDaily($date);
+  public function findAllCheckoutThisMonth($month);
   // public function findAllCheckinActive();
   public function findAllDailyVehicleId($date, $vehicleId);
   public function returnSlotsByDate($date, $sectionId);
   public function returnTotalValueDate($date);
   public function findMonthlyToday($date);
+  public function diffDatesThisMonth($date);
+  public function canceledCkoutsThisMonth($date);
 }

@@ -1,44 +1,47 @@
 <?php
 require_once('../db/config.php');
+require_once('../dao/checkoutDao.php');
+require_once('../dao/CheckoutDao.php');
+require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
-require_once('../dao/CompanyDao.php');
+require_once('../dao/SectionDao.php');
+require_once('../dao/UsuarioDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
 date_default_timezone_set('America/Sao_Paulo');
 $time = date('H:i:s');
 $date = date("d/m/Y");
+$dateSearch = date("Y/m/d");
 
 $userSystem = $_SESSION['user_name'];
 $funcUser = $_SESSION['user_function'];
 
 $relat = $_GET['typeRelat'];
 
-$companyDao = new CompanyDaoDB($pdo);
+$checkoutDao = new checkoutDaoDB($pdo);
+$checkoutDao = new checkoutDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
-$clients = $clientDao->findAll();
+$sectionDao = new SectionDaoDB($pdo);
+$usuarioDao = new UsuarioDaoDB($pdo);
+$checkouts = $checkoutDao->findAll();
 
-$clientsMonthly = $clientDao->findByType('Mensalista');
-$clientsHour = $clientDao->findByType('Horista');
-$clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
-$clientsNoBussinesPlan = $clientDao->findByBussinesPlan('Não');
+$ckoutsThisMonth = $checkoutDao->findAllcheckoutThisMonth($dateSearch);
+$diffDaysThisMonth = $checkoutDao->diffDatesThisMonth($dateSearch);
+$ckoutsCanceled = $checkoutDao->canceledCkoutsThisMonth($date);
 
 $resultsRelat = [];
-
-if($relat == 'monthly') {
-  $titleRelat = 'Clientes Mensalistas';
-  $resultsRelat = $clientsMonthly;
-} else if($relat == 'hour') {
-  $titleRelat = 'Clientes Horistas';
-  $resultsRelat = $clientsHour;
-} else if($relat == 'bussinesPlan') {
-  $titleRelat = 'Clientes Conveniados de Empresas';
-  $resultsRelat = $clientsBussinesPlan;
-} else if($relat == 'noBussinesPlan') {
-  $titleRelat = 'Clientes Não Conveniados';
-  $resultsRelat = $clientsNoBussinesPlan;
+if($relat == 'month') {
+  $titleRelat = 'Checkouts deste mês';
+  $resultsRelat = $ckoutsThisMonth;
+} else if ($relat == 'perDay') {
+  $titleRelat = 'Checkouts por dia - neste mês';
+  $resultsRelat = $ckoutsThisMonth;
+} else if ($relat == 'canceled') {
+  $titleRelat = 'Checkouts Cancelados - neste mês';
+  $resultsRelat = $ckoutsCanceled;
 }
-
 
 
 function get_client_ip() {
@@ -123,66 +126,124 @@ function get_client_ip() {
 
         <div class="main-relat">
           <?php 
-          if($relat == 'monthly' || $relat == 'hour') { 
-            ?>
+          if($relat == 'month') { 
+
+           // Relatório de checkouts no mes atual ?>
             <table id="listRelat" class="table" style="width:100%">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Tipo</th>  
+                  <th>Data</th>
+                  <th>Horário</th>
+                  <th>Veículo</th>
+                  <th>Placa</th>
+                  <th>Cliente</th>
+                  <th>Seção</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <?php              
-                  foreach($resultsRelat as $client): ?>
-                    <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getType()?></td>
-                      <td><?= $client->getStatus(); ?></td>
-                    </tr>
-                  <?php endforeach ?>
-              </tbody>
-            </table>
-          <?php } else if($relat == 'bussinesPlan' || $relat == 'noBussinesPlan') { ?>
-            <table id="listRelat" class="table" style="width:100%">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Convênio</th>  
-                  <th>Empresa</th>  
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php              
-                  foreach($resultsRelat as $client): 
-    
-                  
+                <?php       
+                  foreach($resultsRelat as $checkout):
+                    $vehicle = $vehicleDao->findById($checkout->getVehicleId());
+                    $client = $clientDao->findById($checkout->getClientId());
+                    $section = $sectionDao->findById($checkout->getSectionId());
                   ?>
                     <tr>
+                    
+                      <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
+                      <td><?= $checkout->getTime(); ?></td>
+                      <td><?= $vehicle->getModel(); ?></td>
+                      <td><?= $vehicle->getPlate(); ?></td>
                       <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getBussinesPlan()?></td>
-                      <?php if($relat == 'bussinesPlan') { 
-                        $companyName = $companyDao->findById($client->getCompanyId())?>
-                        <td><?= $companyName->getName()?></td>  
-                      <?php } else { ?>
-                        <td>-</td>  
-                      <?php } ?>
-                      <td><?= $client->getStatus(); ?></td>
+                      <td><?= $section->getName(); ?></td>
+                      <td><?= $checkout->getStatus(); ?></td>
+                 
                     </tr>
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } ?>
+          <?php } else if($relat == 'perDay') { 
+
+              // Relatório de checkouts por dia
+              for($i = 0; $i < count($diffDaysThisMonth); $i++) { 
+                $text = $diffDaysThisMonth[$i]; 
+                $text = implode(" ", $text);
+                $ckinsPerDay = $checkoutDao->findAllDaily($text);?>
+                <table id="listRelat" class="table" style="width:100%">
+                  <h5 class="day-title">Dia: <?=  date('d/m/Y', strtotime($text));?></h5>
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Horário</th>
+                      <th>Veículo</th>
+                      <th>Placa</th>
+                      <th>Cliente</th>
+                      <th>Seção</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php       
+                      foreach($ckinsPerDay as $checkout):
+                        $vehicle = $vehicleDao->findById($checkout->getVehicleId());
+                        $client = $clientDao->findById($checkout->getClientId());
+                        $section = $sectionDao->findById($checkout->getSectionId()); ?>
+
+                        <tr>
+                          <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
+                          <td><?= $checkout->getTime(); ?></td>
+                          <td><?= $vehicle->getModel(); ?></td>
+                          <td><?= $vehicle->getPlate(); ?></td>
+                          <td><?= $client->getName(); ?></td>
+                          <td><?= $section->getName(); ?></td>
+                          <td><?= $checkout->getStatus(); ?></td>
+                        </tr>
+                      <?php endforeach ?>
+                  </tbody>
+                </table>
+              <?php } ?>
+
+          <?php } else if($relat == 'canceled') { ?>
+              <!-- Relatório de checkouts no mes atual  -->
+              <table id="listRelat" class="table" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Veículo</th>
+                    <th>Placa</th>
+                    <th>Cliente</th>
+                    <th>Seção</th>
+                    <th>Status</th>
+                    <th>Motivo Canc.</th>
+                    <th>Canc. por</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php       
+                    foreach($resultsRelat as $checkout):
+                      $vehicle = $vehicleDao->findById($checkout->getVehicleId());
+                      $client = $clientDao->findById($checkout->getClientId());
+                      $section = $sectionDao->findById($checkout->getSectionId());
+                      $user = $usuarioDao->findById($checkout->getCancelUser());
+                    ?>
+                      <tr>
+                      
+                        <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
+                        <td><?= $checkout->getTime(); ?></td>
+                        <td><?= $vehicle->getModel(); ?></td>
+                        <td><?= $vehicle->getPlate(); ?></td>
+                        <td><?= $client->getName(); ?></td>
+                        <td><?= $section->getName(); ?></td>
+                        <td><?= $checkout->getStatus(); ?></td>
+                        <td><?= $checkout->getCancelReason(); ?></td>
+                        <td><?= $user->getName(); ?></td>
+                  
+                      </tr>
+                    <?php endforeach ?>
+                </tbody>
+              </table>
+          <?php }?>
 
           <div class="line-div-black"></div>
 

@@ -21,6 +21,7 @@ Tem que fazer:
 // mostrar na tela de empresas, os funcionários cadastrados nelas
 // colocar no dashboard informações de checkout e checkin
 // add valor mensal
+// erro na cobrança
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.

@@ -1,6 +1,5 @@
 <?php
 require_once('../db/config.php');
-require_once('../dao/ClientDao.php');
 require_once('../dao/CompanyDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
@@ -15,30 +14,13 @@ $funcUser = $_SESSION['user_function'];
 $relat = $_GET['typeRelat'];
 
 $companyDao = new CompanyDaoDB($pdo);
-$clientDao = new ClientDaoDB($pdo);
-$clients = $clientDao->findAll();
+$companys = $companyDao->findAll();
 
-$clientsMonthly = $clientDao->findByType('Mensalista');
-$clientsHour = $clientDao->findByType('Horista');
-$clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
-$clientsNoBussinesPlan = $clientDao->findByBussinesPlan('Não');
+$resultsRelat = $companys;
 
-$resultsRelat = [];
-
-if($relat == 'monthly') {
-  $titleRelat = 'Clientes Mensalistas';
-  $resultsRelat = $clientsMonthly;
-} else if($relat == 'hour') {
-  $titleRelat = 'Clientes Horistas';
-  $resultsRelat = $clientsHour;
-} else if($relat == 'bussinesPlan') {
-  $titleRelat = 'Clientes Conveniados de Empresas';
-  $resultsRelat = $clientsBussinesPlan;
-} else if($relat == 'noBussinesPlan') {
-  $titleRelat = 'Clientes Não Conveniados';
-  $resultsRelat = $clientsNoBussinesPlan;
+if($relat == 'slots') {
+  $titleRelat = 'Vagas Reservadas por Empresa';
 }
-
 
 
 function get_client_ip() {
@@ -123,61 +105,29 @@ function get_client_ip() {
 
         <div class="main-relat">
           <?php 
-          if($relat == 'monthly' || $relat == 'hour') { 
+          if($relat == 'slots') { 
             ?>
             <table id="listRelat" class="table" style="width:100%">
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Tipo</th>  
+                  <th class="th-slots">Vagas Reservadas</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <?php              
-                  foreach($resultsRelat as $client): ?>
-                    <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getType()?></td>
-                      <td><?= $client->getStatus(); ?></td>
-                    </tr>
-                  <?php endforeach ?>
-              </tbody>
-            </table>
-          <?php } else if($relat == 'bussinesPlan' || $relat == 'noBussinesPlan') { ?>
-            <table id="listRelat" class="table" style="width:100%">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Convênio</th>  
-                  <th>Empresa</th>  
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php              
-                  foreach($resultsRelat as $client): 
-    
-                  
+                  foreach($resultsRelat as $company):
+                    if($company->getSlots() < 10) {
+                      $slots = '0' . $company->getSlots() . ' vagas';
+                    } else {
+                      $slots = $company->getSlots() . ' vagas';
+                    }
                   ?>
                     <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getBussinesPlan()?></td>
-                      <?php if($relat == 'bussinesPlan') { 
-                        $companyName = $companyDao->findById($client->getCompanyId())?>
-                        <td><?= $companyName->getName()?></td>  
-                      <?php } else { ?>
-                        <td>-</td>  
-                      <?php } ?>
-                      <td><?= $client->getStatus(); ?></td>
+                      <td><?= $company->getName(); ?></td>
+                      <td class="td-slots"><?= $slots ?></td>       
+                      <td><?= $company->getStatus(); ?></td>
                     </tr>
                   <?php endforeach ?>
               </tbody>

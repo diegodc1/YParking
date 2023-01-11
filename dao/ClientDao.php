@@ -151,7 +151,7 @@ class ClientDaoDB implements ClientDao {
 
     $sql = $this->pdo->query("SELECT * FROM clients WHERE client_type = '$type'");
     if ($sql->rowCount() > 0) {
-      $data = $sql->fetchAll();
+      $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
       foreach ($data as $client) {
         $u = new Client;
@@ -174,32 +174,35 @@ class ClientDaoDB implements ClientDao {
     }
     return $clients;
   }
+ 
 
-  public function findByBussinessPlan() {
-    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_bussiness_plan = 'Sim'");
+  public function findByBussinesPlan($plan) {
+    $clients = [];
 
-    if($sql->rowCount() > 0) {
-      $data = $sql->fetch();
+    $sql = $this->pdo->query(" SELECT * FROM clients WHERE client_bussines_plan = '$plan'");
+    if ($sql->rowCount() > 0) {
+      $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-      $u = new Client;
-      $u->setId($data['client_id']);
-      $u->setName($data['client_name']);
-      $u->setEmail($data['client_email']);
-      $u->setPhone($data['client_phone']);
-      $u->setAddress($data['client_address']);
-      $u->setCep($data['client_cep']);
-      $u->setType($data['client_type']);
-      $u->setBussinesPlan($data['client_bussines_plan']);
-      $u->setDepartureTime($data['client_departure_time']);
-      $u->setCompanyId($data['client_company_id']);
-      $u->setStatus($data['client_status']);
-      $u->setCadDate($data['client_cad_date']);
-      $u->setCadTime($data['client_cad_time']);
+      foreach ($data as $client) {
+        $u = new Client;
+        $u->setId($client['client_id']);
+        $u->setName($client['client_name']);
+        $u->setEmail($client['client_email']);
+        $u->setPhone($client['client_phone']);
+        $u->setAddress($client['client_address']);
+        $u->setCep($client['client_cep']);
+        $u->setType($client['client_type']);
+        $u->setBussinesPlan($client['client_bussines_plan']);
+        $u->setDepartureTime($client['client_departure_time']);
+        $u->setCompanyId($client['client_company_id']);
+        $u->setStatus($client['client_status']);
+        $u->setCadDate($client['client_cad_date']);
+        $u->setCadTime($client['client_cad_time']);
 
-      return $u;
-    } else {
-      return false;
+        $clients[] = $u;
+      }
     }
+    return $clients;
   }
 
   public function update(Client $u){

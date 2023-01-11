@@ -118,6 +118,8 @@ interface VehicleDao {
   public function findByClientId($clientId);
   public function findByClientIdQtd($clientId);
   public function findById($id);
+  public function distinctCategorys();
+  public function vehiclesByCategorys($category);
   public function update(Vehicle $u);
   public function delete($id);
 }

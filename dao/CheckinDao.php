@@ -126,6 +126,32 @@ class CheckinDaoDB implements CheckinDao {
     return $checkins;
   }
 
+  public function findAllCheckinThisMonth($month) {
+    $checkins = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkin WHERE ckin_date >= DATE_TRUNC('month', '$month'::TIMESTAMP) ORDER BY ckin_date;");
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']); 
+        $u->setDate($checkin['ckin_date']);
+
+        $checkins[] = $u; 
+      }     
+    } 
+    return $checkins;
+  }
+  
+
   public function update(Checkin $u){
     $sql = $this->pdo->prepare("UPDATE checkin SET ckin_vehicle_id = :vehicleId, ckin_clientId = :clientId, ckin_section_id = :sectionId, ckin_time = :time, ckin_user_id = userId WHERE ckin_id = :id");
 
@@ -193,6 +219,39 @@ class CheckinDaoDB implements CheckinDao {
     return $sql->rowCount();
   }
 
+  public function diffDatesThisMonth($date) {
+    $sql = $this->pdo->query("SELECT DISTINCT ckin_date FROM checkin  WHERE ckin_date >= DATE_TRUNC('month', '$date'::TIMESTAMP) ORDER BY ckin_date;");
+    $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+  }
+
+  public function canceledCkinsThisMonth($date) {
+    $ckinsCanceled = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkin WHERE ckin_date >= DATE_TRUNC('month', '$date'::TIMESTAMP) AND ckin_status = 'Cancelado' ORDER BY ckin_date");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkin) {
+        $u = new Checkin;
+        $u->setId($checkin['ckin_id']);
+        $u->setVehicleId($checkin['ckin_vehicle_id']);
+        $u->setClientId($checkin['ckin_client_id']);
+        $u->setSectionId($checkin['ckin_section_id']);
+        $u->setTime($checkin['ckin_time']);
+        $u->setUserId($checkin['ckin_user_id']);
+        $u->setStatus($checkin['ckin_status']);
+        $u->setDate($checkin['ckin_date']);
+        $u->setCancelReason($checkin['ckin_cancel_reason']);
+        $u->setCancelUser($checkin['ckin_cancel_user']);
+
+        $ckinsCanceled[] = $u;
+      }
+    }
+    return $ckinsCanceled;
+  } 
+
    public function findAllDaily($date) {
     $checkinsDaily = [];
 
@@ -212,6 +271,8 @@ class CheckinDaoDB implements CheckinDao {
         $u->setUserId($checkin['ckin_user_id']);
         $u->setStatus($checkin['ckin_status']);
         $u->setDate($checkin['ckin_date']);
+        $u->setCancelReason($checkin['ckin_cancel_reason']);
+        $u->setCancelUser($checkin['ckin_cancel_user']);
 
         $checkinsDaily[] = $u;
       }
@@ -254,6 +315,8 @@ class CheckinDaoDB implements CheckinDao {
         $u->setUserId($checkin['ckin_user_id']);
         $u->setStatus($checkin['ckin_status']);
         $u->setDate($checkin['ckin_date']);
+        $u->setCancelReason($checkin['ckin_cancel_reason']);
+        $u->setCancelUser($checkin['ckin_cancel_user']);
 
         $checkinsActive[] = $u;
       }

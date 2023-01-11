@@ -85,6 +85,33 @@ class CheckoutDaoDB implements CheckoutDao {
     }
   }
 
+  public function findByClientId($id) {
+    $checkouts = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkout WHERE ckout_client_id = $id ORDER BY ckout_date DESC");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkout) {
+        $u = new Checkout;
+        $u->setId($checkout['ckout_id']);
+        $u->setVehicleId($checkout['ckout_vehicle_id']);
+        $u->setClientId($checkout['ckout_client_id']);
+        $u->setSectionId($checkout['ckout_section_id']);
+        $u->setTime($checkout['ckout_time']);
+        $u->setUserId($checkout['ckout_user_id']);
+        $u->setStatus($checkout['ckout_status']);
+        $u->setDate($checkout['ckout_date']);
+        $u->setCkinTime($checkout['ckout_ckin_time']);
+        $u->setCkinDate($checkout['ckout_ckin_date']);
+        $u->setCkinId($checkout['ckout_ckin_id']);
+        $u->setTotalValue($checkout['ckout_total_value']);
+
+        $checkouts[] = $u;
+      }
+    }
+    return $checkouts;
+  }
 
   public function findLastCheckout(){
     $sql = $this->pdo->query("SELECT * FROM checkout ORDER BY ckout_id DESC LIMIT 1");
@@ -112,6 +139,66 @@ class CheckoutDaoDB implements CheckoutDao {
       return false;
     }
   }
+
+  public function findAllCheckoutThisMonth($month) {
+    $checkouts = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkout WHERE ckout_date >= DATE_TRUNC('month', '$month'::TIMESTAMP) ORDER BY ckout_date;");
+
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkout) {
+        $u = new Checkout;
+        $u->setId($checkout['ckout_id']);
+        $u->setVehicleId($checkout['ckout_vehicle_id']);
+        $u->setClientId($checkout['ckout_client_id']);
+        $u->setSectionId($checkout['ckout_section_id']);
+        $u->setTime($checkout['ckout_time']);
+        $u->setUserId($checkout['ckout_user_id']);
+        $u->setStatus($checkout['ckout_status']); 
+        $u->setDate($checkout['ckout_date']);
+
+        $checkouts[] = $u; 
+      }     
+    } 
+    return $checkouts;
+  }
+
+  
+  public function diffDatesThisMonth($date) {
+    $sql = $this->pdo->query("SELECT DISTINCT ckout_date FROM checkout WHERE ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP) ORDER BY ckout_date;");
+    $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+  }
+
+
+  public function canceledCkoutsThisMonth($date) {
+    $ckoutsCanceled = [];
+
+    $sql = $this->pdo->query("SELECT * FROM checkout WHERE ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP) AND ckout_status = 'Cancelado' ORDER BY ckout_date");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $checkout) {
+        $u = new Checkout;
+        $u->setId($checkout['ckout_id']);
+        $u->setVehicleId($checkout['ckout_vehicle_id']);
+        $u->setClientId($checkout['ckout_client_id']);
+        $u->setSectionId($checkout['ckout_section_id']);
+        $u->setTime($checkout['ckout_time']);
+        $u->setUserId($checkout['ckout_user_id']);
+        $u->setStatus($checkout['ckout_status']);
+        $u->setDate($checkout['ckout_date']);
+        $u->setCancelReason($checkout['ckout_cancel_reason']);
+        $u->setCancelUser($checkout['ckout_cancel_user']);
+
+        $ckoutsCanceled[] = $u;
+      }
+    }
+    return $ckoutsCanceled;
+  } 
 
   public function update(Checkout $u){
     $sql = $this->pdo->prepare("UPDATE Checkout SET ckout_vehicle_id = :vehicleId, ckout_clientId = :clientId, ckout_section_id = :sectionId, ckout_time = :time, ckout_user_id = userId WHERE ckout_id = :id");

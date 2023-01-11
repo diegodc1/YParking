@@ -59,12 +59,12 @@ if ($sql->rowCount() > 0) {
 }
 
 
-// Faz a busca de todos os tipos de clientes do estacionamento.
+// Faz a busca de todos os tipos categorias.
 $sql = $pdo->query("SELECT DISTINCT vehicle_category FROM vehicles WHERE $status $category ");
 $distCategory = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
-// Soma a partir dos filtros, quantos clientes há em cada cargo.
+// Soma quantos veículos há em cada categoria
 function getSumDistCategory($category, $pdo, $status) {
   $sql = $pdo->query("SELECT count(vehicle_category) as qtd FROM vehicles WHERE $status AND vehicle_category = '$category'");
   $data = $sql->fetch(PDO::FETCH_ASSOC);
@@ -73,7 +73,7 @@ function getSumDistCategory($category, $pdo, $status) {
 } 
 
 
-// Soma a partir dos filtros, quantos clientes há em cada cargo.
+// Soma quantos veículos há em cada status
 function getSumDistStatus($status, $category, $pdo) {
   $sql = $pdo->query("SELECT count(vehicle_status) as qtd FROM vehicles WHERE vehicle_status = '$status' $category");
   $data = $sql->fetch(PDO::FETCH_ASSOC);

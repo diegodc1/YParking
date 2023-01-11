@@ -59,23 +59,30 @@ session_start();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Clientes</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatClients.php?type=monthly">
+              <a href="../pages/fastRelatClients.php?typeRelat=monthly">
                 <div class="relat-btn">
                   <span>Mensalistas</span>
                   <i class="fa-regular fa-calendar-days"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatClients.php?type=hour">
+              <a href="../pages/fastRelatClients.php?typeRelat=hour">
                 <div class="relat-btn">
                   <span>Horistas</span>
                   <i class="fa-regular fa-clock"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatClients.php?typeRelat=bussinesPlan">
                 <div class="relat-btn">
-                  <span>Convênios de Empresa</span>
+                  <span>Conveniados de Empresa</span>
+                  <i class="fa-solid fa-business-time"></i>
+                </div>
+              </a>
+
+              <a href="../pages/fastRelatClients.php?typeRelat=noBussinesPlan">
+                <div class="relat-btn">
+                  <span>Não Conveniados</span>
                   <i class="fa-solid fa-business-time"></i>
                 </div>
               </a>
@@ -93,14 +100,14 @@ session_start();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Veículos</h6>
             <div class="client-relat-box">
-              <a href="">
+              <a href="../pages/fastRelatVehicles.php?typeRelat=category">
                 <div class="relat-btn">
-                  <span>Por Categoria</span>
+                  <span>Quantidade por categoria</span>
                   <i class="fa-solid fa-car-side"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatVehicles.php?typeRelat=activeDisable">
                 <div class="relat-btn">
                   <span>Ativos e Desativados</span>
                   <i class="fa-solid fa-toggle-off"></i>
@@ -113,37 +120,24 @@ session_start();
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Usuários</h6>
             <div class="client-relat-box">
-              <a href="">
+              <a href="../pages/fastRelatUsers.php?typeRelat=levelAccess">
                 <div class="relat-btn">
                   <span>Nível de Acesso</span>
                   <i class="fa-solid fa-layer-group"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatUsers.php?typeRelat=function">
                 <div class="relat-btn">
                   <span>Cargo</span>
                   <i class="fa-solid fa-users-gear"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatUsers.php?typeRelat=status">
                 <div class="relat-btn">
                   <span>Status</span>
                   <i class="fa-solid fa-circle-info"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!------- Relatório Rápido Empresas ------->
-           <div class="box-relat-rapid">
-            <h6 class="title-box-relat">Empresas</h6>
-            <div class="client-relat-box">
-              <a href="">
-                <div class="relat-btn">
-                  <span>Vagas Reservadas</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
                 </div>
               </a>
             </div>
@@ -153,24 +147,24 @@ session_start();
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Check-ins</h6>
             <div class="client-relat-box">
-              <a href="">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=month">
                 <div class="relat-btn">
                   <span>Todos do Mês</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <i class="fa-solid fa-calendar-check"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=perDay">
                 <div class="relat-btn">
-                  <span>Por dia (deste mês)</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <span>Por dia - neste mês </span>
+                  <i class="fa-solid fa-calendar-day"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=canceled">
                 <div class="relat-btn">
-                  <span>Cancelados</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <span>Cancelados - neste mês</span>
+                  <i class="fa-regular fa-calendar-xmark"></i>
                 </div>
               </a>
             </div>
@@ -178,38 +172,52 @@ session_start();
 
 
            <!------- Relatório Rápido Check-outs ------->
-           <div class="box-relat-rapid">
+          <div class="box-relat-rapid">
             <h6 class="title-box-relat">Check-outs</h6>
             <div class="client-relat-box">
-              <a href="">
+              <a href="../pages/fastRelatCheckouts.php?typeRelat=month">
                 <div class="relat-btn">
                   <span>Todos do Mês</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <i class="fa-solid fa-calendar-check"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatCheckouts.php?typeRelat=perDay">
                 <div class="relat-btn">
                   <span>Por dia (deste mês)</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <i class="fa-solid fa-calendar-day"></i>
                 </div>
               </a>
 
-              <a href="">
+              <a href="../pages/fastRelatCheckouts.php?typeRelat=valuePerDay">
                 <div class="relat-btn">
-                  <span>Valor por dia (deste mês)</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <span>Valor por dia - neste mês</span>
+                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
                 </div>
               </a>
 
-               <a href="">
+               <a href="../pages/fastRelatCheckouts.php?typeRelat=canceled">
                 <div class="relat-btn">
-                  <span>Cancelados</span>
+                  <span>Cancelados - neste mês</span>
+                  <i class="fa-regular fa-calendar-xmark"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+           <!------- Relatório Rápido Empresas ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Empresas</h6>
+            <div class="client-relat-box">
+              <a href="../pages/fastRelatCompanys.php?typeRelat=slots">
+                <div class="relat-btn">
+                  <span>Vagas Reservadas</span>
                   <i class="fa-solid fa-car-tunnel"></i>
                 </div>
               </a>
             </div>
           </div>
+
 
         
         </div>

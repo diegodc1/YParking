@@ -1,7 +1,7 @@
 <?php
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
-require_once('../dao/CompanyDao.php');
+require_once('../dao/VehicleDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
@@ -14,30 +14,20 @@ $funcUser = $_SESSION['user_function'];
 
 $relat = $_GET['typeRelat'];
 
-$companyDao = new CompanyDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
-$clients = $clientDao->findAll();
 
-$clientsMonthly = $clientDao->findByType('Mensalista');
-$clientsHour = $clientDao->findByType('Horista');
-$clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
-$clientsNoBussinesPlan = $clientDao->findByBussinesPlan('Não');
+$vehicles = $vehicleDao->findAll(); 
+$disctctCategorys = $vehicleDao->distinctCategorys(); 
 
 $resultsRelat = [];
 
-if($relat == 'monthly') {
-  $titleRelat = 'Clientes Mensalistas';
-  $resultsRelat = $clientsMonthly;
-} else if($relat == 'hour') {
-  $titleRelat = 'Clientes Horistas';
-  $resultsRelat = $clientsHour;
-} else if($relat == 'bussinesPlan') {
-  $titleRelat = 'Clientes Conveniados de Empresas';
-  $resultsRelat = $clientsBussinesPlan;
-} else if($relat == 'noBussinesPlan') {
-  $titleRelat = 'Clientes Não Conveniados';
-  $resultsRelat = $clientsNoBussinesPlan;
-}
+if($relat == 'activeDisable') {
+  $titleRelat = 'Veículos Ativos e Desativados';
+  $resultsRelat = $vehicles;
+} else if($relat == 'category') {
+  $titleRelat = 'Veículos por Categoria';
+} 
 
 
 
@@ -123,81 +113,54 @@ function get_client_ip() {
 
         <div class="main-relat">
           <?php 
-          if($relat == 'monthly' || $relat == 'hour') { 
+          if($relat == 'activeDisable') { 
             ?>
             <table id="listRelat" class="table" style="width:100%">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Tipo</th>  
+                  <th>Model</th>
+                  <th>Marca</th>
+                  <th>Placa</th>
+                  <th>Categoria</th>  
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <?php              
-                  foreach($resultsRelat as $client): ?>
+                  foreach($resultsRelat as $vehicle): ?>
                     <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getType()?></td>
-                      <td><?= $client->getStatus(); ?></td>
+                      <td><?= $vehicle->getModel(); ?></td>
+                      <td><?= $vehicle->getBrand(); ?></td>       
+                      <td><?= $vehicle->getPlate(); ?></td>
+                      <td><?= $vehicle->getCategory()?></td>
+                      <td><?= $vehicle->getStatus(); ?></td>
                     </tr>
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } else if($relat == 'bussinesPlan' || $relat == 'noBussinesPlan') { ?>
-            <table id="listRelat" class="table" style="width:100%">
-              <thead>
+
+           <div class="line-div-black"></div>
+
+
+            <table class="mt-4 mb-4">
+              <tbody>
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefone</th>
-                  <th>Convênio</th>  
-                  <th>Empresa</th>  
-                  <th>Status</th>
+                  <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                  <td class="div-table-infos">=</td>
+                  <td><?php echo ' ' . count($resultsRelat)?></td>  
                 </tr>
-              </thead>
-              <tbody>
-                <?php              
-                  foreach($resultsRelat as $client): 
-    
-                  
-                  ?>
-                    <tr>
-                      <td><?= $client->getName(); ?></td>
-                      <td><?= $client->getEmail(); ?></td>       
-                      <td class="phone-td"><?= $client->getPhone(); ?></td>
-                      <td><?= $client->getBussinesPlan()?></td>
-                      <?php if($relat == 'bussinesPlan') { 
-                        $companyName = $companyDao->findById($client->getCompanyId())?>
-                        <td><?= $companyName->getName()?></td>  
-                      <?php } else { ?>
-                        <td>-</td>  
-                      <?php } ?>
-                      <td><?= $client->getStatus(); ?></td>
-                    </tr>
-                  <?php endforeach ?>
               </tbody>
             </table>
+
+          <div class="line-div-black"></div>
+          <?php } else if($relat == 'category') { ?>
+            <div class="graph-fast-box">
+              <h5>Veículos por Categoria</h5>
+              <div id="donutchart" style="width: 1000px; height: 500px;"></div>
+            </div>
           <?php } ?>
 
-          <div class="line-div-black"></div>
-
-
-          <table class="mt-4 mb-4">
-            <tbody>
-              <tr>
-                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
-                <td class="div-table-infos">=</td>
-                <td><?php echo ' ' . count($resultsRelat)?></td>  
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="line-div-black"></div>
+   
         </div>
       </div> 
 <?php unset($relat);?>
@@ -216,6 +179,40 @@ function get_client_ip() {
 
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script> google.charts.load('current', {packages: ['corechart']}); </script>
+
+
+  <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChartTypes);
+
+    // Desenha o grafico na tela
+    function drawChartTypes() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Quantidade de veículos por categoria'],
+        <?php
+        
+          for($i = 0; $i < count($disctctCategorys); $i++){
+            $text = $disctctCategorys[$i]; 
+            $text = implode(" ", $text);
+            
+            $qtd = $vehicleDao->vehiclesByCategorys($text); ?>
+            ['<?= $text ?>',  <?= $qtd ?>],
+          <?php }
+        ?>
+      ]);
+      var options = {
+        // title: 'Veículos por categoria',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+
+  </script>
+  
 
 
  
