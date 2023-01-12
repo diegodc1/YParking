@@ -268,6 +268,35 @@ class CheckoutDaoDB implements CheckoutDao {
     return $data['value'];
   }
 
+  public function returnTotalValueMonth($date){
+    $sql = $this->pdo->query("SELECT sum(ckout_total_value) as value FROM checkout WHERE ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP)");
+    $data = $sql->fetch();
+
+    return $data['value'];
+  }
+
+  public function totalValueMonthyClient($date){
+    $sql = $this->pdo->query("SELECT sum(ckout_total_value) AS value FROM checkout INNER JOIN clients ON ckout_client_id = client_id AND  clients.client_type = 'Mensalista' AND clients.client_bussines_plan = 'Não' AND ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP)");
+    $data = $sql->fetch();
+
+    return $data['value'];
+  }
+
+  public function totalValueHourClient($date){
+    $sql = $this->pdo->query("SELECT sum(ckout_total_value) AS value FROM checkout INNER JOIN clients ON ckout_client_id = client_id AND  clients.client_type = 'Horista' AND clients.client_bussines_plan = 'Não' AND ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP)");
+    $data = $sql->fetch();
+
+    return $data['value'];
+  }
+
+  
+  // public function returnTotalValueMonthly($date){
+  //   $sql = $this->pdo->query("SELECT sum(ckout_total_value) as value FROM checkout WHERE ckout_date >= DATE_TRUNC('month', '$date'::TIMESTAMP)");
+  //   $data = $sql->fetch();
+
+  //   return $data['value'];
+  // }
+
   public function findMonthlyToday($date){
     $sql = $this->pdo->prepare("SELECT count(ckout_total_value) as qtd FROM checkout WHERE ckout_total_value = 'R$ 0,00' AND ckout_date = :date");
     $sql->bindValue(':date', $date);

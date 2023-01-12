@@ -2,6 +2,7 @@
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/CompanyDao.php');
+require_once('../dao/PriceDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
@@ -16,12 +17,24 @@ $relat = $_GET['typeRelat'];
 
 $companyDao = new CompanyDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
+$priceDao = new PriceDaoDB($pdo);
 $clients = $clientDao->findAll();
+$prices = $priceDao->findAll();
 
 $clientsMonthly = $clientDao->findByType('Mensalista');
 $clientsHour = $clientDao->findByType('Horista');
 $clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
 $clientsNoBussinesPlan = $clientDao->findByBussinesPlan('Não');
+$totalClientsBussinesPlan = $clientDao->getTotalClientsBussinesPlan();
+
+//Soma de valor total de clientes mensalistas
+$priceMonthly = $prices->getPrcCarMonth();
+$priceMonthly = substr($priceMonthly, 2, 7);
+$priceMonthly= str_replace(",",".",$priceMonthly);
+$priceMonthly = floatval($priceMonthly);
+$totaValueMonthly = count($clientsMonthly) * $priceMonthly;
+$totaValueMonthly= number_format($totaValueMonthly, 2);
+$totaValueMonthly= str_replace(".",",",$totaValueMonthly);
 
 $resultsRelat = [];
 
@@ -38,8 +51,6 @@ if($relat == 'monthly') {
   $titleRelat = 'Clientes Não Conveniados';
   $resultsRelat = $clientsNoBussinesPlan;
 }
-
-
 
 function get_client_ip() {
     $ipaddress = '';
@@ -162,10 +173,7 @@ function get_client_ip() {
               </thead>
               <tbody>
                 <?php              
-                  foreach($resultsRelat as $client): 
-    
-                  
-                  ?>
+                  foreach($resultsRelat as $client): ?>
                     <tr>
                       <td><?= $client->getName(); ?></td>
                       <td><?= $client->getEmail(); ?></td>       
@@ -190,9 +198,20 @@ function get_client_ip() {
           <table class="mt-4 mb-4">
             <tbody>
               <tr>
-                <td class="title-infos-relat">Total de Registros Encontrados:  </td>
-                <td class="div-table-infos">=</td>
-                <td><?php echo ' ' . count($resultsRelat)?></td>  
+                <?php if($relat == 'monthly') { ?>
+                  <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                  <td class="div-table-infos">=</td>
+                  <td><?php echo ' ' . count($resultsRelat)?></td> 
+
+                  <td class="div-table-infos">================</td>
+                  <td class="title-infos-relat">Valor Total Mensalistas:  </td>
+                  <td class="div-table-infos">=</td>
+                  <td>R$<?= $totaValueMonthly?></td>          
+                <?php } else { ?>
+                  <td class="title-infos-relat">Total de Registros Encontrados:  </td>
+                  <td class="div-table-infos">=</td>
+                  <td><?php echo ' ' . count($resultsRelat)?></td>  
+                <?php } ?>
               </tr>
             </tbody>
           </table>

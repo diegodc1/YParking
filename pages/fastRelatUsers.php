@@ -94,7 +94,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Clientes</span></p>
+              <p>Relatório de: <span>Usuários</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>

@@ -86,13 +86,6 @@ session_start();
                   <i class="fa-solid fa-business-time"></i>
                 </div>
               </a>
-
-              <a href="">
-                <div class="relat-btn">
-                  <span>Financeiro - Mensalitas</span>
-                  <i class="fa-solid fa-coins"></i>
-                </div>
-              </a>
             </div>
           </div>
 
@@ -116,7 +109,7 @@ session_start();
             </div>
           </div>
 
-          <!------- Relatório Rapido Cliente ------->
+          <!------- Relatório Rapido Usuarios ------->
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Usuários</h6>
             <div class="client-relat-box">
@@ -189,13 +182,6 @@ session_start();
                 </div>
               </a>
 
-              <a href="../pages/fastRelatCheckouts.php?typeRelat=valuePerDay">
-                <div class="relat-btn">
-                  <span>Valor por dia - neste mês</span>
-                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
-                </div>
-              </a>
-
                <a href="../pages/fastRelatCheckouts.php?typeRelat=canceled">
                 <div class="relat-btn">
                   <span>Cancelados - neste mês</span>
@@ -213,6 +199,29 @@ session_start();
                 <div class="relat-btn">
                   <span>Vagas Reservadas</span>
                   <i class="fa-solid fa-car-tunnel"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          
+           <!------- Relatório Rápido Financeiro ------->
+           <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Financeiro</h6>
+            <div class="client-relat-box">
+              <a href="../pages/fastRelatFinance.php?typeRelat=valuePerDay">
+                <div class="relat-btn">
+                  <span>Valor total por dia - neste mês</span>
+                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                </div>
+              </a>
+            </div>
+
+            <div class="client-relat-box">
+              <a href="../pages/fastRelatFinance.php?typeRelat=type">
+                <div class="relat-btn">
+                  <span>Valor total por tipo - neste mês</span>
+                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
                 </div>
               </a>
             </div>

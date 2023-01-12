@@ -133,4 +133,5 @@ interface ClientDao {
   public function disable($id);
   public function reactivate($id);
   public function setTimeAverage($id);
+  public function getTotalClientsBussinesPlan();
 }

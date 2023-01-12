@@ -149,7 +149,7 @@ class ClientDaoDB implements ClientDao {
   public function findByType($type) {
    $clients = [];
 
-    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_type = '$type'");
+    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_type = '$type' AND client_bussines_plan = 'Não'");
     if ($sql->rowCount() > 0) {
       $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -203,6 +203,13 @@ class ClientDaoDB implements ClientDao {
       }
     }
     return $clients;
+  }
+
+  public function getTotalClientsBussinesPlan() {
+    $sql = $this->pdo->query("SELECT count(client_bussines_plan) AS qtd FROM clients WHERE client_bussines_plan = 'Sim' AND client_status = 'Ativo'");
+    $data = $sql->fetch();
+
+    return $data['qtd'];
   }
 
   public function update(Client $u){

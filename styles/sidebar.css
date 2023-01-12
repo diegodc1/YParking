@@ -94,9 +94,23 @@ aside i {
   letter-spacing: 0.05em;
 }
 
-.sections a {
+.sections {
   text-decoration: none;
   color: #084236;
+}
+
+.sections:hover {
+  color: #084236;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sections:link,
+.sections:visited,
+.sections:hover,
+.sections:active {
+  color: #084236;
+  text-decoration: none;
 }
 
 a:visited {
@@ -126,7 +140,7 @@ a:visited {
   left: 0;
   background: var(--blue-light);
   color: white;
-  width: 13vw;
+  width: 100%;
   padding: 1rem 0rem 1rem 1rem;
 
   justify-content: space-between;
@@ -145,11 +159,11 @@ a:visited {
 }
 
 .info-user span {
-  font-size: 0.7rem;
+  font-size: 0.9em;
 }
 
 .info-user p {
-  font-size: 0.8rem !important;
+  font-size: 0.6rem !important;
 }
 
 .info-user img {

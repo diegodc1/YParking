@@ -145,7 +145,10 @@ interface CheckoutDao {
   public function findAllDailyVehicleId($date, $vehicleId);
   public function returnSlotsByDate($date, $sectionId);
   public function returnTotalValueDate($date);
+  public function returnTotalValueMonth($date);
   public function findMonthlyToday($date);
   public function diffDatesThisMonth($date);
   public function canceledCkoutsThisMonth($date);
+  public function totalValueMonthyClient($date);
+  public function totalValueHourClient($date);
 }

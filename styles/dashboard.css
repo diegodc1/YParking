@@ -5,7 +5,7 @@
   /* width: 100vw;   */
   overflow-x: none;
   padding-top: 4rem;
-  padding-left: 2rem;
+
   /* height: 100vh; */
   /* background-color: var(--bg-gray); */
 }
@@ -39,6 +39,7 @@ main {
   align-items: center;
   justify-content: center;
   padding-top: 1rem;
+  padding-left: 2rem;
 }
 
 .main-content {

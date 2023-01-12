@@ -53,7 +53,7 @@ $movements = $movementDao->findAll();
   
 
 <head>
-  <?php require_once('../components/headConfig.php')?>; 
+  <?php require_once('../components/headConfig.php')?>
   <link rel="stylesheet" href="/styles/dashboard.css">
   <title>Dashboard</title>
 

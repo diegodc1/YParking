@@ -316,6 +316,27 @@ main {
   font-weight: 600;
 }
 
+.total-value {
+  color: green;
+}
+
+.graph-value-fast {
+  margin-left: 5rem;
+}
+
+.total-values-box {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.total-values-box p {
+  font-weight: 600;
+}
+
+.total-values-box span {
+  color: green;
+}
+
 /********** MEDIA QUERY **********/
 @media (max-width: 1700px) {
   main {

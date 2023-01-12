@@ -6,6 +6,7 @@ require_once('../dao/VehicleDao.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/UsuarioDao.php');
+require_once('../dao/PriceDao.php');
 session_start();
 require_once('../components/verifyLogin.php');
 
@@ -25,12 +26,40 @@ $vehicleDao = new VehicleDaoDB($pdo);
 $clientDao = new ClientDaoDB($pdo);
 $sectionDao = new SectionDaoDB($pdo);
 $usuarioDao = new UsuarioDaoDB($pdo);
+$priceDao = new PriceDaoDB($pdo);
 $checkouts = $checkoutDao->findAll();
+$prices = $priceDao->findAll();
 
 $ckoutsThisMonth = $checkoutDao->findAllcheckoutThisMonth($dateSearch);
 $totalValueMonth = $checkoutDao->returnTotalValueMonth($dateSearch);
 $diffDaysThisMonth = $checkoutDao->diffDatesThisMonth($dateSearch);
-$ckoutsCanceled = $checkoutDao->canceledCkoutsThisMonth($date);
+$ckoutsCanceled = $checkoutDao->canceledCkoutsThisMonth($dateSearch);
+
+$totalValueMonthlyClient = $checkoutDao->totalValueMonthyClient($dateSearch);
+$qtdMonthly = $totalValueMonthlyClient;
+$qtdMonthly = substr($qtdMonthly, 2, 7);
+$qtdMonthly =str_replace(",",".",$qtdMonthly);
+$qtdMonthly = number_format($qtdMonthly, 2);
+$qtdMonthly = floatval($qtdMonthly);
+
+
+$totalValueHourClient = $checkoutDao->totalValueHourClient($dateSearch);
+$qtdHour = $totalValueHourClient;
+$qtdHour = substr($qtdHour, 2, 7);
+$qtdHour =str_replace(",",".",$qtdHour);
+$qtdHour = number_format($qtdHour, 2);
+$qtdHour = floatval($qtdHour);
+
+$clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
+$priceBussines = $prices->getCompanySlotPrice();
+$priceBussines = substr($priceBussines, 2, 7);
+$priceBussines =str_replace(",",".",$priceBussines);
+$priceBussines = number_format($priceBussines, 2);
+$priceBussines = floatval($priceBussines);
+$totalValueBussinesClient = count($clientsBussinesPlan) * $priceBussines;
+$totalValueBussinesClientFormat = 'R$ ' . $totalValueBussinesClient .',00';
+
+
 
 $resultsRelat = [];
 if($relat == 'month') {
@@ -39,8 +68,8 @@ if($relat == 'month') {
 } else if ($relat == 'perDay') {
   $titleRelat = 'Checkouts por dia - neste mês';
   $resultsRelat = $ckoutsThisMonth;
-} else if ($relat == 'canceled') {
-  $titleRelat = 'Checkouts Cancelados - neste mês';
+} else if ($relat == 'type') {
+  $titleRelat = 'Valores Totais por tipo de Cliente - neste mês';
   $resultsRelat = $ckoutsCanceled;
 } else if ($relat == 'valuePerDay') {
   $titleRelat = 'Valores Totais por dia - neste mês';
@@ -115,7 +144,7 @@ function get_client_ip() {
           </div>
           <div class="box-info-head">
             <div class="info-col-1">
-              <p>Relatório de: <span>Checkouts</span></p>
+              <p>Relatório de: <span>Financeiro</span></p>
               <p>Data de Emissão: <span><?= $date ?></span></p>
               <p>Horário de Emissão: <span><?= $time ?></span></p>
             </div>
@@ -148,6 +177,7 @@ function get_client_ip() {
               </thead>
               <tbody>
                 <?php       
+
                   foreach($resultsRelat as $checkout):
                     $vehicle = $vehicleDao->findById($checkout->getVehicleId());
                     $client = $clientDao->findById($checkout->getClientId());
@@ -167,87 +197,18 @@ function get_client_ip() {
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } else if($relat == 'perDay') { 
+          <?php } else if($relat == 'type') { ?>
+              <div class="graph2">
+                  <h4>Valor total por tipo de cliente</h4>
+                  <p class="subtitle-graph">(Valores em Reais [$] )</p>
+                  <div class="total-values-box">
+                    <p>Horistas: <span><?= $totalValueHourClient ?></span></p>
+                    <p>Mensalistas: <span><?= $totalValueMonthlyClient ?></span></p>
+                    <p>Conveniados: <span><?= $totalValueBussinesClientFormat ?></span></p>
+                  </div>
+                  <div id="totalValuePerType" class="graph-value-fast"style="width: 1000px"></div>
+              </div>
 
-              // Relatório de checkouts por dia
-              for($i = 0; $i < count($diffDaysThisMonth); $i++) { 
-                $text = $diffDaysThisMonth[$i]; 
-                $text = implode(" ", $text);
-                $ckinsPerDay = $checkoutDao->findAllDaily($text);?>
-                <table id="listRelat" class="table" style="width:100%">
-                  <h5 class="day-title">Dia: <?=  date('d/m/Y', strtotime($text));?></h5>
-                  <thead>
-                    <tr>
-                      <th>Data</th>
-                      <th>Horário</th>
-                      <th>Veículo</th>
-                      <th>Placa</th>
-                      <th>Cliente</th>
-                      <th>Seção</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php       
-                      foreach($ckinsPerDay as $checkout):
-                        $vehicle = $vehicleDao->findById($checkout->getVehicleId());
-                        $client = $clientDao->findById($checkout->getClientId());
-                        $section = $sectionDao->findById($checkout->getSectionId()); ?>
-
-                        <tr>
-                          <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
-                          <td><?= $checkout->getTime(); ?></td>
-                          <td><?= $vehicle->getModel(); ?></td>
-                          <td><?= $vehicle->getPlate(); ?></td>
-                          <td><?= $client->getName(); ?></td>
-                          <td><?= $section->getName(); ?></td>
-                          <td><?= $checkout->getStatus(); ?></td>
-                        </tr>
-                      <?php endforeach ?>
-                  </tbody>
-                </table>
-              <?php } ?>
-
-          <?php } else if($relat == 'canceled') { ?>
-              <!-- Relatório de checkouts no mes atual  -->
-              <table id="listRelat" class="table" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Horário</th>
-                    <th>Veículo</th>
-                    <th>Placa</th>
-                    <th>Cliente</th>
-                    <th>Seção</th>
-                    <th>Status</th>
-                    <th>Motivo Canc.</th>
-                    <th>Canc. por</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php       
-                    foreach($resultsRelat as $checkout):
-                      $vehicle = $vehicleDao->findById($checkout->getVehicleId());
-                      $client = $clientDao->findById($checkout->getClientId());
-                      $section = $sectionDao->findById($checkout->getSectionId());
-                      $user = $usuarioDao->findById($checkout->getCancelUser());
-                    ?>
-                      <tr>
-                      
-                        <td><?= date('d/m/Y', strtotime($checkout->getDate())); ?></td>
-                        <td><?= $checkout->getTime(); ?></td>
-                        <td><?= $vehicle->getModel(); ?></td>
-                        <td><?= $vehicle->getPlate(); ?></td>
-                        <td><?= $client->getName(); ?></td>
-                        <td><?= $section->getName(); ?></td>
-                        <td><?= $checkout->getStatus(); ?></td>
-                        <td><?= $checkout->getCancelReason(); ?></td>
-                        <td><?= $user->getName(); ?></td>
-                  
-                      </tr>
-                    <?php endforeach ?>
-                </tbody>
-              </table>
           <?php } else if($relat == 'valuePerDay') { 
             ?>
               <div class="graph2">
@@ -300,6 +261,7 @@ function get_client_ip() {
   
   <script type="text/javascript">
     google.charts.setOnLoadCallback(drawTotalValuePerDay);
+    google.charts.setOnLoadCallback(drawTotalValuePerType);
 
     //======================= GRAFICO DE VALOR POR DIA ==================================== 
     function drawTotalValuePerDay() {
@@ -339,6 +301,33 @@ function get_client_ip() {
         legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("totalValuePerDay"));
+      chart.draw(view, options);
+    };
+
+    //======================= GRAFICO DE VALOR POR TIPO (MENSALISTA/HORISTA) ==================================== 
+    function drawTotalValuePerType() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Valor Total: R$", { role: "style" }],
+        ["Horistas",<?= $qtdHour ?>, "color: #DC3912"],
+        ["Mensalistas",<?= $qtdMonthly?>, "color: #DC3912"],
+        ["Conveniados",<?= $totalValueBussinesClient ?>, "color: #DC3912"],
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        width: 900,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("totalValuePerType"));
       chart.draw(view, options);
     };
   </script>
