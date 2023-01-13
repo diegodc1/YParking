@@ -79,11 +79,6 @@ if($vehicle === false) {
                 <option value="Caminhao">Caminhão</option>
               </select>
             </div>
-
-            <div class="col-md-2">
-              <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
-              <input type="text" class="form-control" name="inputHourOut" value="<?= $vehicle->getDepartureTime()?>">
-            </div>
           </div>
         </div>
 

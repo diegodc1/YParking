@@ -55,8 +55,7 @@ $clientDao = new ClientDaoDB($pdo);
               <th>Placa</th>
               <th>Marca</th>
               <th>Cor</th>
-              <th>Categoria</th>
-              <th>Horário Saída</th>  
+              <th>Categoria</th>  
               <th>Cliente</th>
               <th>Status</th>
               <th>Ações</th>
@@ -71,7 +70,6 @@ $clientDao = new ClientDaoDB($pdo);
                   <td><?= $vehicle->getBrand(); ?></td>
                   <td><?= $vehicle->getColor(); ?></td>
                   <td><?= $vehicle->getCategory(); ?></td>
-                  <td><?= $vehicle->getDepartureTime(); ?></td>
                   <td><?= $client = $clientDao->findByIdReturnName($vehicle->getClientId())?></td>
                   <td><?= $vehicle->getStatus()?></td>
                   <td>

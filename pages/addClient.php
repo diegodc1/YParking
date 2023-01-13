@@ -162,11 +162,15 @@ $companys = $companyDao->findAll();
     function showInput1() {
       var inputBussines =  document.querySelector("#inputBussinesPlan");
       var labelInputBussines = document.querySelector("#labelInputBussinesPlan");
+      var inputCompany =  document.querySelector("#inputCompanyUse");
+      var labelCompany = document.querySelector("#labelCompanyInput");
       var valueSelect = document.querySelector("#inputType").value;
 
       if(valueSelect == 'Horista') {
         inputBussines.style.display = 'none';
         labelInputBussines.style.display = 'none';
+        inputCompany.style.display = 'none';
+        labelCompany.style.display = 'none';
       } else if(valueSelect == 'Mensalista') {
         inputBussines.style.display = 'flex';
         labelInputBussines.style.display = 'flex';

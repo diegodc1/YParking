@@ -5,6 +5,7 @@ session_start();
 
 $usuarioDao = new UsuarioDaoDB($pdo);
 
+
 $name = ucwords(strtolower(trim(filter_input(INPUT_POST, 'inputName'))));
 $email = trim(filter_input(INPUT_POST, 'inputEmail'));
 $function = trim(filter_input(INPUT_POST, 'inputFunction'));

@@ -257,6 +257,46 @@ $movements = $movementDao->findAll();
                 </div>
               </div>
 
+              <!------------------------- Prepare Out-------------------------->
+              <div class="modal fade" id="prepareOutModal<?= $nextVehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content prepare" id="modal-prepare" style="width: 90vw">
+
+                    <div class="modal-header checkout">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="modal-body-1">
+                        <i class="fa-regular fa-hourglass-half icon-prepare-modal"></i>
+                        <h5 class="modal-title" id="exampleModalLabel">Preparar para Saída?</h5>
+                        <p class="p-modal-prepare">O veículo deve ser posicionado para a saída rápida!</p>
+                      </div>
+
+                      <div class="modal-body-2 prepare">
+                        <section class="info-vehicle-checkout prepare">
+                            <div class="info-col-1 prepare">
+                              <p>Modelo: <a><?= $nextVehicle->getModel()?></a></p>
+                              <p>Categoria: <a><?= $nextVehicle->getCategory()?></a></p>
+                              <p>Cor: <a><?= $nextVehicle->getColor()?></a></p>
+                            </div>
+                            <div class="info-col-2 prepare">
+                              <p>Placa: <a><?= $nextVehicle->getPlate()?></a></p>                              
+                              <p>Cliente: <a><?= $nextClient->getName()?></a></p>
+                            </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer ckout">
+                      <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                      <a href="../actions/prepareOutAction.php?vehicle=<?=$nextVehicle->getId() ?>&section=<?= $nextCheckin->getSectionId();?>&ckin=<?= $nextCheckin->getId()?>&page=dashboard" class="btn btn-confirm-prepare">Confirmar</a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
           
                 <?php endforeach ?>
               </tbody>

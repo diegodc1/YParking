@@ -56,7 +56,7 @@
             <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="" required>
           </div>
 <div class="type-user-use col-md-3">
-            <label for="inputAccess" class="form-label">Tipo de usuário:</label>
+            <label for="inputAccess" class="form-label">Nível de Acesso:</label>
             <select id="inputAccess" class="form-select" name="inputAccess">
               <option selected value="0">Normal</option>
               <option value="1">Administrador</option>

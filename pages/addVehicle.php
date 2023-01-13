@@ -45,7 +45,7 @@ $clients = $clientDao->findAllAtive();
               <label for="inputVehicleModel" class="form-label">Modelo:</label>
               <input type="text" class="form-control" autocomplete="off" name="inputVehicleModel" require>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
               <label for="inputVehiclePlate" class="form-label">Placa:</label>
               <input type="text" class="form-control" name="inputVehiclePlate" autocomplete="off" require >
             </div>
@@ -54,7 +54,7 @@ $clients = $clientDao->findAllAtive();
               <input type="text" class="form-control" autocomplete="off" name="inputVehicleColor" require>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label for="inputVehicleCategory" class="form-label">Categoria:</label>
               <select name="inputVehicleCategory" class="form-select" require>
                 <option selected>Sedan</option>

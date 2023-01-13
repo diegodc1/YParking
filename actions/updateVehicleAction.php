@@ -11,7 +11,6 @@ $brand = filter_input(INPUT_POST, 'inputVehicleBrand');
 $plate = filter_input(INPUT_POST, 'inputVehiclePlate');
 $color = filter_input(INPUT_POST, 'inputVehicleColor');
 $category = filter_input(INPUT_POST, 'inputVehicleCategory');
-$dpTime = filter_input(INPUT_POST, 'inputHourOut');
 
 
 if(!empty($id)) {
@@ -22,7 +21,6 @@ if(!empty($id)) {
   $vehicle->setPlate($plate);
   $vehicle->setColor($color);
   $vehicle->setCategory($category);
-  $vehicle->setDepartureTime($dpTime);
 
   $vehicleDao->update($vehicle);
   
