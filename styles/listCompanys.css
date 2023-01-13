@@ -149,3 +149,40 @@ main {
 .modal-body-2 span {
   font-weight: 700;
 }
+
+/********* Modal Clients to company ***************/
+.modal-dialog.company {
+  /* width: 100vw; */
+}
+
+.modal-content.clients-to-company {
+  /* width: 120% !important; */
+}
+
+#modal-company {
+  width: 90vw !important;
+}
+
+.modal-body.company {
+  width: 50vw !important;
+}
+
+.modal-body-2.company {
+  width: 40vw !important;
+}
+
+.td-vehicles,
+.td-slots,
+.td-clients {
+  text-align: center;
+}
+
+.td-phone {
+  font-variant: small-caps;
+  text-size-adjust: unset;
+  font-size: 0.9rem;
+}
+
+.users-btn {
+  color: var(--blue-light) !important;
+}

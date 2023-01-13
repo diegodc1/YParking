@@ -193,6 +193,23 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
+  $('#listClientsCompany').DataTable({
+    scrollCollapse: true,
+    scrollY: '20rem',
+    // scrollX: '50rem',
+    info: false,
+    // autoWidth: false,
+    paging: false,
+    searching: false,
+    ordering: false,
+
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+    }
+  })
+})
+
+$(document).ready(function () {
   $('#listCheckoutVehicles').DataTable({
     scrollY: '35rem',
     scrollCollapse: true,

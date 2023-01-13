@@ -168,6 +168,8 @@ label {
 }
 
 #inputCompanyUse,
+#inputBussinesPlan,
+#labelInputBussinesPlan,
 #labelCompanyInput {
   display: none;
 }

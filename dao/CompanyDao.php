@@ -105,4 +105,12 @@ class CompanyDaoDB implements CompanyDao {
     $sql->bindValue(':status', 'Ativo');
     $sql->execute();  
   }
+
+  public function getAllSlotsReserved() {
+    $sql = $this->pdo->query("SELECT SUM(company_slots) as qtd FROM companys WHERE company_status = 'Ativo'");
+    $data = $sql->fetch();
+
+    return $data['qtd'];
+  }
+
 }

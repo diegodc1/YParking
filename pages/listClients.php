@@ -27,6 +27,8 @@ $vehicleDao = new VehicleDaoDB($pdo);
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="../styles/listClients.css">
   <link rel="stylesheet" href="../styles/style.css">
+  <?php require_once('../components/favicon.php') ?>;
+
 </head>
 
 <body>

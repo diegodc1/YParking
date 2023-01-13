@@ -127,7 +127,7 @@ if($hoursAdditional > 0) {
   $value = strval($value);  
 }
 
-if($client->getType() == 'Mensalista') {
+if($client->getType() == 'Mensalista' || $client->getBussinesPlan() == 'Sim') {
   $value = 0;
 }
 

@@ -79,6 +79,7 @@ interface CompanyDao {
   public function add(Company $u);
   public function findAll();
   public function findById($id);
+  public function getAllSlotsReserved();
   public function update(Company $u);
   public function delete($id);
   public function disable($id);

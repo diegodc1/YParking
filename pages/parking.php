@@ -17,13 +17,14 @@ $prices = $priceDao->findAll();
 
 
 <head>
-  <title>Seções do Estacionamento</title>
+  <title>Estacionamento</title>
   <link rel="stylesheet" href="../styles/prkSection.css">
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+  <?php require_once('../components/favicon.php') ?>
 </head>
 
 <body>
@@ -389,6 +390,29 @@ $prices = $priceDao->findAll();
               </div>
             </div>
           </div>
+        </form>
+
+
+        <form action="../components/color.php" method="POST">
+          <h5>Cor tema:</h5>
+          <div class="btn-group theme" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="colorThemeInput" id="colorThemeInput1" value='#109cf1' autocomplete="off" checked>
+            <label class="btn btn-outline-primary one" for="colorThemeInput1">Azul</label>
+
+            <input type="radio" class="btn-check" name="colorThemeInput" id="colorThemeInput2" value='#2ed47a' autocomplete="off">
+            <label class="btn btn-outline-primary two" for="colorThemeInput2">Verde</label>
+
+            <input type="radio" class="btn-check" name="colorThemeInput" id="colorThemeInput3" value='#885af8' autocomplete="off">
+            <label class="btn btn-outline-primary three" for="colorThemeInput3">Roxo</label>
+
+            <input type="radio" class="btn-check" name="colorThemeInput" id="colorThemeInput4" value='#ffb946;' autocomplete="off">
+            <label class="btn btn-outline-primary four" for="colorThemeInput4">Amarelo</label>
+
+            <input type="radio" class="btn-check" name="colorThemeInput" id="colorThemeInput5" value='#ff3c5f' autocomplete="off">
+            <label class="btn btn-outline-primary five" for="colorThemeInput5">Vermelho</label>
+          </div>
+
+          <input type="submit" class="btn  btn-secondary" value="Alterar tema">
         </form>
     </div>
   </main>

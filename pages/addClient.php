@@ -14,6 +14,7 @@ $companys = $companyDao->findAll();
 <html lang="pt-br">
 
 <head>
+  <?php require_once('../components/favicon.php') ?>;
   <?php require_once('../components/headConfig.php') ?>;
 
   <link rel="stylesheet" href="/styles/addClient.css">
@@ -106,14 +107,14 @@ $companys = $companyDao->findAll();
 
             <div class="col-md-2">
               <label for="inputType" class="form-label">Tipo de Uso:</label>
-              <select id="inputType" name="inputType" class="form-select" required>
+              <select id="inputType" name="inputType" class="form-select" required onclick="showInput1()">
                 <option selected value="Horista">Horista</option>
                 <option value="Mensalista">Mensalista</option>
               </select>
             </div>
 
             <div class="col-md-2">
-              <label for="inputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
+              <label for="inputBussinesPlan" id="labelInputBussinesPlan" class="form-label">Convênio de Empresa?:</label>
               <select id="inputBussinesPlan" name="inputBussinesPlan" class="form-select" required onclick="showInput()">
                 <option selected value="Não">Não</option>
                 <option value="Sim">Sim</option>
@@ -155,6 +156,20 @@ $companys = $companyDao->findAll();
       } else if(valueSelect == 'Sim') {
         inputCompany.style.display = 'flex';
         labelCompany.style.display = 'flex';
+      }
+    }
+
+    function showInput1() {
+      var inputBussines =  document.querySelector("#inputBussinesPlan");
+      var labelInputBussines = document.querySelector("#labelInputBussinesPlan");
+      var valueSelect = document.querySelector("#inputType").value;
+
+      if(valueSelect == 'Horista') {
+        inputBussines.style.display = 'none';
+        labelInputBussines.style.display = 'none';
+      } else if(valueSelect == 'Mensalista') {
+        inputBussines.style.display = 'flex';
+        labelInputBussines.style.display = 'flex';
       }
     }
 

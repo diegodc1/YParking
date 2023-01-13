@@ -23,9 +23,10 @@ if($vehicle === false) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <?php require_once('../components/favicon.php') ?>;
   <?php require_once('../components/headConfig.php')?> ;
   <link rel="stylesheet" href="/styles/addClient.css">
-  <title>Cadastrar Veículo</title>
+  <title>Editar Veículo</title>
 </head>
 
 <body class="addClient-body">

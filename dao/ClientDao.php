@@ -146,6 +146,35 @@ class ClientDaoDB implements ClientDao {
     }
   }
 
+  public function findAllByCompany($id) {
+    $clients = [];
+
+    $sql = $this->pdo->query("SELECT * FROM clients WHERE client_company_id = $id");
+    if ($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach ($data as $client) {
+        $u = new Client;
+        $u->setId($client['client_id']);
+        $u->setName($client['client_name']);
+        $u->setEmail($client['client_email']);
+        $u->setPhone($client['client_phone']);
+        $u->setAddress($client['client_address']);
+        $u->setCep($client['client_cep']);
+        $u->setType($client['client_type']);
+        $u->setBussinesPlan($client['client_bussines_plan']);
+        $u->setDepartureTime($client['client_departure_time']);
+        $u->setCompanyId($client['client_company_id']);
+        $u->setStatus($client['client_status']);
+        $u->setCadDate($client['client_cad_date']);
+        $u->setCadTime($client['client_cad_time']);
+
+        $clients[] = $u;
+      }
+    }
+    return $clients;
+  }
+
   public function findByType($type) {
    $clients = [];
 

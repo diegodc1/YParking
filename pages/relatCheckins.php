@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('../components/verifyLogin.php');
 require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
 require_once('../dao/UsuarioDao.php');
@@ -169,6 +170,7 @@ function get_client_ip() {
   <link rel="stylesheet" href="../styles/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <?php require_once('../components/favicon.php') ?>;
 
   <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script> google.charts.load('current', {packages: ['corechart']}); </script>

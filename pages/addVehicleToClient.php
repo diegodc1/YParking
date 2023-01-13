@@ -10,6 +10,8 @@
   
   <link rel="stylesheet" href="/styles/addVehicleToClient.css">
   <title>Cliente Cadastrado!</title>
+  <?php require_once('../components/favicon.php') ?>;
+
 </head>
 
 

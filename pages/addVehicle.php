@@ -18,6 +18,8 @@ $clients = $clientDao->findAllAtive();
   <?php require_once('../components/headConfig.php')?> ;
   <link rel="stylesheet" href="/styles/addClient.css">
   <title>Cadastrar Veículo</title>
+  <?php require_once('../components/favicon.php') ?>;
+
 </head>
 
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('../components/verifyLogin.php');
 require_once('../db/config.php');
 require_once('../dao/CompanyDao.php');
 require_once('../dao/UsuarioDao.php');
@@ -83,6 +84,7 @@ $totalDisableCompanys = getSumDistStatus('Desativado', $slotsMin, $slotsMax, $pd
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="../styles/relatorioPdf.css">
   <link rel="stylesheet" href="../styles/style.css">
+  <?php require_once('../components/favicon.php') ?>;
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>

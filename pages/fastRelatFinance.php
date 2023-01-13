@@ -59,6 +59,11 @@ $priceBussines = floatval($priceBussines);
 $totalValueBussinesClient = count($clientsBussinesPlan) * $priceBussines;
 $totalValueBussinesClientFormat = 'R$ ' . $totalValueBussinesClient .',00';
 
+$sumTotalValues = $qtdMonthly + $qtdHour + $totalValueBussinesClient;
+$sumTotalValues = number_format($sumTotalValues, 2);
+$sumTotalValues = str_replace(",",".", $sumTotalValues);
+// $sumTotalValues = str_replace(".",",", $sumTotalValues);
+
 
 
 $resultsRelat = [];
@@ -197,7 +202,7 @@ function get_client_ip() {
                   <?php endforeach ?>
               </tbody>
             </table>
-          <?php } else if($relat == 'type') { ?>
+          <?php } else if($relat == 'type') {?>
               <div class="graph2">
                   <h4>Valor total por tipo de cliente</h4>
                   <p class="subtitle-graph">(Valores em Reais [$] )</p>
@@ -205,7 +210,12 @@ function get_client_ip() {
                     <p>Horistas: <span><?= $totalValueHourClient ?></span></p>
                     <p>Mensalistas: <span><?= $totalValueMonthlyClient ?></span></p>
                     <p>Conveniados: <span><?= $totalValueBussinesClientFormat ?></span></p>
+                    <div class="total-values-box">
+                     <p>Valor Total: <span>R$<?= $sumTotalValues ?></span></p>
+                    </div>
                   </div>
+                  
+                  
                   <div id="totalValuePerType" class="graph-value-fast"style="width: 1000px"></div>
               </div>
 
@@ -218,8 +228,9 @@ function get_client_ip() {
               </div>
           <?php }?>
 
-          <div class="line-div-black"></div>
-
+         <?php if($relat != 'type') { ?>
+            <div class="line-div-black"></div>
+          <?php  }?>
 
           <table class="mt-4 mb-4">
             <tbody>
@@ -228,10 +239,13 @@ function get_client_ip() {
                   <td class="title-infos-relat">Valor Total:  </td>
                   <td class="div-table-infos">=</td>
                   <td class="total-value"><?php echo ' ' . $resultsRelat ?></td>  
+                <?php } else if($relat = 'type'){ ?>
+                   
                 <?php } else { ?>
                   <td class="title-infos-relat">Total de Registros Encontrados:  </td>
                   <td class="div-table-infos">=</td>
-                  <td><?php echo ' ' . count($resultsRelat)?></td>   
+                  <td><?php echo ' ' . count($resultsRelat)?></td>  
+                    
                 <?php } ?>
               </tr>
             </tbody>

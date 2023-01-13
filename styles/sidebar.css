@@ -184,7 +184,7 @@ a:visited {
 }
 
 .log-out i {
-  color: var(white);
+  color: white !important;
   font-size: 1rem;
   cursor: pointer;
   margin-right: 1rem;

@@ -63,6 +63,8 @@ $allCheckins = $checkinDao->findAll();
   <script src="../js/tooltip.js"></script>
   <script src="../js/dataTable.js"></script>
   <script src="../js/tooltip.js"></script>
+  <?php require_once('../components/favicon.php') ?>;
+
 
   <!-- Style -->
   <link rel="stylesheet" href="../stylesstyle.css">

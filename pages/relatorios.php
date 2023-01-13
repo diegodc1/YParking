@@ -1,4 +1,6 @@
 <?php
+session_start();
+require_once('../components/verifyLogin.php');
 require_once('../db/config.php');
 require_once('../dao/SectionDao.php');
 require_once('../dao/UsuarioDao.php');
@@ -12,12 +14,11 @@ $users = $usuarioDao->findAll();
 
 
 
-session_start();
 
 ?>
 
 <head>
-  <title>Relatório</title>
+  <title>Relatórios</title>
 
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -31,6 +32,7 @@ session_start();
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="../styles/relatorio.css">
   <link rel="stylesheet" href="../styles/style.css">
+  <?php require_once('../components/favicon.php') ?>;
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -84,26 +86,6 @@ session_start();
                 <div class="relat-btn">
                   <span>Não Conveniados</span>
                   <i class="fa-solid fa-business-time"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!------- Relatório Rápido Veículos ------->
-          <div class="box-relat-rapid">
-            <h6 class="title-box-relat">Veículos</h6>
-            <div class="client-relat-box">
-              <a href="../pages/fastRelatVehicles.php?typeRelat=category">
-                <div class="relat-btn">
-                  <span>Quantidade por categoria</span>
-                  <i class="fa-solid fa-car-side"></i>
-                </div>
-              </a>
-
-              <a href="../pages/fastRelatVehicles.php?typeRelat=activeDisable">
-                <div class="relat-btn">
-                  <span>Ativos e Desativados</span>
-                  <i class="fa-solid fa-toggle-off"></i>
                 </div>
               </a>
             </div>
@@ -191,14 +173,21 @@ session_start();
             </div>
           </div>
 
-           <!------- Relatório Rápido Empresas ------->
-           <div class="box-relat-rapid">
-            <h6 class="title-box-relat">Empresas</h6>
+          <!------- Relatório Rápido Veículos ------->
+          <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Veículos</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatCompanys.php?typeRelat=slots">
+              <a href="../pages/fastRelatVehicles.php?typeRelat=category">
                 <div class="relat-btn">
-                  <span>Vagas Reservadas</span>
-                  <i class="fa-solid fa-car-tunnel"></i>
+                  <span>Quantidade por categoria</span>
+                  <i class="fa-solid fa-car-side"></i>
+                </div>
+              </a>
+
+              <a href="../pages/fastRelatVehicles.php?typeRelat=activeDisable">
+                <div class="relat-btn">
+                  <span>Ativos e Desativados</span>
+                  <i class="fa-solid fa-toggle-off"></i>
                 </div>
               </a>
             </div>
@@ -222,6 +211,19 @@ session_start();
                 <div class="relat-btn">
                   <span>Valor total por tipo - neste mês</span>
                   <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                </div>
+              </a>
+            </div>    
+          </div>
+
+                    <!------- Relatório Rápido Empresas ------->
+          <div class="box-relat-rapid">
+            <h6 class="title-box-relat">Empresas</h6>
+            <div class="client-relat-box">
+              <a href="../pages/fastRelatCompanys.php?typeRelat=slots">
+                <div class="relat-btn">
+                  <span>Vagas Reservadas</span>
+                  <i class="fa-solid fa-car-tunnel"></i>
                 </div>
               </a>
             </div>

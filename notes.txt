@@ -14,14 +14,9 @@ Tem que fazer:
 
 ## Notas:
 // cadastro de novos cargos
-// gerar grafico de financas, atraves de um button que vai ficar na tela do form
-// ver checkin de um determinado cliente
-// mostrar no final do relatório o total de cada informação
-//gerar relatórios personalizados ou prontos
-// mostrar na tela de empresas, os funcionários cadastrados nelas
-// colocar no dashboard informações de checkout e checkin
-// add valor mensal
 // erro na cobrança
+// mudar a quantidade de vagas de cada empresa no bd da empresa
+// mudar no bd os clientes que são horistas e convenio
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.

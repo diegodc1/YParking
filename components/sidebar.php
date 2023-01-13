@@ -11,7 +11,10 @@ $id = $_SESSION['user_id'];
 if($id) {
   $perfil = $usuarioDao->findById($id);
 }
-
+$color = '#109cf1';
+if(isset($_SESSION['colorTheme'])) {
+  $color = $_SESSION['colorTheme'];
+} 
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +45,22 @@ if($id) {
   <link rel="mask-icon" href="../assets/imgs/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+
+      <link rel="apple-touch-icon" sizes="180x180" href="../assets/imgs/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/imgs/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/imgs/favicon-16x16.png">
+  <link rel="manifest" href="../assets/imgs/site.webmanifest">
+  <link rel="mask-icon" href="../assets/imgs/safari-pinned-tab.svg color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <?php require_once('../components/favicon.php') ?>
+
 </head>
+<style>
+  :root {
+    --blue-light: <?= $color?>;
+  }
+</style>
 
 <body class="sidebar-body">
     <div class="bg-sidebar remove-bg-sidebar"></div>

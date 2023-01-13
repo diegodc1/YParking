@@ -19,7 +19,7 @@
 }
 
 .title-login {
-  color: var(--blue-light);
+  color: #109cf1;
 }
 
 .title-login h1 {
@@ -29,10 +29,10 @@
 }
 
 .line-box-login {
-  border: 2px solid var(--blue-light);
+  border: 2px solid #109cf1;
   width: 30%;
   border-radius: 10px;
-  background-color: var(--blue-light);
+  background-color: #109cf1;
 }
 
 .box1 img {
@@ -82,8 +82,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: var(--blue-light);
-  color: var(--text-light);
+  background-color: #109cf1;
+  color: #109cf1;
 }
 
 form {
@@ -109,7 +109,7 @@ form {
 
 .user input,
 .password input {
-  background-color: var(--blue-light);
+  background-color: #109cf1;
   border: none;
   border-bottom: 1px solid var(--text-light);
   color: var(--text-light);
@@ -139,7 +139,7 @@ form {
   padding: 0.5rem;
   width: 23%;
   border-radius: 7px;
-  color: var(--blue-light);
+  color: #109cf1;
   font-weight: 700;
   transition: all 0.2s linear;
   font-size: 1rem;
@@ -161,7 +161,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px var(--blue-light) inset !important;
+  -webkit-box-shadow: 0 0 0 30px #109cf1 inset !important;
 }
 
 /*Change text in autofill textbox*/
