@@ -32,7 +32,7 @@ if($perfil === false) {
   <?php require_once('../components/sidebar.php') ?>
 
   <header class="perfil-header">
-    <h1>CLIENTES CADASTRADOS</h1>
+    <h1>PERFIL</h1>
   </header>
 
   <div class="main-content">
