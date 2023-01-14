@@ -13,6 +13,7 @@ $zip = filter_input(INPUT_POST, 'inputZip');
 $address = filter_input(INPUT_POST, 'inputAddress');
 $type = filter_input(INPUT_POST, 'inputType');
 $bussinesPlan = filter_input(INPUT_POST, 'inputBussinesPlan');
+$companyId = filter_input(INPUT_POST, 'inputCompanyUse');
 
 if($clientId) {
   $client = new Client();
@@ -24,6 +25,7 @@ if($clientId) {
   $client->setAddress($address);
   $client->setType($type);
   $client->setBussinesPlan($bussinesPlan);
+  $client->setCompanyId($companyId);
 
   $clientDao->update($client);
 

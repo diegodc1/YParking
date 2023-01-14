@@ -574,6 +574,13 @@ main {
   width: 100vw;
   height: 100vh;
 }
+
+.message-prepare-modal {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--dark-blue-text);
+}
+
 /**********  MEDIA QUERY ***************/
 @media (max-width: 100px) {
   .body-checkin {

@@ -56,8 +56,6 @@
                 <input type="password" placeholder="Digite sua senha" name="inputPassword" maxlength="35" required>
             </div>
 
-            <p class="password-recovery">Para alterar sua senha, <a href="#">clique aqui!</a></p>
-
             <input type="submit" value="ENTRAR" class="submit-button">
 
             <?php 

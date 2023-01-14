@@ -17,6 +17,7 @@ Tem que fazer:
 // erro na cobrança
 // mudar a quantidade de vagas de cada empresa no bd da empresa
 // mudar no bd os clientes que são horistas e convenio
+//mostrare horario no checkin
 
 -- Tem que ter na entrega:
 -- explicar como é feito o cálculo das proximas saídas de veículos.

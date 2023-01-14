@@ -1,3 +1,7 @@
+.form-box1 {
+  width: 80vw;
+}
+
 .cancel-button {
   background-color: var(--dark-blue-text);
   border: none;
@@ -59,4 +63,13 @@
   /* display: flex;
   align-items: center;
   justify-content: center; */
+}
+
+.reactivate {
+  color: var(--green-light);
+}
+
+.table-list {
+  border-radius: 5px;
+  width: 100%;
 }

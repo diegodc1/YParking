@@ -67,7 +67,7 @@ $allCheckins = $checkinDao->findAll();
 
 
   <!-- Style -->
-  <link rel="stylesheet" href="../stylesstyle.css">
+  <link rel="stylesheet" href="../styles/style.css">
   <link rel="stylesheet" href="../styles/checkIn.css">
 
 
@@ -301,7 +301,7 @@ $allCheckins = $checkinDao->findAll();
                       <div class="modal-body-1">
                         <i class="fa-regular fa-hourglass-half"></i>
                         <h5 class="modal-title" id="exampleModalLabel">Preparar para Saída?</h5>
-                        <p>O veículo deve ser posicionado na seção de Saída!</p>
+                        <p class="message-prepare-modal">O veículo deve ser posicionado na seção de Saída!</p>
                       </div>
 
                       <div class="modal-body-2">

@@ -242,7 +242,7 @@ class ClientDaoDB implements ClientDao {
   }
 
   public function update(Client $u){
-    $sql = $this->pdo->prepare("UPDATE clients SET client_name = :name, client_email = :email, client_address = :address, client_type = :type, client_bussines_plan = :bussinessPlan, client_phone = :phone, client_cep = :cep WHERE client_id = :id");
+    $sql = $this->pdo->prepare("UPDATE clients SET client_name = :name, client_email = :email, client_address = :address, client_type = :type, client_bussines_plan = :bussinessPlan, client_phone = :phone, client_cep = :cep, client_company_id = :companyId WHERE client_id = :id");
 
     $sql->bindValue(':name', $u->getName());
     $sql->bindValue(':email', $u->getEmail());
@@ -251,6 +251,7 @@ class ClientDaoDB implements ClientDao {
     $sql->bindValue(':bussinessPlan', $u->getBussinesPlan());
     $sql->bindValue(':phone', $u->getPhone());
     $sql->bindValue(':cep', $u->getCep());
+    $sql->bindValue(':companyId', $u->getCompanyId());
     $sql->bindValue(':id', $u->getId());
 
     $sql->execute();

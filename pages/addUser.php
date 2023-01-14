@@ -15,6 +15,7 @@
   <?php 
   session_start();
   require_once('../components/verifyLogin.php');
+  require_once('../components/verifyAdmAccess.php');
   require_once('../components/sidebar.php');
   ?>
 

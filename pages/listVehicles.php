@@ -78,7 +78,7 @@ $clientDao = new ClientDaoDB($pdo);
                       <?php 
                         if($vehicle->getStatus() === 'Ativo') { ?>
                           <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $vehicle->getId()?>"><i class="fa-solid fa-ban trash"></i></a></button>
-                          <!-- Confirm delete modal-->
+                          <!-- Confirm disable modal-->
                           <div class="modal fade" id="confirmDelModal<?= $vehicle->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
@@ -124,7 +124,7 @@ $clientDao = new ClientDaoDB($pdo);
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                                  <a href="../actions/reactivateVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal react">Reativar</a>
+                                  <a href="../actions/reactivateVehicleAction.php?id=<?= $vehicle->getId(); ?>&page=listVehicles" class="btn btn-primary button-confirm-modal react">Reativar</a>
                                 </div>
                               </div>
                             </div>
