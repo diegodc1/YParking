@@ -25,6 +25,7 @@ $date = date("Y/m/d");
 // Checkins
 $ckinToday = $checkinDao->findAllDaily($date);
 $ckinAllActive = $checkinDao->findAllCheckinActive();
+$ckinAllPrepareOut = $checkinDao->findAllCheckinPrepareOut();
 $ckinActiveToday = $checkinDao->findStatusDaily('Ativo', $date);
 $ckinFinishToday = $checkinDao->findStatusDaily('Finalizado', $date);
 $ckinCancelToday = $checkinDao->findStatusDaily('Cancelado', $date);
@@ -36,9 +37,9 @@ $ckoutTypeMonthToday = $checkoutDao->findMonthlyToday($date);
 $ckoutHourToday =count($ckoutToday) - $ckoutTypeMonthToday;
 
 //  Sections
-$sections = $sectionDao->findAll();
+$sections = $sectionDao->findAllActive();
 $totalSlots = $sectionDao->totalSlots();
-$totalFreeSlots = $totalSlots - count($ckinAllActive);
+$totalFreeSlots = ($totalSlots - count($ckinAllActive)) + count($ckinAllPrepareOut);
 $totalOccupationPercentage = round((count($ckinAllActive) * 100) / $totalSlots) . "%";
 
 // Next outs

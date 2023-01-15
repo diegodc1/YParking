@@ -49,7 +49,7 @@ if($vehicle === false) {
           <input type="hidden" name="inputVehicleId" value="<?= $vehicle->getId(); ?>">
 
           <div class="inputs2 row gx-3 gy-2 align-items-center">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label for="inputVehicleModel" class="form-label">Modelo:</label>
               <input type="text" class="form-control" name="inputVehicleModel" value="<?= $vehicle->getModel()?>">
             </div>
@@ -57,7 +57,7 @@ if($vehicle === false) {
               <label for="inputVehicleBrand" class="form-label">Marca:</label>
               <input type="text" class="form-control" name="inputVehicleBrand" value="<?= $vehicle->getBrand()?>">
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
               <label for="inputVehiclePlate" class="form-label">Placa:</label>
               <input type="text" class="form-control" name="inputVehiclePlate" value="<?= $vehicle->getPlate()?>">
             </div>
@@ -66,7 +66,7 @@ if($vehicle === false) {
               <input type="text" class="form-control" name="inputVehicleColor" value="<?= $vehicle->getColor()?>">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label for="inputVehicleCategory" class="form-label">Categoria:</label>
 
               <select name="inputVehicleCategory" class="form-select">

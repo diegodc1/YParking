@@ -30,7 +30,7 @@ if(!empty($_POST['selectedClients']) ) {
       $newVehicle = new Vehicle();
       $newVehicle->setBrand($brand);
       $newVehicle->setModel($model);
-      $newVehicle->setPlate($plate);
+      $newVehicle->setPlate($newPlate);
       $newVehicle->setColor($color);
       $newVehicle->setCategory($category);
       $newVehicle->setClientId($clientId);

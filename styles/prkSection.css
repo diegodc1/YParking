@@ -421,6 +421,21 @@ select:focus {
   width: 6rem !important;
 }
 
+.button-confirm-modal.section-box {
+  background-color: var(--red-light) !important;
+  color: var(--text-light) !important;
+  font-weight: 400;
+}
+.button-confirm-modal.reactivate {
+  background-color: var(--green-light) !important;
+  color: var(--text-light) !important;
+  font-weight: 400;
+}
+
+.reactivate {
+  color: var(--green-light);
+}
+
 .btn-outline-primary.one:hover {
   color: #109cf1 !important;
   background-color: #109cf1 !important;

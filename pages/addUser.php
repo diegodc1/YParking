@@ -59,7 +59,7 @@
 <div class="type-user-use col-md-3">
             <label for="inputAccess" class="form-label">Nível de Acesso:</label>
             <select id="inputAccess" class="form-select" name="inputAccess">
-              <option selected value="0">Normal</option>
+              <option selected value="0">Comum</option>
               <option value="1">Administrador</option>
             </select>
           </div>

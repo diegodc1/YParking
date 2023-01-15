@@ -8,11 +8,13 @@ $sectionDao = new SectionDaoDB($pdo);
 $name = ucwords(strtolower(trim(filter_input(INPUT_GET, 'inputNameSection'))));
 $slots = trim(filter_input(INPUT_GET, 'inputSlotsSection'));
 $color = filter_input(INPUT_GET, 'inputSectionColor');
+$status = 'Ativo';
 
 $newSection = new Section();
 $newSection->setName($name);
 $newSection->setSlots($slots);
 $newSection->setColor($color);
+$newSection->setStatus($status);
 
 $sectionDao->add($newSection);
 

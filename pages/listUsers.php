@@ -65,7 +65,7 @@ $users = $usuarioDao->findAll();
               <th>Cargo</th>
               <th>Nível de acesso</th>
               <th>Status</th>
-              <th>Ações</th>
+              <th class="th-actions-list">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -83,7 +83,6 @@ $users = $usuarioDao->findAll();
                   <td><?= $user->getStatus(); ?></td>
                   <td>
                     <div class="action-buttons">
-                      <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Visualizar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-eye eye"></i></a></button>
                       <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="../pages/editUser.php?id=<?= $user->getId(); ?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
                       <?php  if($user->getStatus() === 'Ativo') { ?>
                         <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Excluir"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $user->getId(); ?>"><i class="fa-solid fa-ban trash"></i></a></button>

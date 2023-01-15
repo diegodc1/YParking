@@ -448,6 +448,26 @@ main {
   background-color: #d82244;
 }
 
+.info-checkin-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: var(--dark-blue);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.info-checkin-box span {
+  font-weight: 400;
+}
+
+.info-checkin-content1 {
+  display: flex;
+  gap: 0.8rem;
+}
+
 /******************** MODAL CHECKOUT  *******************/
 .info-vehicle-checkout {
   display: flex;

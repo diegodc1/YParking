@@ -95,7 +95,7 @@ $clients = $clientDao->findAllAtive();
                       <td scope="row" class="td-phone"><?= $client->getPhone() ?></td>
                       <td class=""><?= $client->getType() ?></td>
                       <td class=""><?= $client->getBussinesPlan() ?></td>
-                      <td class="deleteIcon td-select"> <input type="checkbox" class="check-box-client" name="selectedClients[]" value="<?= $client->getId() ?>"></td>
+                      <td class="deleteIcon td-select"> <input type="radio" class="check-box-client" name="selectedClients[]" value="<?= $client->getId() ?>"></td>
                     </tr>
                   <?php }
                 ?>

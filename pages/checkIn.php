@@ -37,7 +37,7 @@ date_default_timezone_set('America/Sao_Paulo');
 $date = date("Y/m/d");
 
 
-$sections = $sectionDao->findAll();
+$sections = $sectionDao->findAllActive();
 $checkinsToday = $checkinDao->findAllCheckinActive();
 $checkinsActive = $checkinDao->findAllCheckinActive();
 $lastCheckouts = $checkoutDao->findAll();
@@ -110,6 +110,7 @@ $allCheckins = $checkinDao->findAll();
             <input type="submit" class="search-button" value="Pesquisar"></input>
           </form>
         </div>
+
         <table id="" class="table">
           <thead>
             <tr>
@@ -575,6 +576,16 @@ $allCheckins = $checkinDao->findAll();
           <div class="modal-body-1">
             <i class="fa-solid fa-square-parking"></i>
             <h5 class="modal-title" id="exampleModalLabel">Selecione uma seção para o veículo</h5>
+            <div class="info-checkin-box">
+              <?php
+                $clientVehicle = $clientDao->findById($vehicle->getClientId());
+              ?>
+              <div class="info-checkin-content1">
+                <p>Cliente: <span><?= $clientVehicle->getName()?></span></p>
+                <p>Veículo: <span><?= $vehicle->getModel() ?></span></p>
+              </div>
+              <p>Saída Prevista: <span><?= $clientVehicle->getDepartureTime()?></span></p>
+            </div>
           </div>
 
           <div class="modal-body-2">
@@ -619,18 +630,6 @@ $allCheckins = $checkinDao->findAll();
       </div>
     </div>
   </div>
-
-
-
-
-
-  
-  
-
-
- 
-
-  
 
   <!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>

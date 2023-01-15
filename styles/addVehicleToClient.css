@@ -30,7 +30,7 @@ header {
   padding: 0rem 0rem 0rem 1rem;
   height: 5vh;
   font-size: 0.8rem !important;
-  z-index: 3;
+  z-index: 5;
   position: fixed;
   top: 0;
 }
@@ -191,6 +191,7 @@ label {
   display: flex;
   justify-content: flex-end;
   gap: 2rem;
+  margin-top: 2rem;
 }
 
 .clear-button {

@@ -19,7 +19,7 @@
   <?php require_once('../components/sidebar.php') ?>
 
   <header>
-    <h1>Cliente Cadastrado!</h1>
+    <h1>CLIENTE CADASTRADO!</h1>
   </header>
 
   <main>
@@ -40,21 +40,21 @@
           <h2>DADOS DO VEÍCULO</h2>
           <div class="line"></div>
           <div class="inputs1 row gx-3 gy-2 align-items-center">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label for="inputVehicleBrand" class="form-label">Marca:</label>
-              <input type="text" class="form-control" name="inputVehicleBrand">
+              <input type="text" class="form-control" name="inputVehicleBrand" autocomplete="off">
             </div>
             <div class="col-md-3">
               <label for="inputVehicleModel" class="form-label">Modelo:</label>
-              <input type="text" class="form-control" name="inputVehicleModel">
+              <input type="text" class="form-control" name="inputVehicleModel" autocomplete="off">
             </div>
             <div class="col-md-2">
               <label for="inputVehiclePlate" class="form-label">Placa:</label>
-              <input type="text" class="form-control" name="inputVehiclePlate">
+              <input type="text" class="form-control" name="inputVehiclePlate" autocomplete="off">
             </div>
             <div class="col-md-2">
               <label for="inputVehicleColor" class="form-label">Cor:</label>
-              <input type="text" class="form-control" name="inputVehicleColor">
+              <input type="text" class="form-control" name="inputVehicleColor" autocomplete="off">
             </div>
 
             <div class="col-md-2">

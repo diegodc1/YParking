@@ -97,7 +97,7 @@ $clientDao = new ClientDaoDB($pdo);
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                                  <a href="../actions/disableVehicleAction.php?id=<?= $vehicle->getId(); ?>" class="btn btn-primary button-confirm-modal">Desativar</a>
+                                  <a href="../actions/disableVehicleAction.php?id=<?= $vehicle->getId(); ?>&page=listVehicles" class="btn btn-primary button-confirm-modal">Desativar</a>
                                 </div>
                               </div>
                           </div>

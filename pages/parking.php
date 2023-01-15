@@ -86,6 +86,7 @@ $prices = $priceDao->findAll();
                 <th>Nome</th>
                 <th>Vagas</th>
                 <th>Cor</th>
+                <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -95,16 +96,78 @@ $prices = $priceDao->findAll();
                   <tr>
                     <td><?= $section->getName(); ?></td>
                     <td><?= $section->getSlots(); ?></td>          
-                    <td><div class="color-box" style="background-color: <?= $section->getColor(); ?>; color: <?= $section->getColor(); ?>">.</div></td>       
+                    <td><div class="color-box" style="background-color: <?= $section->getColor(); ?>; color: <?= $section->getColor(); ?>">.</div></td>    
+                    <td><?= $section->getStatus(); ?></td>    
                     <td>
                       <div class="action-buttons">
                         <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"><a href="" data-bs-toggle="modal" data-bs-target="#updateSection<?= $section->getId()?>"><i class="fa-solid fa-pencil pencil"></i></a></button>
-                        <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cancelar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $section->getId()?>"><i class="fa-solid fa-ban trash"></i></a></button>
+
+                        <?php if($section->getStatus() == 'Ativo') { ?>
+
+                          <!-- Button disable -->
+                          <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDelModal<?= $section->getId()?>"><i class="fa-solid fa-ban trash"></i></a></button>
+
+                            <!-- Confirm delete modal-->
+                            <div class="modal fade" id="confirmDelModal<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="modal-body-1">
+                                      <i class="fa-solid fa-circle-exclamation"></i>
+                                      <h5 class="modal-title" id="exampleModalLabel">Desativar Seção</h5>
+                                    </div>
+                                    <div class="modal-body-2">
+                                      <p class="p-modal-warning">Você realmente deseja desativar esta seção?</p>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="../actions/disableSectionAction.php?id=<?= $section->getId(); ?>" class="btn btn-primary button-confirm-modal section-box">Desativar</a>
+                                  </div>
+                                </div>
+                              </div>
+                            <div>
+   
+                        <?php } else if ($section->getStatus() == 'Desativado') { ?>
+
+                          <!-- Button reactivate -->
+                          <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reativar"><a href="" data-bs-toggle="modal" data-bs-target="#confirmReact<?= $section->getId()?>"><i class="fa-solid fa-power-off reactivate"></i></a></button>
+
+                             <!-- Confirm reactivate modal-->
+                            <div class="modal fade" id="confirmReact<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="modal-body-1">
+                                      <i class="fa-solid fa-circle-exclamation"></i>
+                                      <h5 class="modal-title" id="exampleModalLabel">Reativar Seção</h5>
+                                    </div>
+                                    <div class="modal-body-2">
+                                      <p class="p-modal-warning">Você realmente deseja reativar esta seção?</p>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="../actions/reactivateSectionAction.php?id=<?= $section->getId(); ?>" class="btn btn-primary button-confirm-modal reactivate">Reativar</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        <?php } ?>           
+                             
                       </div>
                     </td>
                   </tr>
-                  
-
+              <div>
+                
               <!-- Update modal-->
                <div class="modal fade modal-update-section" id="updateSection<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -158,31 +221,6 @@ $prices = $priceDao->findAll();
                       </div>
                   </div>
                 </div>
-
-              <!-- Confirm delete modal-->
-              <div class="modal fade" id="confirmDelModal<?= $section->getId()?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="modal-body-1">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <h5 class="modal-title" id="exampleModalLabel">Desativar Seção</h5>
-                      </div>
-                      <div class="modal-body-2">
-                        <p class="p-modal-warning">Você realmente deseja desativar esta seção?</p>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary button-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                      <a href="../actions/deleteSectionAction.php?id=<?= $section->getId(); ?>" class="btn btn-primary button-confirm-modal">Excluir</a>
-                    </div>
-                  </div>
-              </div>
-
               <?php } ?>
             </tbody>
           </table>

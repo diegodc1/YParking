@@ -7,11 +7,11 @@ $sectionDao= new SectionDaoDB($pdo);
 
 $id = filter_input(INPUT_GET, 'id');
 if ($id) {
-  $sectionDao->delete($id);
+  $sectionDao->reactivate($id);
 
   $_SESSION['message-type'] = 'success';
   $_SESSION['icon-message'] = '#check-circle-fill';
-  $_SESSION['insert_user_message'] = 'Seção excluída com sucesso!';
+  $_SESSION['insert_user_message'] = 'Seção reativada com sucesso!';
   header("Location: ../pages/parking.php");
 } else {
   $_SESSION['message-type'] = 'danger';

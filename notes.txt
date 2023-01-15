@@ -13,15 +13,8 @@ Tem que fazer:
 
 
 ## Notas:
-// cadastro de novos cargos
-// erro na cobrança
 // mudar a quantidade de vagas de cada empresa no bd da empresa
 // mudar no bd os clientes que são horistas e convenio
-//mostrare horario no checkin
+// controle acesso
+// verificar se na hora do login a empresa do cliente conveiado está ativa ou não
 
--- Tem que ter na entrega:
--- explicar como é feito o cálculo das proximas saídas de veículos.
--- falar sobre verificação de login e acesso.
-//prototipos
---desafio
---planejamento

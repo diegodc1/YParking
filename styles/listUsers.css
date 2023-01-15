@@ -108,8 +108,10 @@ div.container {
 .action-buttons {
   width: 70%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
   align-items: center;
+  margin-right: 0.6rem;
 }
 
 .action-buttons button {
@@ -151,4 +153,8 @@ div.container {
 .button-confirm-modal.reac:hover {
   background-color: var(--green-light);
   filter: brightness(1.08);
+}
+
+.th-actions-list {
+  text-align: center;
 }

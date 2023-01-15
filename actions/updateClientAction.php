@@ -24,8 +24,14 @@ if($clientId) {
   $client->setCep($zip);
   $client->setAddress($address);
   $client->setType($type);
-  $client->setBussinesPlan($bussinesPlan);
-  $client->setCompanyId($companyId);
+  
+  if($type == 'Horista' || $bussinesPlan == 'Não') {
+    $client->setCompanyId(NULL);
+    $client->setBussinesPlan('Não');
+  } else {
+   $client->setCompanyId($companyId);
+    $client->setBussinesPlan($bussinesPlan);
+  }
 
   $clientDao->update($client);
 
