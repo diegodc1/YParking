@@ -17,10 +17,10 @@ $clients = $clientDao->findAllAtive();
 <html lang="pt-br">
 
 <head>
-  <?php require_once('../components/headConfig.php')?> ;
+  <?php require_once('../components/headConfig.php')?> 
   <link rel="stylesheet" href="/styles/addClient.css">
   <title>Cadastrar Veículo</title>
-  <?php require_once('../components/favicon.php') ?>;
+  <?php require_once('../components/favicon.php') ?>
 
 </head>
 

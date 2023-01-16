@@ -24,6 +24,8 @@ date_default_timezone_set('America/Sao_Paulo');
 $cadDate = date("d-m-Y");
 $cadTime = date('H:i:s');
 
+
+//Verifica se o total de vagas reservadas pelas empresas é menor que a qtd total de vagas do estacionamento - 10.
 if(($totalSlotsReserved + $slots) <= ($totalSlotsPrk - 10)) {
   $newCompany = new Company();
   $newCompany->setName($name);

@@ -21,7 +21,6 @@ $type = 'cnclCkout';
 if($checkout_id){
   $checkoutDao->cancel($checkout_id, $cancel_reason, $user_id, $ckin_id);
 
-  
   //add movement
   $newMovement = new Movement;
   $newMovement->setType($type);

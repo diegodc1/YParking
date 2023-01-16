@@ -141,7 +141,6 @@ interface CheckoutDao {
   public function addDaily(Checkout $u);
   public function findAllDaily($date);
   public function findAllCheckoutThisMonth($month);
-  // public function findAllCheckinActive();
   public function findAllDailyVehicleId($date, $vehicleId);
   public function returnSlotsByDate($date, $sectionId);
   public function returnTotalValueDate($date);

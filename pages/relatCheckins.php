@@ -85,7 +85,7 @@ if ($sql->rowCount() > 0) {
   }
 }
 
-// ========== Dados para os gráficos =============
+// ============================== Dados para os gráficos ============================
 
 // Faz a busca de todos as seções do estacionamento.
 $sql = $pdo->query("SELECT DISTINCT ckin_section_id FROM checkin WHERE $status $section $user AND ckin_date BETWEEN '$dateInicial' AND '$dateFinal' AND ckin_time BETWEEN time '$timeInitial' AND time '$timeFinal' ORDER BY ckin_section_id");
@@ -124,8 +124,6 @@ function getSumDistStatus($status, $section, $pdo, $user2, $dateInicial, $dateFi
 
   return $data['qtd'];
 }
-
-
 
 //========= Dados para as informações totais ================
 $totalActiveCkin = getSumDistStatus('Ativo', $section, $pdo, $user2, $dateInicial, $dateFinal, $timeInitial, $timeFinal);

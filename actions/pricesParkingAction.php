@@ -30,8 +30,6 @@ $mtbikeAdditionalPrice = filter_input(INPUT_POST, 'mtbikeAdditionalPrice');
 $mtbikeMonthPrice = filter_input(INPUT_POST, 'mtbikeMonthPrice');
 $companySlotPrice = filter_input(INPUT_POST, 'companySlotPrice');
 
-
-
 $updatePrices = new Price();
 
 if($usuarioDao->findUserLogin($email, $password) != false) {

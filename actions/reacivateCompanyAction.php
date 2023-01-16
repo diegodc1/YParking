@@ -2,12 +2,9 @@
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
 require_once('../dao/CompanyDao.php');
-
-
 session_start();
 
 $companyDao = new CompanyDaoDB($pdo);
-
 
 $id = filter_input(INPUT_GET, 'id');
 

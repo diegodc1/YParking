@@ -10,14 +10,12 @@ $clientDao = new ClientDaoDB($pdo);
 
 $client = $clientDao->findById($idClient);
 
-
 $brand = filter_input(INPUT_POST, 'inputVehicleBrand');
 $model = filter_input(INPUT_POST, 'inputVehicleModel');
 $plate = filter_input(INPUT_POST, 'inputVehiclePlate');
 $color = filter_input(INPUT_POST, 'inputVehicleColor');
 $category = filter_input(INPUT_POST, 'inputVehicleCategory');
 $status = 'Ativo';
-
 
 
 date_default_timezone_set('America/Sao_Paulo');
