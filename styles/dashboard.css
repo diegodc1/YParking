@@ -63,7 +63,7 @@ main {
 /****** BOX 1 - BOX/BUTTON ******/
 .box1 {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   gap: 2rem;
   background-color: var(--text-light);

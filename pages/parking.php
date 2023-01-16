@@ -29,6 +29,7 @@ $prices = $priceDao->findAll();
 
 <body>
   <?php 
+  require_once('../components/verifyAdmAccess.php');
   require_once('../components/sidebar.php');
    
   ?>

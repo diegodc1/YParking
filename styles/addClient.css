@@ -187,6 +187,16 @@ label {
   font-weight: 600;
 }
 
+.td-qtd-vehicle,
+.th-qtd-vehicles,
+.th-select {
+  text-align: center !important;
+}
+
+.td-select {
+  text-align: center;
+}
+
 /********** MEDIA QUERY **********/
 /* @media (max-width: 1700px) {
   main {

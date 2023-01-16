@@ -39,7 +39,9 @@ $users = $usuarioDao->findAll();
 
 
 <body>
-  <?php require_once("../components/sidebar.php") ;?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php');    
+  require_once("../components/sidebar.php") ;?>
    
 
   <header class="relat-header">
@@ -49,7 +51,9 @@ $users = $usuarioDao->findAll();
   <main>
     <div class="main-content">
 
-        <?php require('../components/alertMessage.php')?>
+        <?php require('../components/alertMessage.php');
+ 
+        ?>
 
 
       <div class="form-relat">

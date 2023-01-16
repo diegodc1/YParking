@@ -47,6 +47,29 @@ class CompanyDaoDB implements CompanyDao {
     }
     return $companys;
   }
+  
+  public function findAllActive(){
+    $companys = [];
+
+    $sql = $this->pdo->query("SELECT * FROM companys WHERE company_status = 'Ativo'");
+    if($sql->rowCount() > 0) {
+      $data = $sql->fetchAll();
+
+      foreach($data as $company) {
+        $u = new Company;
+        $u->setId($company['company_id']);
+        $u->setName($company['company_name']);
+        $u->setEmail($company['company_email']);
+        $u->setPhone($company['company_phone']);
+        $u->setSlots($company['company_slots']);
+        $u->setStatus($company['company_status']);
+        $u->setCadDate($company['company_cad_date']);
+        $u->setCadTime($company['company_cad_time']);
+        $companys[] = $u;
+      }
+    }
+    return $companys;
+  }
 
   public function findById($id){
     $sql = $this->pdo->prepare("SELECT * FROM companys WHERE company_id = :id");

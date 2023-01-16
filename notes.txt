@@ -1,20 +1,5 @@
 
-Tem que fazer:
---Colocar os tooltips nos botões do sidebar. ✔️
-
---arrumar alinhamento sidebar
-
---algumas paginas o tooltip n está funcionando
-
---emitir relatorios
-
-##Talvez:
---O usuario poder escolher o layout do dashboard.
-
-
 ## Notas:
-// mudar a quantidade de vagas de cada empresa no bd da empresa
-// mudar no bd os clientes que são horistas e convenio
-// controle acesso
-// verificar se na hora do login a empresa do cliente conveiado está ativa ou não
+
+
 

@@ -21,7 +21,6 @@ date_default_timezone_set('America/Sao_Paulo');
 $date = date("Y/m/d");
 
 
-
 // Checkins
 $ckinToday = $checkinDao->findAllDaily($date);
 $ckinAllActive = $checkinDao->findAllCheckinActive();
@@ -72,6 +71,14 @@ $movements = $movementDao->findAll();
   <?php require_once('../components/favicon.php') ?>;
 
 </head>
+
+<style>
+  <?php if($userAccess == 0){ ?>
+      .admin {
+        display: none !important;
+      }
+  <?php }?>
+</style>
 
 
 <body class="dashboard-body">
@@ -124,14 +131,14 @@ $movements = $movementDao->findAll();
                 </div>
               </a>
               
-              <a href="/pages/addUser.php">
+              <a href="/pages/addUser.php" class="admin">
                 <div class="buttons-section">
                   <i class="fa-solid fa-user-gear"></i>
                   <p>CADASTRAR USUÁRIO</p>
                 </div>
               </a>
 
-              <a href="/pages/relatorios.php">
+              <a href="/pages/relatorios.php" class="admin">
                 <div class="buttons-section">
                   <i class="fa-regular fa-file-lines"></i>
                   <p>RELATÓRIOS</p>
@@ -162,14 +169,14 @@ $movements = $movementDao->findAll();
                 </div>
               </a>
               
-              <a href="/pages/listUsers.php">
+              <a href="/pages/listUsers.php" class="admin">
                 <div class="buttons-section">
                   <i class="fa-solid fa-users-gear"></i>
                   <p>USUÁRIOS CADASTRADOS</p>
                 </div>
               </a>
 
-              <a href="/pages/parking.php">
+              <a href="/pages/parking.php" class="admin">
                 <div class="buttons-section">
                   <i class="fa-solid fa-square-parking"></i>
                   <p>ESTACIONAMENTO</p>

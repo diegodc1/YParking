@@ -15,6 +15,8 @@ $color = '#109cf1';
 if(isset($_SESSION['colorTheme'])) {
   $color = $_SESSION['colorTheme'];
 } 
+
+$userAccess = $_SESSION['user_access'];
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +62,13 @@ if(isset($_SESSION['colorTheme'])) {
   :root {
     --blue-light: <?= $color?>;
   }
+
+  <?php if($userAccess == 0){ ?>
+      .admin {
+        display: none !important;
+      }
+  <?php }?>
+
 </style>
 
 <body class="sidebar-body">
@@ -92,7 +101,7 @@ if(isset($_SESSION['colorTheme'])) {
           </a>
         </button>
 
-        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Usuários" class="">
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Usuários" class="admin">
           <a href="../pages/listUsers.php" class="sections">
             <i class="fa-solid fa-users-gear"></i>
             <span>Usuários</span>
@@ -113,7 +122,7 @@ if(isset($_SESSION['colorTheme'])) {
           </a>
         </button>
 
-        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Relatórios" class="">
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Relatórios" class="admin">
           <a href="../pages/relatorios.php" class="sections">
             <i class="fa-regular fa-file-lines"></i>
             <span>Relatorios</span>
@@ -122,7 +131,7 @@ if(isset($_SESSION['colorTheme'])) {
 
         <div class="line"></div>
 
-        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Estacionamento" class="">
+        <button data-bs-toggle="tooltip" data-bs-placement="right" title="Estacionamento" class="admin">
           <a href="../pages/parking.php" class="sections">
             <i class="fa-solid fa-square-parking"></i>
             <span>Estacionamento</span>

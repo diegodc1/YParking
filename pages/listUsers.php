@@ -28,7 +28,10 @@ $users = $usuarioDao->findAll();
 </head>
 
 <body>
-  <?php require_once("../components/sidebar.php") ?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php');
+  require_once("../components/sidebar.php");
+   ?>
 
   <header class="list-users-header">
     <h1>USUÁRIOS CADASTRADOS</h1>

@@ -7,7 +7,7 @@ require_once('../components/verifyLogin.php');
 
 
 $companyDao = new CompanyDaoDB($pdo);
-$companys = $companyDao->findAll();
+$companys = $companyDao->findAllActive();
 ?>
 
 <!DOCTYPE html>

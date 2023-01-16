@@ -212,6 +212,7 @@ $allCheckins = $checkinDao->findAll();
               <th>Cliente</th>
               <th>Seção</th>
               <th class="td-prepare">Data Entr.</th>
+              <th class="td-prepare">Saída Prev.</th>
               <th class="td-prepare">Ações</th></th>
             </tr>
           </thead>
@@ -236,6 +237,14 @@ $allCheckins = $checkinDao->findAll();
                     <td class="td-section"><?= $sectionck->getName()?></td>
                 <?php } ?>
                 <td class="td-date"><?= date('d/m/Y', strtotime($dateCkin))?></td>
+                <td class="td-section"><?php 
+                  if($clientCk->getDepartureTime()) {
+                    echo $clientCk->getDepartureTime(); 
+                  } else {
+                    echo '-';
+                  }
+                
+                ?></td>
 
                 <td class="action-buttons">
                   <?php if($active->getStatus() == 'Aguardando Saída'){ ?>
@@ -453,9 +462,9 @@ $allCheckins = $checkinDao->findAll();
   <!-- Historic Checkouts Modal --> 
   <div class="modal fade" id="cancelCkOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content cancelCheckin">
+      <div class="modal-content cancelCheckout">
 
-        <div class="modal-header cancelCheckin">
+        <div class="modal-header ">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -503,7 +512,7 @@ $allCheckins = $checkinDao->findAll();
 
                        <div class="modal fade" id="confirmCancelCheckout<?= $checkout->getId(); ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                          <div class="modal-content cancelCheckin">
+                          <div class="modal-content cancelCheckin ">
 
                             <div class="modal-header cancelCheckin">
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -584,7 +593,14 @@ $allCheckins = $checkinDao->findAll();
                 <p>Cliente: <span><?= $clientVehicle->getName()?></span></p>
                 <p>Veículo: <span><?= $vehicle->getModel() ?></span></p>
               </div>
-              <p>Saída Prevista: <span><?= $clientVehicle->getDepartureTime()?></span></p>
+              <p>Saída Prevista: <span><?php 
+              if($clientVehicle->getDepartureTime()) {
+                echo $clientVehicle->getDepartureTime();
+              } else {
+                echo 'Histórico Insuficiente';
+              }
+              
+              ?></span></p>
             </div>
           </div>
 

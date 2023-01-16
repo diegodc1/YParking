@@ -2,11 +2,13 @@
 session_start();
 require_once('../db/config.php');
 require_once('../dao/ClientDao.php');
+require_once('../dao/VehicleDao.php');
 require_once('../components/verifyLogin.php');
 
 
 
 $clientDao = new ClientDaoDB($pdo);
+$vehicleDao = new VehicleDaoDB($pdo);
 $clients = $clientDao->findAllAtive();
 ?>
 
@@ -66,10 +68,6 @@ $clients = $clientDao->findAllAtive();
               </select>
             </div>
 
-            <!-- <div class="col-md-2">
-              <label for="inputHourOut" class="form-label">Horário Previsto de Saída:</label>
-              <input type="text" class="form-control" name="inputHourOut" autocomplete="off" maxlength="5" OnKeyPress="formatar('##:##', this)" require>
-            </div> -->
           </div>
         </div>
 
@@ -83,18 +81,21 @@ $clients = $clientDao->findAllAtive();
                   <th scope="col">Nome</th>
                   <th scope="col">Telefone</th>
                   <th scope="col">Tipo de Plano</th>
-                  <th scope="col">Convênio de Empresa</th>
-                  <th scope="col ">Selecionar</th>
+                  <th scope="col">Convênio</th>
+                  <th scope="col" class="th-qtd-vehicles">Veículos</th>
+                  <th scope="col " class="th-select">Selecionar</th>
                 </tr>
               </thead>
               <tbody class="table-striped">
                 <?php 
-                  foreach($clients as $client) { ?>
+                  foreach($clients as $client) {
+                    $clientVehicleQtd = $vehicleDao->findByClientIdQtd($client->getId());?>
                     <tr>
                       <td scope="row" class="td-nome"> <?= $client->getName() ?></td>
                       <td scope="row" class="td-phone"><?= $client->getPhone() ?></td>
                       <td class=""><?= $client->getType() ?></td>
-                      <td class=""><?= $client->getBussinesPlan() ?></td>
+                      <td class="td-bussiness"><?= $client->getBussinesPlan() ?></td>
+                      <td class="td-qtd-vehicle"><?= $clientVehicleQtd ?></td>
                       <td class="deleteIcon td-select"> <input type="radio" class="check-box-client" name="selectedClients[]" value="<?= $client->getId() ?>"></td>
                     </tr>
                   <?php }

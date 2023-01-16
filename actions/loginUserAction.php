@@ -30,5 +30,4 @@ if($usuarioDao->findUserLogin($email, $password) != false) {
   $_SESSION['icon-message'] = '#exclamation-triangle-fill';
   $_SESSION['insert_user_message'] = "Usuário ou senha incorretos!";
   header("Location: ../index.php");
-
 }

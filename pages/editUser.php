@@ -3,6 +3,8 @@ session_start();
 require_once('../db/config.php');
 require_once('../dao/UsuarioDao.php');
 require_once('../components/verifyLogin.php');
+require_once('../components/verifyAdmAccess.php');
+
 
 
 $usuarioDao= new UsuarioDaoDB($pdo);
@@ -33,9 +35,10 @@ if($user === false) {
 </head>
 
 <body>
-  <?php require_once('../components/sidebar.php');
-   
-  ?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php'); 
+  require_once('../components/sidebar.php');
+ ?>
 
   <header class="addUser-header">
     <h1>EDITAR USUÁRIO</h1>

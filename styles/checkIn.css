@@ -365,8 +365,12 @@ main {
 }
 
 .modal-content.cancelCheckin {
-  height: 65vh;
-  width: 45vw !important;
+  height: 80vh;
+  width: 60vw !important;
+}
+.modal-content.cancelCheckout {
+  height: 76vh;
+  width: 60vw !important;
 }
 
 .modal-header.cancelCheckin {

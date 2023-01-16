@@ -47,8 +47,8 @@ $totalValueHourClient = $checkoutDao->totalValueHourClient($dateSearch);
 $qtdHour = $totalValueHourClient;
 $qtdHour = substr($qtdHour, 2, 7);
 $qtdHour =str_replace(",",".",$qtdHour);
-$qtdHour = number_format($qtdHour, 2);
 $qtdHour = floatval($qtdHour);
+$qtdHour = number_format($qtdHour, 2);
 
 $clientsBussinesPlan = $clientDao->findByBussinesPlan('Sim');
 $priceBussines = $prices->getCompanySlotPrice();
@@ -124,7 +124,10 @@ function get_client_ip() {
 
 
 <body>
-  <?php require_once("../components/sidebar.php") ;?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php');
+  require_once("../components/sidebar.php") ;
+  ?>
   <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
 
 

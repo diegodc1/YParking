@@ -70,7 +70,10 @@ function get_client_ip() {
 
 
 <body>
-  <?php require_once("../components/sidebar.php") ;?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php');
+  require_once("../components/sidebar.php") ;
+  ?>
   <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
 
 

@@ -149,7 +149,10 @@ function get_client_ip() {
 
 
 <body>
-  <?php require_once("../components/sidebar.php") ;?>
+  <?php 
+  require_once('../components/verifyAdmAccess.php');
+  require_once("../components/sidebar.php") ;
+  ?>
     <a href="#top" class="back-to-top"><i class="fa-solid fa-circle-up"></i></a>
 
    
@@ -275,14 +278,14 @@ function get_client_ip() {
 
            <?php 
             if((count($distTypes) > 0  && $genGraphType == 'Sim') || (count($distBussinesPlan) > 0 && $genGraphBussinesPlan == 'Sim')): ?>
-              <h3 class="title-graph">Gráfico</h3>
+              <h3 class="title-graph">Gráficos</h3>
               <div class="graphs-box">
                 <?php if(count($distTypes) > 0  && $genGraphType == 'Sim'): ?>
-                  <div id="donutchart" style="width: 500px; height: 300px;"></div>
+                  <div id="donutchart" style="width: 700px; height: 500px;"></div>
                  <?php endif ?>
 
                  <?php if(count($distBussinesPlan) > 0 && $genGraphBussinesPlan == 'Sim'): ?>
-                  <div id="bussinePlanGraph" style="width: 500px; height: 300px;"></div>           
+                  <div id="bussinePlanGraph" style="width: 700px; height: 500px;"></div>           
                  <?php endif ?>
               </div>
             <?php endif ?>
@@ -351,7 +354,7 @@ function get_client_ip() {
       var options = {
         title: 'Clientes conveniados ou não',
         pieHole: 0.4,
-        colors: ['#2ed47a', '#ECEF5B']
+        colors: ['#2ed47a', '#8E44AD']
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('bussinePlanGraph'));
