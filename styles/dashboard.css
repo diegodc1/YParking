@@ -330,6 +330,10 @@ main {
   height: 3.4rem;
 }
 
+.td-client-name {
+  font-size: 0.9rem;
+}
+
 /********** Box 3 ***********/
 .movements {
   background-color: var(--text-light);

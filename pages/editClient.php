@@ -13,7 +13,7 @@ $clientDao = new ClientDaoDB($pdo);
 $vechicleDao = new VehicleDaoDB($pdo);
 $companyDao = new CompanyDaoDB($pdo);
 $clients = $clientDao->findAll();
-$companys = $companyDao->findAll();
+$companys = $companyDao->findAllActive();
 $vehicles = $vechicleDao->findByClientId($clientId);
 
 

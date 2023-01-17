@@ -213,7 +213,7 @@ $movements = $movementDao->findAll();
                   <tr class="item-table">
                     <td class="item1"><?= $nextVehicle->getModel()?></td>
                     <td><?= $nextVehicle->getPlate()?></td>
-                    <td><?= $nextClient->getName()?></td>
+                    <td class="td-client-name"><?= $nextClient->getName()?></td>
                     <td class="item4"><?= substr($next['client_departure_time'], 0, 5)?></td>
                     <td class="action-buttons">
                       <?php if($next['ckin_status'] == 'Aguardando Saída'){ ?>

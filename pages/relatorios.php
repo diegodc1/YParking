@@ -65,28 +65,28 @@ $users = $usuarioDao->findAll();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Clientes</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatClients.php?typeRelat=monthly">
+              <a href="../pages/fastRelatClients.php?typeRelat=monthly"  target="_blank">
                 <div class="relat-btn">
                   <span>Mensalistas</span>
                   <i class="fa-regular fa-calendar-days"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatClients.php?typeRelat=hour">
+              <a href="../pages/fastRelatClients.php?typeRelat=hour"  target="_blank">
                 <div class="relat-btn">
                   <span>Horistas</span>
                   <i class="fa-regular fa-clock"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatClients.php?typeRelat=bussinesPlan">
+              <a href="../pages/fastRelatClients.php?typeRelat=bussinesPlan"  target="_blank">
                 <div class="relat-btn">
                   <span>Conveniados de Empresa</span>
                   <i class="fa-solid fa-business-time"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatClients.php?typeRelat=noBussinesPlan">
+              <a href="../pages/fastRelatClients.php?typeRelat=noBussinesPlan"  target="_blank">
                 <div class="relat-btn">
                   <span>Não Conveniados</span>
                   <i class="fa-solid fa-business-time"></i>
@@ -99,21 +99,21 @@ $users = $usuarioDao->findAll();
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Usuários</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatUsers.php?typeRelat=levelAccess">
+              <a href="../pages/fastRelatUsers.php?typeRelat=levelAccess"  target="_blank">
                 <div class="relat-btn">
                   <span>Nível de Acesso</span>
                   <i class="fa-solid fa-layer-group"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatUsers.php?typeRelat=function">
+              <a href="../pages/fastRelatUsers.php?typeRelat=function"  target="_blank">
                 <div class="relat-btn">
                   <span>Cargo</span>
                   <i class="fa-solid fa-users-gear"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatUsers.php?typeRelat=status">
+              <a href="../pages/fastRelatUsers.php?typeRelat=status"  target="_blank">
                 <div class="relat-btn">
                   <span>Status</span>
                   <i class="fa-solid fa-circle-info"></i>
@@ -126,21 +126,21 @@ $users = $usuarioDao->findAll();
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Check-ins</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatCheckins.php?typeRelat=month">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=month"  target="_blank">
                 <div class="relat-btn">
                   <span>Todos do Mês</span>
                   <i class="fa-solid fa-calendar-check"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatCheckins.php?typeRelat=perDay">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=perDay"  target="_blank">
                 <div class="relat-btn">
                   <span>Por dia - neste mês </span>
                   <i class="fa-solid fa-calendar-day"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatCheckins.php?typeRelat=canceled">
+              <a href="../pages/fastRelatCheckins.php?typeRelat=canceled"  target="_blank">
                 <div class="relat-btn">
                   <span>Cancelados - neste mês</span>
                   <i class="fa-regular fa-calendar-xmark"></i>
@@ -154,21 +154,21 @@ $users = $usuarioDao->findAll();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Check-outs</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatCheckouts.php?typeRelat=month">
+              <a href="../pages/fastRelatCheckouts.php?typeRelat=month" target="_blank" >
                 <div class="relat-btn">
                   <span>Todos do Mês</span>
                   <i class="fa-solid fa-calendar-check"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatCheckouts.php?typeRelat=perDay">
+              <a href="../pages/fastRelatCheckouts.php?typeRelat=perDay" target="_blank">
                 <div class="relat-btn">
                   <span>Por dia (deste mês)</span>
                   <i class="fa-solid fa-calendar-day"></i>
                 </div>
               </a>
 
-               <a href="../pages/fastRelatCheckouts.php?typeRelat=canceled">
+               <a href="../pages/fastRelatCheckouts.php?typeRelat=canceled"  target="_blank">
                 <div class="relat-btn">
                   <span>Cancelados - neste mês</span>
                   <i class="fa-regular fa-calendar-xmark"></i>
@@ -181,14 +181,14 @@ $users = $usuarioDao->findAll();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Veículos</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatVehicles.php?typeRelat=category">
+              <a href="../pages/fastRelatVehicles.php?typeRelat=category"  target="_blank">
                 <div class="relat-btn">
                   <span>Quantidade por categoria</span>
                   <i class="fa-solid fa-car-side"></i>
                 </div>
               </a>
 
-              <a href="../pages/fastRelatVehicles.php?typeRelat=activeDisable">
+              <a href="../pages/fastRelatVehicles.php?typeRelat=activeDisable" target="_blank">
                 <div class="relat-btn">
                   <span>Ativos e Desativados</span>
                   <i class="fa-solid fa-toggle-off"></i>
@@ -202,7 +202,7 @@ $users = $usuarioDao->findAll();
            <div class="box-relat-rapid">
             <h6 class="title-box-relat">Financeiro</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatFinance.php?typeRelat=valuePerDay">
+              <a href="../pages/fastRelatFinance.php?typeRelat=valuePerDay" target="_blank">
                 <div class="relat-btn">
                   <span>Valor total por dia - neste mês</span>
                   <i class="fa-solid fa-circle-dollar-to-slot"></i>
@@ -211,7 +211,7 @@ $users = $usuarioDao->findAll();
             </div>
 
             <div class="client-relat-box">
-              <a href="../pages/fastRelatFinance.php?typeRelat=type">
+              <a href="../pages/fastRelatFinance.php?typeRelat=type" target="_blank">
                 <div class="relat-btn">
                   <span>Valor total por tipo - neste mês</span>
                   <i class="fa-solid fa-circle-dollar-to-slot"></i>
@@ -224,7 +224,7 @@ $users = $usuarioDao->findAll();
           <div class="box-relat-rapid">
             <h6 class="title-box-relat">Empresas</h6>
             <div class="client-relat-box">
-              <a href="../pages/fastRelatCompanys.php?typeRelat=slots">
+              <a href="../pages/fastRelatCompanys.php?typeRelat=slots" target="_blank">
                 <div class="relat-btn">
                   <span>Vagas Reservadas</span>
                   <i class="fa-solid fa-car-tunnel"></i>
@@ -254,7 +254,7 @@ $users = $usuarioDao->findAll();
         </div>
 
         <!--============= Formulário Clientes ==============-->
-        <form action="../pages/relatClient.php" method="POST" id="form-clients" class="row g-3">
+        <form action="../pages/relatClient.php" method="POST" id="form-clients" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -322,7 +322,7 @@ $users = $usuarioDao->findAll();
         </form>
 
         <!--============= Formulário Veículos ==============-->
-        <form action="../pages/relatVehicles.php" method="POST" id="form-vehicles" class="row g-3">
+        <form action="../pages/relatVehicles.php" method="POST" id="form-vehicles" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -372,7 +372,7 @@ $users = $usuarioDao->findAll();
         </form>
 
         <!--============= Formulário Checkins ==============-->
-        <form action="../pages/relatCheckins.php" method="POST" id="form-checkins" class="row g-3">
+        <form action="../pages/relatCheckins.php" method="POST" id="form-checkins" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -470,13 +470,13 @@ $users = $usuarioDao->findAll();
 
           <div class="row mt-3">
             <div class="col-md-2">
-              <input type="submit" value="Gerar Relatório" class="submit-button">
+              <input type="submit" value="Gerar Relatório" class="submit-button"  target="_blank">
             </div>
           </div>
         </form>
 
         <!--============= Formulário Ckeckouts ==============-->
-        <form action="../pages/relatCheckout.php" method="POST" id="form-checkouts" class="row g-3">
+        <form action="../pages/relatCheckout.php" method="POST" id="form-checkouts" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -597,7 +597,7 @@ $users = $usuarioDao->findAll();
         </form>
 
         <!--============= Formulário Empresas ==============-->
-        <form action="../pages/relatCompanys.php" method="POST" id="form-companys" class="row g-3">
+        <form action="../pages/relatCompanys.php" method="POST" id="form-companys" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
@@ -632,7 +632,7 @@ $users = $usuarioDao->findAll();
         </form>
 
         <!--============= Formulário Usuários ==============-->
-        <form action="../pages/relatUsers.php" method="POST" id="form-users" class="row g-3">
+        <form action="../pages/relatUsers.php" method="POST" id="form-users" class="row g-3"  target="_blank">
           <div class="col-md-3">
             <label for="inputRelatName" class="form-label">Nome do relatório:</label>
             <input type="text" class="form-control" name="inputRelatName" autocomplete="off" required>
